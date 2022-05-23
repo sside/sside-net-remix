@@ -37,5 +37,5 @@ model BlogEntryBodyDraft {
   updatedAt DateTime @updatedAt
 
   blogEntry   BlogEntry @relation(fields: [blogEntryId], references: [id])
-  blogEntryId String
+  blogEntryId String    @unique
 }
