@@ -10,6 +10,7 @@
         "dev": "run-s dev:prisma:migrate dev:remix",
         "dev:remix": "remix dev",
         "dev:prisma:migrate": "prisma migrate dev",
+        "lint": "eslint app",
         "prepare": "husky install"
     },
     "dependencies": {
