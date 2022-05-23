@@ -1,6 +1,6 @@
 {
     "extends": ["@remix-run/eslint-config", "@remix-run/eslint-config/node"],
     "rules": {
-        "@typescript-eslint/consistent-type-imports": false
+        "@typescript-eslint/consistent-type-imports": 0
     }
 }
