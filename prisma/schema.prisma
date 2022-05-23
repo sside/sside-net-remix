@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model BlogEntry {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  slug        String    @unique
+  publishedAt DateTime?
+
+  blogEntryBodies    BlogEntryBody[]
+  BlogEntryBodyDraft BlogEntryBodyDraft?
+}
+
+model BlogEntryBody {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  blogEntryId String
+  BlogEntry   BlogEntry @relation(fields: [blogEntryId], references: [id])
+}
+
+model BlogEntryBodyDraft {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  blogEntry   BlogEntry @relation(fields: [blogEntryId], references: [id])
+  blogEntryId String
+}

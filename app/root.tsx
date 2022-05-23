@@ -1,6 +1,9 @@
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
-import destyleCss from "destyle.css";
+import destyle from "destyle.css";
+import color from "./styles/constants/_color.css";
+import font from "./styles/constants/_font.css";
+import style from "./styles/pages/root.css";
 
 export const meta: MetaFunction = () => ({
     charset: "utf-8",
@@ -11,7 +14,19 @@ export const meta: MetaFunction = () => ({
 export const links: LinksFunction = () => [
     {
         rel: "stylesheet",
-        href: destyleCss,
+        href: destyle,
+    },
+    {
+        rel: "stylesheet",
+        href: color,
+    },
+    {
+        rel: "stylesheet",
+        href: font,
+    },
+    {
+        rel: "stylesheet",
+        href: style,
     },
 ];
 
