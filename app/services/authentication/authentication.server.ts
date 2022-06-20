@@ -1,8 +1,8 @@
 import { Authenticator, AuthorizationError } from "remix-auth";
 import { FormStrategy } from "remix-auth-form";
-import { Environment } from "~/libraries/environment/Environment";
-import { sessionStorage } from "~/services/authentication/authenticationSession.server";
-import { AuthenticationInputName } from "~/services/authentication/constants/AuthenticationInputName";
+import { Environment } from "../../libraries/environment/Environment";
+import { sessionStorage } from "./authenticationSession.server";
+import { AuthenticationInputName } from "./constants/AuthenticationInputName";
 
 export let authenticator = new Authenticator(sessionStorage);
 export const ADMINISTRATOR_AUTHENTICATION_STRATEGY_NAME = "administrator-authentication";

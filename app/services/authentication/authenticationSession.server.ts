@@ -1,5 +1,5 @@
 import { createCookieSessionStorage } from "@remix-run/node";
-import { Environment } from "~/libraries/environment/Environment";
+import { Environment } from "../../libraries/environment/Environment";
 import { appConfig } from "../../../appConfig";
 
 const environment = Environment.instance;

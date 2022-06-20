@@ -1,0 +1,10 @@
+.managementFormItem {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-row-gap: var(--spacingFormItem);
+}
+
+.managementFormItem__label {
+    font-size: var(--fontSizeFormLabel);
+    font-weight: var(--fontWeightFormLabel);
+}

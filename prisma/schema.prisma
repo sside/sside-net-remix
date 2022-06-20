@@ -15,20 +15,24 @@ model BlogEntry {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  slug        String    @unique
-  publishedAt DateTime?
+  slug      String    @unique
+  publishAt DateTime?
 
-  blogEntryBodies    BlogEntryBody[]
-  BlogEntryBodyDraft BlogEntryBodyDraft?
+  blogEntryBodies    BlogEntryBodyHistory[]
+  blogEntryBodyDraft BlogEntryBodyDraft?
+  blogMetaTags       BlogMetaTag[]
 }
 
-model BlogEntryBody {
+model BlogEntryBodyHistory {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  title String
+  body  String
+
   blogEntryId String
-  BlogEntry   BlogEntry @relation(fields: [blogEntryId], references: [id])
+  blogEntry   BlogEntry @relation(fields: [blogEntryId], references: [id])
 }
 
 model BlogEntryBodyDraft {
@@ -36,6 +40,19 @@ model BlogEntryBodyDraft {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  title String
+  body  String
+
   blogEntry   BlogEntry @relation(fields: [blogEntryId], references: [id])
   blogEntryId String    @unique
+}
+
+model BlogMetaTag {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name String @unique
+
+  blogEntries BlogEntry[]
 }

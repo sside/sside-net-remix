@@ -1,9 +1,12 @@
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
+import type { ErrorBoundaryComponent, LinksFunction, MetaFunction } from "@remix-run/node";
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
 import destyle from "destyle.css";
+import { RootErrorBoundary } from "./RootErrorBoundary";
 import color from "./styles/constants/_color.css";
 import font from "./styles/constants/_font.css";
-import style from "./styles/pages/root.css";
+import layout from "./styles/constants/_layout.css";
+import styles from "./styles/pages/root.css";
+import { cssLinks } from "./utilities/styling/cssDescription";
 
 export const meta: MetaFunction = () => ({
     charset: "utf-8",
@@ -11,28 +14,13 @@ export const meta: MetaFunction = () => ({
     viewport: "width=device-width,initial-scale=1",
 });
 
-export const links: LinksFunction = () => [
-    {
-        rel: "stylesheet",
-        href: destyle,
-    },
-    {
-        rel: "stylesheet",
-        href: color,
-    },
-    {
-        rel: "stylesheet",
-        href: font,
-    },
-    {
-        rel: "stylesheet",
-        href: style,
-    },
-];
+export const ErrorBoundary: ErrorBoundaryComponent = RootErrorBoundary;
+
+export const links: LinksFunction = () => cssLinks(destyle, color, font, layout, styles);
 
 export default function App() {
     return (
-        <html lang="en">
+        <html lang="ja">
             <head>
                 <Meta />
                 <Links />

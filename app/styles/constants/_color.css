@@ -24,6 +24,7 @@
 
     --colorBackground: var(--base03);
     --colorBackgroundHighlights: var(--base02);
+    --colorBackgroundMenu: var(--base0);
 
     --colorPrimary: var(--blue);
 }

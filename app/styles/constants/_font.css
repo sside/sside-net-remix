@@ -5,4 +5,9 @@
 
     /*font size*/
     --fontSizeBase: 14px;
+
+    --fontSizeFormLabel: 1.2rem;
+
+    /*font weight*/
+    --fontWeightFormLabel: 400;
 }

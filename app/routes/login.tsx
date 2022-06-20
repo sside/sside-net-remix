@@ -1,18 +1,10 @@
-import type { ActionFunction, LinksFunction } from "@remix-run/node";
+import type { ActionFunction } from "@remix-run/node";
 import type { FC } from "react";
 import {
     ADMINISTRATOR_AUTHENTICATION_STRATEGY_NAME,
     authenticator,
-} from "~/services/authentication/authentication.server";
-import { AuthenticationInputName } from "~/services/authentication/constants/AuthenticationInputName";
-import style from "../styles/pages/login.css";
-
-export const links: LinksFunction = () => [
-    {
-        rel: "stylesheet",
-        href: style,
-    },
-];
+} from "../services/authentication/authentication.server";
+import { AuthenticationInputName } from "../services/authentication/constants/AuthenticationInputName";
 
 export const action: ActionFunction = async ({ request }) => {
     return await authenticator.authenticate(ADMINISTRATOR_AUTHENTICATION_STRATEGY_NAME, request, {
