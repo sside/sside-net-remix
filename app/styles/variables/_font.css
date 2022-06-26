@@ -1,0 +1,19 @@
+:root {
+    /*font family*/
+    --fontFamilyContent: "Yu Gothic UI", "Helvetica Neue", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo UI",
+        Meiryo, sans-selif;
+    --fontFamilyMonospace: "Cascadia Code", monospace;
+
+    /*font size*/
+    --fontSizeBase: 16px;
+    --fontSizeExtraLarge: 2rem;
+    --fontSizeLarge: 1.5rem;
+    --fontSizeSmall: 0.8rem;
+    --fontSizeExtraSmall: 0.6rem;
+
+    /*font weight*/
+    --fontWeightFormLabel: 400;
+    --fontWeightNormal: 400;
+    --fontWeightBold: 700;
+    --fontWeightThin: 100;
+}

@@ -1,0 +1,24 @@
+.managementBlogMetaTagList {
+}
+
+.managementBlogMetaTagList__header {
+}
+
+.managementBlogMetaTagList__headerItem {
+    border: solid 1px var(--colorBody);
+    padding: 0.5rem;
+}
+
+.managementBlogMetaTagList__body {
+}
+
+.managementBlogMetaTagList__bodyRow {
+}
+
+.managementBlogMetaTagList__bodyItem {
+    border: solid 1px var(--colorBody);
+    padding: 0.5rem;
+}
+
+.managementBlogMetaTagList__bodyManipulateButton {
+}

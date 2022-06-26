@@ -1,15 +1,19 @@
 import { InternalServerError, NotFoundServerError, UnprocessableServerError } from "../../error/ServerError";
 import { prisma } from "../../libraries/database/database";
 import { Logger } from "../../libraries/logger/logger";
-import { isValidMetaTags } from "../../libraries/vallidator/isValidMetaTag";
-import { isValidSlug } from "../../libraries/vallidator/isValidSlug";
-import { isValidTitle } from "../../libraries/vallidator/isValidTitle";
-import { upsertBlogMetaTags } from "./blogMetaTags.server";
+import { validateBlogEntryMetaTags } from "../../libraries/vallidator/validateBlogEntryMetaTag";
+import { validateBlogEntrySlug } from "../../libraries/vallidator/validateBlogEntrySlug";
+import { validateBlogEntryTitle } from "../../libraries/vallidator/validateBlogEntryTitle";
+import { upsertBlogMetaTags } from "../blog-meta-tag/blogMetaTags.server";
 import { JoinedBlogEntry } from "./types/JoinedBlogEntry";
 
-const logger = new Logger("BlogEntry");
+const logger = new Logger("blogEntry");
 
 export async function findOneBlogEntryById(id: string): Promise<JoinedBlogEntry> {
+    logger.log(`Find a blog entry`, {
+        id,
+    });
+
     if (!id) {
         throw new InternalServerError(`Blog entry id is not defined.`);
     }
@@ -33,11 +37,16 @@ export async function findOneBlogEntryById(id: string): Promise<JoinedBlogEntry>
 }
 
 export async function findAllBlogEntries(): Promise<JoinedBlogEntry[]> {
+    logger.log(`Find all exist blog entries.`);
+
     return await prisma.blogEntry.findMany({
         include: {
             blogEntryBodies: true,
             blogMetaTags: true,
             blogEntryBodyDraft: true,
+        },
+        orderBy: {
+            updatedAt: "desc",
         },
     });
 }
@@ -64,6 +73,15 @@ export async function upsertDraftBlogEntry(
     tags: string[],
     id?: string,
 ): Promise<JoinedBlogEntry> {
+    logger.log(`Create or update draft blog entry.`, {
+        id,
+        title,
+        slug,
+        body,
+        tags,
+        operation: id ? "update" : "create",
+    });
+
     validatePublishBlogEntry(title, slug, body, tags);
     const blogEntry = await (id
         ? findOneBlogEntryById(id)
@@ -98,10 +116,27 @@ export async function upsertDraftBlogEntry(
     return await findOneBlogEntryById(updatedBlogEntry.id);
 }
 
+export async function deleteOneBlogEntryById(id: string): Promise<void> {
+    logger.log(`Delete blog entry.`, {
+        id,
+    });
+
+    // Just check exists.
+    const exist = await findOneBlogEntryById(id);
+
+    await prisma.blogEntry.delete({
+        where: {
+            id: exist.id,
+        },
+    });
+}
+
 function validatePublishBlogEntry(title: string, slug: string, body: string, tags: string[]): void {
-    const errorMessages = [isValidTitle(title), isValidSlug(slug), isValidMetaTags(tags)].filter(
-        (value) => typeof value === "string",
-    );
+    const errorMessages = [
+        validateBlogEntryTitle(title),
+        validateBlogEntrySlug(slug),
+        validateBlogEntryMetaTags(tags),
+    ].filter((value) => typeof value === "string");
     if (errorMessages.length) {
         throw new UnprocessableServerError(`Validation error. Error messages:${errorMessages.join(", ")}`);
     }
@@ -114,6 +149,14 @@ async function publishNewBlogEntry(
     tags: string[],
     publishAt?: Date,
 ): Promise<JoinedBlogEntry> {
+    logger.log(`Publish new blog entry.`, {
+        title,
+        slug,
+        body,
+        tags,
+        publishAt,
+    });
+
     validatePublishBlogEntry(title, slug, body, tags);
     const created = await prisma.blogEntry.create({
         data: {
@@ -141,14 +184,34 @@ async function publishExistBlogEntry(
     tags: string[],
     publishAt?: Date,
 ): Promise<JoinedBlogEntry> {
+    logger.log(`Publish exist blog entry.`, {
+        id,
+        title,
+        slug,
+        body,
+        tags,
+        publishAt,
+    });
+
     validatePublishBlogEntry(title, slug, body, tags);
     const existBlogEntry = await prisma.blogEntry.findUnique({
         where: {
             id,
         },
+        include: {
+            blogEntryBodyDraft: true,
+        },
     });
     if (!existBlogEntry) {
         throw new NotFoundServerError(`Exist entry was not found. Id: ${id}`);
+    }
+
+    if (existBlogEntry.blogEntryBodyDraft) {
+        await prisma.blogEntryBodyDraft.delete({
+            where: {
+                id: existBlogEntry.blogEntryBodyDraft.id,
+            },
+        });
     }
 
     const updated = await prisma.blogEntry.update({
@@ -162,9 +225,6 @@ async function publishExistBlogEntry(
                     body,
                     title,
                 },
-            },
-            blogEntryBodyDraft: {
-                delete: true,
             },
             blogMetaTags: {
                 connect: (await upsertBlogMetaTags(tags)).map(({ id }) => ({ id })),

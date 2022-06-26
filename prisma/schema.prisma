@@ -32,7 +32,7 @@ model BlogEntryBodyHistory {
   body  String
 
   blogEntryId String
-  blogEntry   BlogEntry @relation(fields: [blogEntryId], references: [id])
+  blogEntry   BlogEntry @relation(fields: [blogEntryId], references: [id], onDelete: Cascade)
 }
 
 model BlogEntryBodyDraft {
@@ -43,8 +43,8 @@ model BlogEntryBodyDraft {
   title String
   body  String
 
-  blogEntry   BlogEntry @relation(fields: [blogEntryId], references: [id])
   blogEntryId String    @unique
+  blogEntry   BlogEntry @relation(fields: [blogEntryId], references: [id], onDelete: Cascade)
 }
 
 model BlogMetaTag {

@@ -1,6 +1,7 @@
 import { LinksFunction } from "@remix-run/node";
 import { FC } from "react";
-import { BaseButton, BaseButtonColor, links as baseButtonLinks } from "../../../global/button/BaseButton";
+import { ProjectColor } from "../../../../constants/ProjectColor";
+import { BaseButton, links as baseButtonLinks } from "../../../global/button/BaseButton";
 
 export const links: LinksFunction = baseButtonLinks;
 
@@ -12,13 +13,13 @@ interface Props {
 }
 
 export const ManagementPrimaryButton: FC<Props> = ({ text, id, name, value }) => {
-    return <BaseButton text={text} id={id} name={name} type={`submit`} value={value} color={BaseButtonColor.Blue} />;
+    return <BaseButton text={text} id={id} name={name} type={`submit`} value={value} color={ProjectColor.Blue} />;
 };
 
 export const ManagementBasicButton: FC<Props> = ({ text, id, name, value }) => {
-    return <BaseButton text={text} id={id} name={name} type={`submit`} value={value} color={BaseButtonColor.Gray} />;
+    return <BaseButton text={text} id={id} name={name} type={`submit`} value={value} color={ProjectColor.Gray} />;
 };
 
 export const ManagementDangerButton: FC<Props> = ({ text, id, name, value }) => {
-    return <BaseButton text={text} id={id} name={name} type={`submit`} value={value} color={BaseButtonColor.Red} />;
+    return <BaseButton text={text} id={id} name={name} type={`submit`} value={value} color={ProjectColor.Red} />;
 };

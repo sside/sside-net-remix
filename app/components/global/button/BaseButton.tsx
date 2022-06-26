@@ -1,22 +1,11 @@
 import { LinksFunction } from "@remix-run/node";
-import { ButtonHTMLAttributes, FC } from "react";
-import { cssLinks } from "../../../utilities/styling/cssDescription";
-import styles from "./BaseButton.css";
+import { ButtonHTMLAttributes, FC, MouseEventHandler } from "react";
+import { ProjectColor } from "../../../constants/ProjectColor";
+import { CssClassNamePrefix } from "../../../constants/style/CssClassNamePrefix";
+import { cssLinks } from "../../../utilities/styling/cssLinkDescriptor";
+import buttonStyles from "../../../styles/utilites/button.css";
 
-export const BaseButtonColor = {
-    Yellow: "yellow",
-    Orange: "orange",
-    Red: "red",
-    Magenta: "magenta",
-    Violet: "violet",
-    Blue: "blue",
-    Cyan: "cyan",
-    Green: "green",
-    Gray: "gray",
-};
-export type ButtonColor = typeof BaseButtonColor[keyof typeof BaseButtonColor];
-
-export const links: LinksFunction = () => cssLinks(styles);
+export const links: LinksFunction = () => cssLinks(buttonStyles);
 
 interface Props {
     text: string;
@@ -25,21 +14,22 @@ interface Props {
     value?: ButtonHTMLAttributes<HTMLButtonElement>["value"];
     id?: ButtonHTMLAttributes<HTMLButtonElement>["id"];
     name?: ButtonHTMLAttributes<HTMLButtonElement>["name"];
-    color?: ButtonColor;
+    color?: ProjectColor;
+    onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
-export const BaseButton: FC<Props> = ({ type, text, id, value, name, action, color }) => {
-    const BUTTON_COLOR_CLASSNAME_PREFIX = `baseButton__`;
-    const buttonColorCssClassName = BUTTON_COLOR_CLASSNAME_PREFIX + (color || BaseButtonColor.Gray);
+export const BaseButton: FC<Props> = ({ type, text, id, value, name, action, color, onClick }) => {
+    const buttonClassName = color ? CssClassNamePrefix.Button + color : ``;
 
     return (
         <button
             id={id}
             name={name}
-            className={`baseButton ${buttonColorCssClassName}`}
+            className={`button ${buttonClassName}`}
             formAction={action}
             type={type}
             value={value}
+            onClick={onClick}
         >
             {text}
         </button>

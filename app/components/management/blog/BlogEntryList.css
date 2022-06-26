@@ -1,0 +1,30 @@
+.blogEntryList {
+}
+
+.blogEntryList__header {
+}
+
+.blogEntryList__headerRow {
+}
+
+.blogEntryList__headerItem {
+    border: 1px solid var(--colorBody);
+    text-align: center;
+    padding: 0.5rem;
+}
+
+.blogEntryList__body {
+}
+
+.blogEntryList__bodyRow {
+}
+
+.blogEntryList__bodyItem {
+    border: 1px solid var(--colorBody);
+    padding: 0.5rem;
+    vertical-align: middle;
+}
+
+.blogEntryList__bodyItemLink {
+    text-decoration: underline;
+}

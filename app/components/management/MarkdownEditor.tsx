@@ -2,7 +2,7 @@ import { LinksFunction } from "@remix-run/node";
 import easyMdeStyles from "easymde/dist/easymde.min.css";
 import { FC, useEffect } from "react";
 import { isClientSide } from "../../utilities/isClientSide";
-import { cssLinks } from "../../utilities/styling/cssDescription";
+import { cssLinks } from "../../utilities/styling/cssLinkDescriptor";
 import markdownEditorStyle from "./MarkdownEditor.css";
 
 export const links: LinksFunction = () => [...cssLinks(easyMdeStyles, markdownEditorStyle)];
@@ -15,9 +15,9 @@ interface Props {
 
 export const MarkdownEditor: FC<Props> = ({ defaultValue, id, name }) => {
     useEffect(() => {
-        if (isClientSide()) {
+        if (isClientSide() && !document.querySelector(".EasyMDEContainer")) {
             const EasyMDE = require("easymde");
-            new EasyMDE({
+            const easyMde = new EasyMDE({
                 element: document.getElementById(id),
                 status: false,
                 lineNumbers: true,
@@ -39,6 +39,10 @@ export const MarkdownEditor: FC<Props> = ({ defaultValue, id, name }) => {
                     "guide",
                 ],
             });
+            return () => {
+                console.debug("clean up");
+                easyMde.cleanup();
+            };
         }
     });
 

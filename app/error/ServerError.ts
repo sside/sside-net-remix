@@ -1,7 +1,7 @@
 import { Response } from "@remix-run/node";
 import { StatusCodes } from "http-status-codes";
 
-class ServerError extends Error {
+export class ServerError extends Error {
     constructor(public readonly code: StatusCodes, message?: string) {
         super(`${code}: ` + (message || ""));
     }
@@ -28,6 +28,24 @@ export class ForbiddenServerError extends ServerError {
 export class UnprocessableServerError extends ServerError {
     constructor(message?: string) {
         super(StatusCodes.UNPROCESSABLE_ENTITY, message);
+    }
+}
+
+export class ConflictServerError extends ServerError {
+    constructor(message?: string) {
+        super(StatusCodes.CONFLICT, message);
+    }
+}
+
+export class BadRequestServerError extends ServerError {
+    constructor(message?: string) {
+        super(StatusCodes.BAD_REQUEST, message);
+    }
+}
+
+export class MethodNotAllowedServerError extends ServerError {
+    constructor(message?: string) {
+        super(StatusCodes.METHOD_NOT_ALLOWED, message);
     }
 }
 
