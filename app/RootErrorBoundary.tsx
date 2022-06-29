@@ -26,7 +26,7 @@ export const RootErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
                         <pre className={`rootErrorBoundary__stackTrace`}>{stack}</pre>
                     )}
                 </main>
-                <Link to={PathUrl.public.blogRoot} className={`rootErrorBoundary__linkToRoot`}>
+                <Link to={PathUrl.blog.root} className={`rootErrorBoundary__linkToRoot`}>
                     Go to root
                 </Link>
             </body>

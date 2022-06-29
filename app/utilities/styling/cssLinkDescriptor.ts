@@ -5,8 +5,4 @@ export const cssLinkDescriptor = (style: string): LinkDescriptor => ({
     href: style,
 });
 
-export const cssLinks = (...styles: string[]): LinkDescriptor[] =>
-    styles.map((style) => ({
-        rel: "stylesheet",
-        href: style,
-    }));
+export const cssLinks = (...styles: string[]): LinkDescriptor[] => styles.map(cssLinkDescriptor);

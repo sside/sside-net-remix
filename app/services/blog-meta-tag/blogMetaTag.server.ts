@@ -47,6 +47,16 @@ export async function findAllBlogMetaTags() {
     return await prisma.blogMetaTag.findMany();
 }
 
+export async function findAllBlogMetaTagCounts() {
+    logger.log(`Find all blog meta tag counts.`);
+
+    return await prisma.blogMetaTag.findMany({
+        include: {
+            _count: true,
+        },
+    });
+}
+
 export async function createBlogMetaTag(name: string): Promise<BlogMetaTag> {
     logger.log(`Create new meta tag`, {
         name,

@@ -1,6 +1,14 @@
 export const PathUrl = {
-    public: {
-        blogRoot: `/`,
+    blog: {
+        root: `/blog/`,
+        entryBySlug: (slug: string) => `/blog/entry/${slug}/`,
+        archive: {
+            byYear: (year: number) => `/blog/archive/${year}/`,
+            byYearMonth: (year: number, month: number) => `/blog/archive/${year}/${String(month).padStart(2, "0")}/`,
+        },
+        metaTag: {
+            byMetaTag: (metaTag: string) => `/blog/metaTag/${metaTag}/`,
+        },
     },
     management: {
         root: `/management`,

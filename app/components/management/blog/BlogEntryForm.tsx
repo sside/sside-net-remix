@@ -5,7 +5,7 @@ import { PathUrl } from "../../../constants/paths/PathUrl";
 import { ProjectColor } from "../../../constants/ProjectColor";
 import { ForbiddenServerError } from "../../../error/ServerError";
 import { checkLoggedIn } from "../../../services/authentication/checkLoggedIn.server";
-import { publishBlogEntry, upsertDraftBlogEntry } from "../../../services/blog/blogEntry.server";
+import { publishBlogEntry, upsertBlogEntryDraft } from "../../../services/blog/blogEntry.server";
 import {
     BlogPostEditorInputName,
     BlogPostEditorSubmitType,
@@ -47,7 +47,7 @@ export const blogEntryFormAction: ActionFunction = async ({ request }) => {
                 .id;
             break;
         case Draft:
-            redirectId = (await upsertDraftBlogEntry(title, slug, body, parsedTags, blogEntryId || undefined)).id;
+            redirectId = (await upsertBlogEntryDraft(title, slug, body, parsedTags, blogEntryId || undefined)).id;
             break;
         default:
             throw new ForbiddenServerError(`Blog post submit type is not valid`);

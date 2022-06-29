@@ -2,8 +2,8 @@ import { ActionFunction } from "@remix-run/node";
 import { isPutRequest } from "../../../../constants/HttpMethodName";
 import { MethodNotAllowedServerError, toErrorResponse, UnprocessableServerError } from "../../../../error/ServerError";
 import { checkLoggedIn } from "../../../../services/authentication/checkLoggedIn.server";
-import { updateBlogMetaTag } from "../../../../services/blog-meta-tag/blogMetaTags.server";
-import { MetaTagRestResponse } from "../../../../types/api/metaTag/response/MetaTagRestResponse";
+import { updateBlogMetaTag } from "../../../../services/blog-meta-tag/blogMetaTag.server";
+import { MetaTagRestResponse } from "../../../../services/blog-meta-tag/types/MetaTagRestResponse";
 
 export class UpdateMetaTagRestRequest {
     constructor(readonly name: string) {}

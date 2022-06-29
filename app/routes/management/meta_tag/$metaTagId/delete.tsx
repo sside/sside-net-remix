@@ -2,7 +2,7 @@ import { ActionFunction } from "@remix-run/node";
 import { isDeleteRequest } from "../../../../constants/HttpMethodName";
 import { MethodNotAllowedServerError, toErrorResponse, UnprocessableServerError } from "../../../../error/ServerError";
 import { checkLoggedIn } from "../../../../services/authentication/checkLoggedIn.server";
-import { deleteOneBlogMetaTag } from "../../../../services/blog-meta-tag/blogMetaTags.server";
+import { deleteOneBlogMetaTag } from "../../../../services/blog-meta-tag/blogMetaTag.server";
 
 export const action: ActionFunction = async ({ request, params }) => {
     await checkLoggedIn(request);

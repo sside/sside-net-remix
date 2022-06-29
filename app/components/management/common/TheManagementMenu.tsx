@@ -11,7 +11,7 @@ export const links: LinksFunction = () => [cssLinkDescriptor(styles), ...linkBut
 export const TheManagementMenu: FC = () => {
     return (
         <header className={`theManagementMenu`}>
-            <Link to={PathUrl.public.blogRoot}>
+            <Link to={PathUrl.blog.root}>
                 <h1 className={`theManagementMenu__title`}>sside.net</h1>
             </Link>
             <Link className={`theManagementMenu__item`} to={PathUrl.management.root}>

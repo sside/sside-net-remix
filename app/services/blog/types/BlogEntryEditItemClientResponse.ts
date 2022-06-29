@@ -1,5 +1,5 @@
-import { toIso8601 } from "../../../libraries/datetime";
-import { JoinedBlogEntry } from "./JoinedBlogEntry";
+import { toIso8601DateTime } from "../../../libraries/datetime";
+import { PrismaJoinedBlogEntry } from "./prisma/PrismaJoinedBlogEntry";
 
 export class BlogEntryEditItemClientResponse {
     constructor(
@@ -17,7 +17,7 @@ export class BlogEntryEditItemClientResponse {
         readonly publishAt: string | null,
     ) {}
 
-    static fromEntity(entity: JoinedBlogEntry): BlogEntryEditItemClientResponse {
+    static fromEntity(entity: PrismaJoinedBlogEntry): BlogEntryEditItemClientResponse {
         const { blogEntryBodies, blogEntryBodyDraft, id, slug, createdAt, blogMetaTags, publishAt } = entity;
         const latestEntryBody =
             blogEntryBodyDraft || blogEntryBodies.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())[0];
@@ -30,9 +30,9 @@ export class BlogEntryEditItemClientResponse {
             body,
             blogMetaTags.map(({ id, name }) => ({ id, name })),
             isDraft,
-            toIso8601(createdAt),
-            toIso8601(updatedAt),
-            publishAt ? toIso8601(publishAt) : null,
+            toIso8601DateTime(createdAt),
+            toIso8601DateTime(updatedAt),
+            publishAt ? toIso8601DateTime(publishAt) : null,
         );
     }
 }

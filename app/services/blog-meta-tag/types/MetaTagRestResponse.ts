@@ -1,5 +1,5 @@
 import { BlogMetaTag } from "@prisma/client";
-import { toIso8601 } from "../../../../libraries/datetime";
+import { toIso8601DateTime } from "../../../libraries/datetime";
 
 export class MetaTagRestResponse {
     constructor(readonly id: string, readonly name: string, readonly createdAt: string, readonly updatedAt: string) {}
@@ -9,8 +9,8 @@ export class MetaTagRestResponse {
         return {
             id,
             name,
-            createdAt: toIso8601(createdAt),
-            updatedAt: toIso8601(updatedAt),
+            createdAt: toIso8601DateTime(createdAt),
+            updatedAt: toIso8601DateTime(updatedAt),
         };
     }
 }

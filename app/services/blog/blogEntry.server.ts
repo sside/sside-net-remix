@@ -4,12 +4,13 @@ import { Logger } from "../../libraries/logger/logger";
 import { validateBlogEntryMetaTags } from "../../libraries/vallidator/validateBlogEntryMetaTag";
 import { validateBlogEntrySlug } from "../../libraries/vallidator/validateBlogEntrySlug";
 import { validateBlogEntryTitle } from "../../libraries/vallidator/validateBlogEntryTitle";
-import { upsertBlogMetaTags } from "../blog-meta-tag/blogMetaTags.server";
-import { JoinedBlogEntry } from "./types/JoinedBlogEntry";
+import { upsertBlogMetaTags } from "../blog-meta-tag/blogMetaTag.server";
+import { PrismaJoinedBlogEntry } from "./types/prisma/PrismaJoinedBlogEntry";
+import { PrismaPublishedBlogEntry } from "./types/prisma/PrismaPublishedBlogEntry";
 
 const logger = new Logger("blogEntry");
 
-export async function findOneBlogEntryById(id: string): Promise<JoinedBlogEntry> {
+export async function findOneBlogEntryById(id: string): Promise<PrismaJoinedBlogEntry> {
     logger.log(`Find a blog entry`, {
         id,
     });
@@ -36,7 +37,29 @@ export async function findOneBlogEntryById(id: string): Promise<JoinedBlogEntry>
     return blogEntry;
 }
 
-export async function findAllBlogEntries(): Promise<JoinedBlogEntry[]> {
+export async function findManyBlogEntryRecentPublished(count: number): Promise<PrismaPublishedBlogEntry[]> {
+    logger.log(`Find recent published blog entries.`, {
+        count,
+    });
+
+    return await prisma.blogEntry.findMany({
+        where: {
+            publishAt: {
+                not: null,
+            },
+        },
+        include: {
+            blogEntryBodies: true,
+            blogMetaTags: true,
+        },
+        orderBy: {
+            publishAt: "desc",
+        },
+        take: count,
+    });
+}
+
+export async function findAllBlogEntries(): Promise<PrismaJoinedBlogEntry[]> {
     logger.log(`Find all exist blog entries.`);
 
     return await prisma.blogEntry.findMany({
@@ -51,6 +74,23 @@ export async function findAllBlogEntries(): Promise<JoinedBlogEntry[]> {
     });
 }
 
+export async function findAllBlogEntryOnlyPublishedAt(): Promise<Date[]> {
+    logger.log(`Find all published blog dates.`);
+
+    return (
+        await prisma.blogEntry.findMany({
+            where: {
+                publishAt: {
+                    not: null,
+                },
+            },
+            select: {
+                publishAt: true,
+            },
+        })
+    ).map(({ publishAt }) => publishAt!);
+}
+
 export async function publishBlogEntry(
     title: string,
     slug: string,
@@ -58,7 +98,7 @@ export async function publishBlogEntry(
     tags: string[],
     id?: string,
     publishAt?: Date,
-): Promise<JoinedBlogEntry> {
+): Promise<PrismaJoinedBlogEntry> {
     if (id) {
         return publishExistBlogEntry(id, title, slug, body, tags, publishAt);
     } else {
@@ -66,13 +106,13 @@ export async function publishBlogEntry(
     }
 }
 
-export async function upsertDraftBlogEntry(
+export async function upsertBlogEntryDraft(
     title: string,
     slug: string,
     body: string,
     tags: string[],
     id?: string,
-): Promise<JoinedBlogEntry> {
+): Promise<PrismaJoinedBlogEntry> {
     logger.log(`Create or update draft blog entry.`, {
         id,
         title,
@@ -148,7 +188,7 @@ async function publishNewBlogEntry(
     body: string,
     tags: string[],
     publishAt?: Date,
-): Promise<JoinedBlogEntry> {
+): Promise<PrismaJoinedBlogEntry> {
     logger.log(`Publish new blog entry.`, {
         title,
         slug,
@@ -183,7 +223,7 @@ async function publishExistBlogEntry(
     body: string,
     tags: string[],
     publishAt?: Date,
-): Promise<JoinedBlogEntry> {
+): Promise<PrismaJoinedBlogEntry> {
     logger.log(`Publish exist blog entry.`, {
         id,
         title,
