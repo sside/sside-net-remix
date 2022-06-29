@@ -1,5 +1,5 @@
 .idea
-*.css.map
+app/**/*.css.map
 
 node_modules
 
