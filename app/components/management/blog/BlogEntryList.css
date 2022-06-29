@@ -1,22 +1,7 @@
-.blogEntryList {
-}
-
-.blogEntryList__header {
-}
-
-.blogEntryList__headerRow {
-}
-
 .blogEntryList__headerItem {
     border: 1px solid var(--colorBody);
     text-align: center;
     padding: 0.5rem;
-}
-
-.blogEntryList__body {
-}
-
-.blogEntryList__bodyRow {
 }
 
 .blogEntryList__bodyItem {
@@ -28,3 +13,7 @@
 .blogEntryList__bodyItemLink {
     text-decoration: underline;
 }
+
+/*# sourceMappingURL=BlogEntryList.css.map */
+
+/*# sourceMappingURL=BlogEntryList.css.map */
