@@ -1,4 +1,4 @@
 .theMenu {
-    grid-area: menu;
-    display: grid;
+  grid-area: menu;
+  display: grid;
 }

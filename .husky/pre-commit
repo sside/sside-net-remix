@@ -2,5 +2,5 @@
 . "$(dirname -- "$0")/_/husky.sh"
 . "$(dirname -- "$0")/common.sh"
 
-npx pretty-quick --staged
+npx pretty-quick --staged -ignore-path .prettierignore
 npx prisma format

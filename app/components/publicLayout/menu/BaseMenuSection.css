@@ -1,9 +1,9 @@
 .baseMenuSection {
-    width: 100%;
+  width: 100%;
 }
 
 .baseMenuSection__header {
-    font-size: var(--fontSizeLarge);
-    font-weight: var(--fontWeightThin);
-    border-bottom: 1px solid var(--colorBody);
+  font-size: var(--fontSizeLarge);
+  font-weight: var(--fontWeightThin);
+  border-bottom: 1px solid var(--colorBody);
 }

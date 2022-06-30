@@ -1,10 +1,10 @@
 .theHeader {
-    background-color: var(--base02);
-    grid-area: header;
+  background-color: var(--base02);
+  grid-area: header;
 }
 
 .theHeader__title {
-    color: var(--base3);
-    font-size: var(--fontSizeLarge);
-    font-weight: var(--fontWeightThin);
+  color: var(--base3);
+  font-size: var(--fontSizeLarge);
+  font-weight: var(--fontWeightThin);
 }

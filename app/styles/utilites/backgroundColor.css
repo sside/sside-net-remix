@@ -1,35 +1,35 @@
 .background--yellow {
-    background-color: var(--yellow);
+  background-color: var(--yellow);
 }
 
 .background--orange {
-    background-color: var(--orange);
+  background-color: var(--orange);
 }
 
 .background--red {
-    background-color: var(--red);
+  background-color: var(--red);
 }
 
 .background--magenta {
-    background-color: var(--magenta);
+  background-color: var(--magenta);
 }
 
 .background--violet {
-    background-color: var(--violet);
+  background-color: var(--violet);
 }
 
 .background--blue {
-    background-color: var(--blue);
+  background-color: var(--blue);
 }
 
 .background--cyan {
-    background-color: var(--cyan);
+  background-color: var(--cyan);
 }
 
 .background--green {
-    background-color: var(--green);
+  background-color: var(--green);
 }
 
 .background--gray {
-    background-color: var(--base01);
+  background-color: var(--base01);
 }

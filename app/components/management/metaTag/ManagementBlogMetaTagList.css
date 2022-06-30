@@ -1,9 +1,9 @@
 .managementBlogMetaTagList__headerItem {
-    border: solid 1px var(--colorBody);
-    padding: 0.5rem;
+  border: solid 1px var(--colorBody);
+  padding: 0.5rem;
 }
 
 .managementBlogMetaTagList__bodyItem {
-    border: solid 1px var(--colorBody);
-    padding: 0.5rem;
+  border: solid 1px var(--colorBody);
+  padding: 0.5rem;
 }

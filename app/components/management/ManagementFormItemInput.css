@@ -1,16 +1,16 @@
 .managementFormItemInput {
-    display: grid;
-    grid-template-columns: 6rem 1fr;
-    grid-row-gap: var(--spacingFormItem);
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  grid-row-gap: var(--spacingFormItem);
 }
 
 .managementFormItemInput__label {
-    font-weight: var(--fontWeightFormLabel);
-    line-height: 1.5rem;
+  font-weight: var(--fontWeightFormLabel);
+  line-height: 1.5rem;
 }
 
 .managementFormItemInput__input {
-    border: solid 1px var(--colorBody);
-    padding: 0.2rem;
-    border-radius: 5px;
+  border: solid 1px var(--colorBody);
+  padding: 0.2rem;
+  border-radius: 5px;
 }

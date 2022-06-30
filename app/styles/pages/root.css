@@ -1,6 +1,6 @@
 body {
-    background-color: var(--colorBackground);
-    color: var(--colorBody);
-    font-family: var(--fontFamilyContent);
-    font-size: var(--fontSizeBase);
+  background-color: var(--colorBackground);
+  color: var(--colorBody);
+  font-family: var(--fontFamilyContent);
+  font-size: var(--fontSizeBase);
 }

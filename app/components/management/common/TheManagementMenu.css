@@ -1,17 +1,17 @@
 .theManagementMenu {
-    width: 100vw;
-    padding: 1rem 2rem;
-    display: flex;
-    align-items: baseline;
-    font-weight: var(--fontWeightThin);
+  width: 100vw;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: baseline;
+  font-weight: var(--fontWeightThin);
 }
 
 .theManagementMenu__title {
-    display: block;
-    padding-right: 2rem;
-    font-size: var(--fontSizeExtraLarge);
+  display: block;
+  padding-right: 2rem;
+  font-size: var(--fontSizeExtraLarge);
 }
 
 .theManagementMenu__item:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
