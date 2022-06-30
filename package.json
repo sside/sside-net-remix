@@ -8,7 +8,7 @@
         "build": "remix build",
         "start": "remix-serve build",
         "dev": "cross-env PORT=33000 run-s dev:prisma:migrate dev:remix",
-        "dev:remix": "cross-env PORT=33000 concurrently \"remix dev\" \"sass --watch app/:app\"",
+        "dev:remix": "cross-env PORT=33000 concurrently \"remix dev\" \"sass --watch --no-source-map app/:app\"",
         "dev:prisma:migrate": "prisma migrate dev",
         "lint": "eslint app",
         "prepare": "husky install"
