@@ -1,0 +1,37 @@
+.background {
+    &--yellow {
+        background-color: var(--yellow);
+    }
+
+    &--orange {
+        background-color: var(--orange);
+    }
+
+    &--red {
+        background-color: var(--red);
+    }
+
+    &--magenta {
+        background-color: var(--magenta);
+    }
+
+    &--violet {
+        background-color: var(--violet);
+    }
+
+    &--blue {
+        background-color: var(--blue);
+    }
+
+    &--cyan {
+        background-color: var(--cyan);
+    }
+
+    &--green {
+        background-color: var(--green);
+    }
+
+    &--gray {
+        background-color: var(--base01);
+    }
+}

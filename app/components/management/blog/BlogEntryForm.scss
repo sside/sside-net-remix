@@ -1,0 +1,15 @@
+.blogEntryForm {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-gap: 1rem;
+
+    &__header {
+        font-size: var(--fontSizeExtraLarge);
+        font-weight: var(--fontWeightThin);
+    }
+
+    &__buttons {
+        display: flex;
+        gap: 1rem;
+    }
+}

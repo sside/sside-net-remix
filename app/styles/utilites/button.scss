@@ -1,0 +1,56 @@
+.button {
+    padding: 0.5rem;
+    border: 1px solid var(--base2);
+    border-radius: 5px;
+    width: fit-content;
+    opacity: 0.8;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    &--yellow {
+        color: var(--base2);
+        background-color: var(--yellow);
+    }
+
+    &--orange {
+        color: var(--base2);
+        background-color: var(--orange);
+    }
+
+    &--red {
+        color: var(--base2);
+        background-color: var(--red);
+    }
+
+    &--magenta {
+        color: var(--base2);
+        background-color: var(--magenta);
+    }
+
+    &--violet {
+        color: var(--base2);
+        background-color: var(--violet);
+    }
+
+    &--blue {
+        color: var(--base2);
+        background-color: var(--blue);
+    }
+
+    &--cyan {
+        color: var(--base2);
+        background-color: var(--cyan);
+    }
+
+    &--green {
+        color: var(--base2);
+        background-color: var(--green);
+    }
+
+    &--gray {
+        color: var(--base2);
+        background-color: var(--base01);
+    }
+}
