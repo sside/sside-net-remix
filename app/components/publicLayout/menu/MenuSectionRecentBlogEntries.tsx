@@ -15,11 +15,11 @@ export class RecentBlogEntryItem {
         readonly updatedAt: Date,
     ) {}
 
-    static fromEntity({ id, slug, publishAt, blogEntryBodies }: PrismaPublishedBlogEntry): RecentBlogEntryItem {
-        const { updatedAt, title } = blogEntryBodies.reduce(
+    static fromEntity({ id, slug, publishAt, blogEntryBodyHistories }: PrismaPublishedBlogEntry): RecentBlogEntryItem {
+        const { updatedAt, title } = blogEntryBodyHistories.reduce(
             (previousValue, currentValue) =>
                 previousValue.updatedAt.getTime() > currentValue.updatedAt.getTime() ? previousValue : currentValue,
-            blogEntryBodies[0],
+            blogEntryBodyHistories[0],
         );
         return {
             blogEntryId: id,

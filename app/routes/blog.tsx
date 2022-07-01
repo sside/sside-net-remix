@@ -39,6 +39,7 @@ export const loader: LoaderFunction = async (): Promise<
         name,
         count: _count.blogEntries,
     }));
+
     return [recentEntriesResponse, archivesPublishYearMonths, metaTags];
 };
 

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { appConfig } from "../../../../appConfig";
 import { DangerouslySetInnerHtmlValue } from "../../../types/DangerouslySetInnerHtmlValue";
-import { parseMarkdown } from "../../../utilities/markdown/parseMarkdown";
+import { parseMarkdown } from "../../../libraries/markdown/parseMarkdown";
 import { BaseMenuSection } from "./BaseMenuSection";
 
 export { links } from "./BaseMenuSection";

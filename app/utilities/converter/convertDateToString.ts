@@ -8,6 +8,10 @@ export const convertDateToString = <T>(target: T): DateToString<T> => {
             // For key access
             // @ts-ignore
             converted[key] = toIso8601Date(value);
+        } else if (typeof value === "object") {
+            // Object type is not proper. This will cause bug. But this project don't use RegExp or any built-in classes in response.
+            // @ts-ignore
+            converted[key] = convertDateToString(value);
         } else {
             // @ts-ignore
             converted[key] = value;

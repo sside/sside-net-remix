@@ -6,3 +6,7 @@ body.app {
         "footer main";
     grid-template-columns: 15rem 1fr;
 }
+
+.blog {
+    grid-area: main;
+}

@@ -24,7 +24,7 @@ export async function findOneBlogEntryById(id: string): Promise<PrismaJoinedBlog
             id: id,
         },
         include: {
-            blogEntryBodies: true,
+            blogEntryBodyHistories: true,
             blogEntryBodyDraft: true,
             blogMetaTags: true,
         },
@@ -49,7 +49,7 @@ export async function findManyBlogEntryRecentPublished(count: number): Promise<P
             },
         },
         include: {
-            blogEntryBodies: true,
+            blogEntryBodyHistories: true,
             blogMetaTags: true,
         },
         orderBy: {
@@ -64,7 +64,7 @@ export async function findAllBlogEntries(): Promise<PrismaJoinedBlogEntry[]> {
 
     return await prisma.blogEntry.findMany({
         include: {
-            blogEntryBodies: true,
+            blogEntryBodyHistories: true,
             blogMetaTags: true,
             blogEntryBodyDraft: true,
         },
@@ -202,7 +202,7 @@ async function publishNewBlogEntry(
         data: {
             slug,
             publishAt: publishAt || new Date(),
-            blogEntryBodies: {
+            blogEntryBodyHistories: {
                 create: {
                     title,
                     body,
@@ -260,7 +260,7 @@ async function publishExistBlogEntry(
         },
         data: {
             publishAt: publishAt || existBlogEntry.publishAt || new Date(),
-            blogEntryBodies: {
+            blogEntryBodyHistories: {
                 create: {
                     body,
                     title,

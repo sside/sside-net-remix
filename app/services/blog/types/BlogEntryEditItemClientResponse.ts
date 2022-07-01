@@ -18,9 +18,10 @@ export class BlogEntryEditItemClientResponse {
     ) {}
 
     static fromEntity(entity: PrismaJoinedBlogEntry): BlogEntryEditItemClientResponse {
-        const { blogEntryBodies, blogEntryBodyDraft, id, slug, createdAt, blogMetaTags, publishAt } = entity;
+        const { blogEntryBodyHistories, blogEntryBodyDraft, id, slug, createdAt, blogMetaTags, publishAt } = entity;
         const latestEntryBody =
-            blogEntryBodyDraft || blogEntryBodies.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())[0];
+            blogEntryBodyDraft ||
+            blogEntryBodyHistories.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())[0];
         const isDraft: boolean = !!blogEntryBodyDraft;
         const { title, body, updatedAt } = latestEntryBody;
         return new BlogEntryEditItemClientResponse(

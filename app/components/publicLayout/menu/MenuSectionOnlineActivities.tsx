@@ -1,7 +1,7 @@
 import { FC, Fragment } from "react";
 import { appConfig, OnlineActivity } from "../../../../appConfig";
 import { DangerouslySetInnerHtmlValue } from "../../../types/DangerouslySetInnerHtmlValue";
-import { parseMarkdown } from "../../../utilities/markdown/parseMarkdown";
+import { parseMarkdown } from "../../../libraries/markdown/parseMarkdown";
 import { BaseMenuSection } from "./BaseMenuSection";
 
 interface MenuSectionOnlineActivityItemProps {

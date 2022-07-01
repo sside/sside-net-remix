@@ -15,9 +15,9 @@ model BlogEntry {
   slug      String    @unique
   publishAt DateTime?
 
-  blogEntryBodies    BlogEntryBodyHistory[]
-  blogEntryBodyDraft BlogEntryBodyDraft?
-  blogMetaTags       BlogMetaTag[]
+  blogEntryBodyHistories BlogEntryBodyHistory[]
+  blogEntryBodyDraft     BlogEntryBodyDraft?
+  blogMetaTags           BlogMetaTag[]
 }
 
 model BlogEntryBodyHistory {

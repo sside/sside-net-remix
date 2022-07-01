@@ -27,6 +27,8 @@ const parseJstFromDate = (date: Date): DateTime => setJst(DateTime.fromJSDate(da
 
 export const parseIso8601ToJst = (iso8601: string): Date => setJst(DateTime.fromISO(iso8601)).toJSDate();
 
+export const parseIso8601ToEpochMillisecond = (iso8601: string): number => parseIso8601ToJst(iso8601).getTime();
+
 export const toIso8601DateTime = (date: Date): string => parseJstFromDate(date).toISO();
 
 export const toIso8601Date = (date: Date): string => parseJstFromDate(date).toISODate();

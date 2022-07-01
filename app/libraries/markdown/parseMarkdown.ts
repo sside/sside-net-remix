@@ -1,4 +1,4 @@
-import { isClientSide } from "../isClientSide";
+import { isClientSide } from "../../utilities/isClientSide";
 
 const markdownParser = (isClientSide() ? require("safe-marked/lib/browser") : require("safe-marked")).createMarkdown();
 
