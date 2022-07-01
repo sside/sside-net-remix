@@ -2,6 +2,7 @@ import { BlogMetaTag } from "@prisma/client";
 import { ConflictServerError, InternalServerError, NotFoundServerError } from "../../error/ServerError";
 import { prisma } from "../../libraries/database/database";
 import { Logger } from "../../libraries/logger/logger";
+import { DateParsedOrOriginal } from "../../types/DateParsedResponseBody";
 
 const logger = new Logger(`blogMetaTag`);
 
@@ -144,4 +145,8 @@ export async function deleteOneBlogMetaTag(id: string): Promise<void> {
     });
 
     return;
+}
+
+export function getAllMetaTagNamesFromMetaTags(blogMetaTags: DateParsedOrOriginal<BlogMetaTag>[]): string[] {
+    return blogMetaTags.map(({ name }) => name);
 }

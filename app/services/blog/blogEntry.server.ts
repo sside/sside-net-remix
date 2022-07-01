@@ -1,3 +1,4 @@
+import { BlogEntry, Prisma } from "@prisma/client";
 import { InternalServerError, NotFoundServerError, UnprocessableServerError } from "../../error/ServerError";
 import { prisma } from "../../libraries/database/database";
 import { Logger } from "../../libraries/logger/logger";
@@ -9,6 +10,12 @@ import { PrismaJoinedBlogEntry } from "./types/prisma/PrismaJoinedBlogEntry";
 import { PrismaPublishedBlogEntry } from "./types/prisma/PrismaPublishedBlogEntry";
 
 const logger = new Logger("blogEntry");
+
+const publishedBlogEntryWhereQuery: Prisma.BlogEntryWhereInput = {
+    publishAt: {
+        lte: new Date(),
+    },
+};
 
 export async function findOneBlogEntryById(id: string): Promise<PrismaJoinedBlogEntry> {
     logger.log(`Find a blog entry`, {
@@ -37,17 +44,36 @@ export async function findOneBlogEntryById(id: string): Promise<PrismaJoinedBlog
     return blogEntry;
 }
 
+export async function findOnePublishedBlogEntryBySlug(slug: string): Promise<PrismaJoinedBlogEntry> {
+    logger.log(`Find a blog entry by slug`, {
+        slug,
+    });
+
+    const blogEntry = await prisma.blogEntry.findUnique({
+        where: {
+            slug,
+        },
+        include: {
+            blogEntryBodyHistories: true,
+            blogEntryBodyDraft: true,
+            blogMetaTags: true,
+        },
+    });
+
+    if (!blogEntry || !isPublished(blogEntry)) {
+        throw new NotFoundServerError(`Blog entry was not found. Slug: ${slug}`);
+    }
+
+    return blogEntry;
+}
+
 export async function findManyBlogEntryRecentPublished(count: number): Promise<PrismaPublishedBlogEntry[]> {
     logger.log(`Find recent published blog entries.`, {
         count,
     });
 
     return await prisma.blogEntry.findMany({
-        where: {
-            publishAt: {
-                not: null,
-            },
-        },
+        where: publishedBlogEntryWhereQuery,
         include: {
             blogEntryBodyHistories: true,
             blogMetaTags: true,
@@ -74,16 +100,12 @@ export async function findAllBlogEntries(): Promise<PrismaJoinedBlogEntry[]> {
     });
 }
 
-export async function findAllBlogEntryOnlyPublishedAt(): Promise<Date[]> {
+export async function findAllBlogEntryOnlyPublishAt(): Promise<Date[]> {
     logger.log(`Find all published blog dates.`);
 
     return (
         await prisma.blogEntry.findMany({
-            where: {
-                publishAt: {
-                    not: null,
-                },
-            },
+            where: publishedBlogEntryWhereQuery,
             select: {
                 publishAt: true,
             },
@@ -273,4 +295,8 @@ async function publishExistBlogEntry(
     });
 
     return await findOneBlogEntryById(updated.id);
+}
+
+function isPublished({ publishAt }: BlogEntry): boolean {
+    return !!publishAt && publishAt.getTime() < new Date().getTime();
 }

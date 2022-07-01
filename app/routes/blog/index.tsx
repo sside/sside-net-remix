@@ -6,7 +6,7 @@ import { BlogEntry, BlogEntryItem } from "../../components/blog/blogEntry/BlogEn
 import { parseIso8601ToJst } from "../../libraries/datetime";
 import { findManyBlogEntryRecentPublished } from "../../services/blog/blogEntry.server";
 import { PrismaPublishedBlogEntry } from "../../services/blog/types/prisma/PrismaPublishedBlogEntry";
-import { DateToString } from "../../types/DateToString";
+import { DateParsedResponseBody } from "../../types/DateParsedResponseBody";
 import { getLatestBlogEntryBody } from "../../utilities/blog/getLatestBlogEntryBody";
 
 export const loader: LoaderFunction = async (): Promise<PrismaPublishedBlogEntry[]> => {
@@ -14,14 +14,15 @@ export const loader: LoaderFunction = async (): Promise<PrismaPublishedBlogEntry
 };
 
 const BlogIndex: FC = () => {
-    const fetchedBlogEntries = useLoaderData<DateToString<PrismaPublishedBlogEntry>[]>();
-    const blogEntries: BlogEntryItem[] = fetchedBlogEntries.map(
-        ({ id, blogEntryBodyHistories, blogMetaTags, publishAt }): BlogEntryItem => {
+    const fetchedBlogEntries = useLoaderData<DateParsedResponseBody<PrismaPublishedBlogEntry>[]>();
+    const blogEntries: (BlogEntryItem & Pick<PrismaPublishedBlogEntry, "id">)[] = fetchedBlogEntries.map(
+        ({ id, slug, blogEntryBodyHistories, blogMetaTags, publishAt }) => {
             const { title, body, updatedAt } = getLatestBlogEntryBody(blogEntryBodyHistories);
             const metaTags: string[] = blogMetaTags.map(({ name }) => name);
             return {
                 id,
                 title,
+                slug,
                 bodyMarkdown: body,
                 metaTags,
                 publishAt: parseIso8601ToJst(publishAt!),
@@ -32,11 +33,11 @@ const BlogIndex: FC = () => {
 
     return (
         <Fragment>
-            {blogEntries.map(({ id, title, bodyMarkdown, publishAt, updatedAt, metaTags }) => (
+            {blogEntries.map(({ id, title, slug, bodyMarkdown, publishAt, updatedAt, metaTags }) => (
                 <BlogEntry
                     key={id}
-                    id={id}
                     title={title}
+                    slug={slug}
                     bodyMarkdown={bodyMarkdown}
                     publishAt={publishAt}
                     updatedAt={updatedAt}

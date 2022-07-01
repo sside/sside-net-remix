@@ -10,9 +10,9 @@ import { RecentBlogEntryItem } from "../components/publicLayout/menu/MenuSection
 import { links as theMenuLinks, TheMenu } from "../components/publicLayout/menu/TheMenu";
 import { DateFormat, formatDate, parseIso8601ToJst } from "../libraries/datetime";
 import { findAllBlogMetaTagCounts } from "../services/blog-meta-tag/blogMetaTag.server";
-import { findAllBlogEntryOnlyPublishedAt, findManyBlogEntryRecentPublished } from "../services/blog/blogEntry.server";
+import { findAllBlogEntryOnlyPublishAt, findManyBlogEntryRecentPublished } from "../services/blog/blogEntry.server";
 import styles from "../styles/pages/blog/blogOutlet.css";
-import { DateToString } from "../types/DateToString";
+import { DateParsedResponseBody } from "../types/DateParsedResponseBody";
 import { convertDateToString } from "../utilities/converter/convertDateToString";
 import { cssLinkDescriptor } from "../utilities/styling/cssLinkDescriptor";
 
@@ -24,14 +24,14 @@ export const links: LinksFunction = () => [
 ];
 
 export const loader: LoaderFunction = async (): Promise<
-    [DateToString<RecentBlogEntryItem>[], string[], BlogMetaTagCount[]]
+    [DateParsedResponseBody<RecentBlogEntryItem>[], string[], BlogMetaTagCount[]]
 > => {
     const recentEntries = await findManyBlogEntryRecentPublished(appConfig.menu.latestEntries.entriesCount);
     const recentEntriesResponse = recentEntries.map(RecentBlogEntryItem.fromEntity).map(convertDateToString);
 
     const archivesPublishYearMonths = Array.from(
         new Set(
-            (await findAllBlogEntryOnlyPublishedAt()).map((publishAt) => formatDate(publishAt, DateFormat.YearMonth)),
+            (await findAllBlogEntryOnlyPublishAt()).map((publishAt) => formatDate(publishAt, DateFormat.YearMonth)),
         ),
     );
 
@@ -45,7 +45,7 @@ export const loader: LoaderFunction = async (): Promise<
 
 const Blog: FC = () => {
     const [recentEntriesResponse, archivePublishedYearMonths, blogMetaTagCounts] =
-        useLoaderData<[DateToString<RecentBlogEntryItem>[], YearMonthFormat[], BlogMetaTagCount[]]>();
+        useLoaderData<[DateParsedResponseBody<RecentBlogEntryItem>[], YearMonthFormat[], BlogMetaTagCount[]]>();
     const recentEntries: RecentBlogEntryItem[] = recentEntriesResponse.map(({ updatedAt, publishAt, ...rest }) => ({
         ...rest,
         updatedAt: parseIso8601ToJst(updatedAt),

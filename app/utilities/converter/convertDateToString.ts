@@ -1,8 +1,8 @@
 import { toIso8601Date } from "../../libraries/datetime";
-import { DateToString } from "../../types/DateToString";
+import { DateParsedResponseBody } from "../../types/DateParsedResponseBody";
 
-export const convertDateToString = <T>(target: T): DateToString<T> => {
-    const converted: Partial<DateToString<T>> = {};
+export const convertDateToString = <T>(target: T): DateParsedResponseBody<T> => {
+    const converted: Partial<DateParsedResponseBody<T>> = {};
     for (const [key, value] of Object.entries(target)) {
         if (value instanceof Date) {
             // For key access
@@ -17,5 +17,5 @@ export const convertDateToString = <T>(target: T): DateToString<T> => {
             converted[key] = value;
         }
     }
-    return converted as DateToString<T>;
+    return converted as DateParsedResponseBody<T>;
 };
