@@ -1,8 +1,10 @@
 .theHeader {
-    background-color: var(--base02);
     grid-area: header;
+    padding: 3rem 0 2rem 1rem;
+
     &__title {
-        color: var(--base3);
+        text-decoration: none;
+        color: var(--base03);
         font-size: var(--fontSizeLarge);
         font-weight: var(--fontWeightThin);
     }

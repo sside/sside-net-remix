@@ -1,4 +1,5 @@
 import { toIso8601DateTime } from "../../../libraries/datetime";
+import { getLatestBlogEntryBody } from "../../../utilities/blog/getLatestBlogEntryBody";
 import { PrismaJoinedBlogEntry } from "./prisma/PrismaJoinedBlogEntry";
 
 export class BlogEntryEditItemClientResponse {
@@ -19,11 +20,10 @@ export class BlogEntryEditItemClientResponse {
 
     static fromEntity(entity: PrismaJoinedBlogEntry): BlogEntryEditItemClientResponse {
         const { blogEntryBodyHistories, blogEntryBodyDraft, id, slug, createdAt, blogMetaTags, publishAt } = entity;
-        const latestEntryBody =
-            blogEntryBodyDraft ||
-            blogEntryBodyHistories.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())[0];
+        const latestEntryBody = blogEntryBodyDraft || getLatestBlogEntryBody(blogEntryBodyHistories);
         const isDraft: boolean = !!blogEntryBodyDraft;
         const { title, body, updatedAt } = latestEntryBody;
+
         return new BlogEntryEditItemClientResponse(
             id,
             title,

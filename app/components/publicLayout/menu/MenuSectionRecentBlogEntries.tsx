@@ -1,9 +1,9 @@
 import { Link } from "@remix-run/react";
-import { DurationLikeObject } from "luxon";
 import { FC } from "react";
 import { PathUrl } from "../../../constants/paths/PathUrl";
-import { isBetweenDate, minusDate, plusDate, toIso8601Date } from "../../../libraries/datetime";
+import { toIso8601Date } from "../../../libraries/datetime";
 import { PrismaPublishedBlogEntry } from "../../../services/blog/types/prisma/PrismaPublishedBlogEntry";
+import { isUpdatedEntry } from "../../../utilities/blog/isUpdatedBlogEntry";
 import { BaseMenuSection } from "./BaseMenuSection";
 
 export class RecentBlogEntryItem {
@@ -36,14 +36,13 @@ interface Props {
 }
 
 export const MenuSectionRecentBlogEntries: FC<Props> = ({ recentEntries }) => {
-    const isUpdatedEntry = (publishAt: Date, updatedAt: Date, marginSecond: number): boolean => {
-        const duration: DurationLikeObject = { second: marginSecond };
-        return isBetweenDate(publishAt, plusDate(updatedAt, duration), minusDate(updatedAt, duration));
-    };
-
     const createTitle = (title: string, publishAt: Date, updatedAt: Date): string => {
-        const updatedInfo = isUpdatedEntry(publishAt, updatedAt, 10) ? `, modified: ${toIso8601Date(updatedAt)}` : "";
-        return `${title} (${toIso8601Date(publishAt)}${updatedInfo})`;
+        let created = title + ` (${toIso8601Date(publishAt)}`;
+        if (isUpdatedEntry(publishAt, updatedAt, 60)) {
+            created += ` update: ${toIso8601Date(updatedAt)}`;
+        }
+        created += ")";
+        return created;
     };
 
     return (

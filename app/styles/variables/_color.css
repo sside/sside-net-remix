@@ -22,9 +22,10 @@
     --colorEmphasize: var(--base02);
     --colorComment: var(--base01);
 
-    --colorBackground: var(--base03);
+    --colorPublicBackground: var(--base2);
     --colorBackgroundHighlights: var(--base02);
-    --colorBackgroundMenu: var(--base0);
+    --colorMenuBackground: var(--base02);
+    --colorLoginBackground: var(--base03);
 
     --colorPrimary: var(--blue);
 }

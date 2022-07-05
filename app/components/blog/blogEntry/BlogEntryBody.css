@@ -1,1 +1,111 @@
+.blogEntryBody {
+  line-height: 1.5rem;
+}
 
+.blogEntryBody * {
+  margin-bottom: 1rem;
+}
+
+.blogEntryBody p {
+  text-indent: 0.8rem;
+  line-height: 1.5rem;
+}
+
+.blogEntryBody h1,
+.blogEntryBody h2,
+.blogEntryBody h3,
+.blogEntryBody h4,
+.blogEntryBody h5,
+.blogEntryBody h6 {
+  border-bottom: solid 1px var(--base0);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.4rem;
+}
+
+.blogEntryBody ul li,
+.blogEntryBody ol li {
+  list-style-position: inside;
+  margin-bottom: 0;
+}
+
+.blogEntryBody ul li li,
+.blogEntryBody ol li li {
+  margin-left: 1rem;
+}
+
+.blogEntryBody ul ul,
+.blogEntryBody ul ol,
+.blogEntryBody ol ul,
+.blogEntryBody ol ol {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.blogEntryBody ul li {
+  list-style-type: circle;
+}
+
+.blogEntryBody ol li {
+  list-style-type: decimal;
+}
+
+.blogEntryBody pre {
+  margin-left: 1rem;
+  border: solid 1px var(--base0);
+  padding: 1rem;
+  font-family: var(--fontFamilyMonospace);
+}
+
+.blogEntryBody code {
+  font-family: var(--fontFamilyMonospace);
+  border: solid 1px var(--base01);
+  padding: 0 0.2rem;
+}
+
+.blogEntryBody h1 {
+  font-size: 2.26rem;
+  font-weight: var(--fontWeightThin);
+  border-left: solid 0.6rem var(--base0);
+  padding-left: 0.4rem;
+  margin-left: 0;
+}
+
+.blogEntryBody h2 {
+  font-size: 1.875rem;
+  font-weight: var(--fontWeightThin);
+  border-left: solid 0.6rem var(--base0);
+  padding-left: 0.4rem;
+  margin-left: 0.5rem;
+}
+
+.blogEntryBody h3 {
+  font-size: 1.56rem;
+  font-weight: var(--fontWeightThin);
+  border-left: solid 0.6rem var(--base0);
+  padding-left: 0.4rem;
+  margin-left: 1rem;
+}
+
+.blogEntryBody h4 {
+  font-size: 1.315rem;
+  font-weight: var(--fontWeightThin);
+  border-left: solid 0.6rem var(--base0);
+  padding-left: 0.4rem;
+  margin-left: 1.5rem;
+}
+
+.blogEntryBody h5 {
+  font-size: 1.14rem;
+  font-weight: var(--fontWeightThin);
+  border-left: solid 0.6rem var(--base0);
+  padding-left: 0.4rem;
+  margin-left: 2rem;
+}
+
+.blogEntryBody h6 {
+  font-size: 1.035rem;
+  font-weight: var(--fontWeightThin);
+  border-left: solid 0.6rem var(--base0);
+  padding-left: 0.4rem;
+  margin-left: 2.5rem;
+}

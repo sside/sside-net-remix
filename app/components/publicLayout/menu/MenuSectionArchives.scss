@@ -1,0 +1,32 @@
+.menuSectionArchives {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 0.3rem;
+
+    &__legend {
+        display: flex;
+        gap: 0.4rem;
+
+        a {
+            text-decoration: none;
+            border: solid 1px var(--base0);
+            padding: 0.3rem 0.4rem;
+            width: fit-content;
+            border-radius: 5px;
+            &:hover {
+                color: var(--base0);
+                background-color: var(--base3);
+            }
+        }
+    }
+
+    &__item {
+        &--year {
+            color: var(--base2);
+            background-color: var(--base1);
+        }
+        &--month {
+            background-color: var(--base2);
+        }
+    }
+}

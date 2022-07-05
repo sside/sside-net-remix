@@ -1,8 +1,13 @@
+import { LinksFunction } from "@remix-run/node";
 import { FC, Fragment } from "react";
 import { appConfig, OnlineActivity } from "../../../../appConfig";
 import { DangerouslySetInnerHtmlValue } from "../../../types/DangerouslySetInnerHtmlValue";
 import { parseMarkdown } from "../../../libraries/markdown/parseMarkdown";
+import { cssLinks } from "../../../utilities/styling/cssLinkDescriptor";
 import { BaseMenuSection } from "./BaseMenuSection";
+import styles from "./MenuSectionOnlineActivities.css";
+
+export const links: LinksFunction = () => cssLinks(styles);
 
 interface MenuSectionOnlineActivityItemProps {
     activity: OnlineActivity;
@@ -27,7 +32,7 @@ export const MenuSectionOnlineActivities: FC = () => {
     return (
         <BaseMenuSection sectionName={`Online accounts`}>
             <div dangerouslySetInnerHTML={messageMarkdown} />
-            <dl>
+            <dl className={`menuSectionOnlineActivities`}>
                 {appConfig.menu.onlineActivity.activities.map((activity) => (
                     <MenuSectionOnlineActivityItem key={activity.serviceName} activity={activity} />
                 ))}

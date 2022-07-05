@@ -14,7 +14,7 @@ export const BaseMenuSection: FC<Props> = ({ sectionName, children }) => {
     return (
         <section className={`baseMenuSection`}>
             <header className={`baseMenuSection__header`}>{sectionName}</header>
-            {children}
+            <div className={`baseMenuSection__body`}>{children}</div>
         </section>
     );
 };

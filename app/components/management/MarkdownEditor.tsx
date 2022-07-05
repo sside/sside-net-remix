@@ -5,7 +5,7 @@ import { isClientSide } from "../../utilities/isClientSide";
 import { cssLinks } from "../../utilities/styling/cssLinkDescriptor";
 import markdownEditorStyle from "./MarkdownEditor.css";
 
-export const links: LinksFunction = () => [...cssLinks(easyMdeStyles, markdownEditorStyle)];
+export const links: LinksFunction = () => cssLinks(easyMdeStyles, markdownEditorStyle);
 
 interface Props {
     defaultValue: string;

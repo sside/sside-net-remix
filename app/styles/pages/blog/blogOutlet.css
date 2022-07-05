@@ -1,9 +1,16 @@
 body.app {
   display: grid;
   grid-template-areas: "header main" "menu main" "footer main";
-  grid-template-columns: 15rem 1fr;
+  grid-template-columns: 17rem 1fr;
+  grid-template-rows: min-content 1fr min-content;
 }
 
 .blog {
   grid-area: main;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 3rem;
+  background-color: var(--base03);
+  color: var(--base0);
+  padding: 2rem 3rem;
 }

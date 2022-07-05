@@ -1,7 +1,12 @@
+import { LinksFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
 import { FC } from "react";
 import { PathUrl } from "../../../constants/paths/PathUrl";
+import { cssLinks } from "../../../utilities/styling/cssLinkDescriptor";
 import { BaseMenuSection } from "./BaseMenuSection";
+import styles from "./MenuSectionBlogMetaTags.css";
+
+export const links: LinksFunction = () => cssLinks(styles);
 
 export interface BlogMetaTagCount {
     name: string;
@@ -17,14 +22,20 @@ export const MenuSectionBlogMetaTags: FC<Props> = ({ blogMetaTagCounts }) => {
 
     return (
         <BaseMenuSection sectionName={`Meta tags`}>
-            {filteredBlogMetaTagCounts.map(({ name, count }) => (
-                <Link key={name} to={PathUrl.blog.metaTag.byMetaTag(name)}>
-                    <div>
-                        <span>{name}</span>
-                        <span>{count}</span>
-                    </div>
-                </Link>
-            ))}
+            <nav className={`menuSectionBlogMetaTags`}>
+                {filteredBlogMetaTagCounts.map(({ name, count }) => (
+                    <Link
+                        className={`menuSectionBlogMetaTags__link`}
+                        key={name}
+                        to={PathUrl.blog.metaTag.byMetaTag(name)}
+                    >
+                        <div>
+                            <span>{name}</span>
+                            <span className={`menuSectionBlogMetaTags__linkCount`}>{count}</span>
+                        </div>
+                    </Link>
+                ))}
+            </nav>
         </BaseMenuSection>
     );
 };

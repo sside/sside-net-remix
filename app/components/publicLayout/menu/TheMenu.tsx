@@ -1,14 +1,25 @@
 import { LinksFunction } from "@remix-run/node";
 import { FC } from "react";
 import { cssLinkDescriptor } from "../../../utilities/styling/cssLinkDescriptor";
-import { links as menuSectionAboutThisSiteLinks, MenuSectionAboutThisSite } from "./MenuSectionAboutThisSite";
-import { MenuSectionArchives, YearMonthFormat } from "./MenuSectionArchives";
-import { BlogMetaTagCount, MenuSectionBlogMetaTags } from "./MenuSectionBlogMetaTags";
-import { MenuSectionOnlineActivities } from "./MenuSectionOnlineActivities";
+import { links as baseMenuSectionLinks } from "./BaseMenuSection";
+import { MenuSectionAboutThisSite } from "./MenuSectionAboutThisSite";
+import { MenuSectionArchives, YearMonthFormat, links as menuSectionArchivesLinks } from "./MenuSectionArchives";
+import {
+    BlogMetaTagCount,
+    MenuSectionBlogMetaTags,
+    links as menuSectionBlogMetaTagsLinks,
+} from "./MenuSectionBlogMetaTags";
+import { links as menuSectionOnlineActivitiesLinks, MenuSectionOnlineActivities } from "./MenuSectionOnlineActivities";
 import { MenuSectionRecentBlogEntries, RecentBlogEntryItem } from "./MenuSectionRecentBlogEntries";
 import styles from "./TheMenu.css";
 
-export const links: LinksFunction = () => [cssLinkDescriptor(styles), ...menuSectionAboutThisSiteLinks()];
+export const links: LinksFunction = () => [
+    cssLinkDescriptor(styles),
+    ...baseMenuSectionLinks(),
+    ...menuSectionOnlineActivitiesLinks(),
+    ...menuSectionArchivesLinks(),
+    ...menuSectionBlogMetaTagsLinks(),
+];
 
 interface Props {
     recentEntries: RecentBlogEntryItem[];

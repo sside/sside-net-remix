@@ -1,0 +1,20 @@
+.menuSectionOnlineActivities {
+    flex-wrap: wrap;
+
+    dt {
+        float: left;
+        clear: left;
+        margin-right: 0.3rem;
+
+        &:before {
+            content: "◦";
+        }
+
+        &:after {
+            content: ":";
+        }
+    }
+    dd {
+        float: left;
+    }
+}

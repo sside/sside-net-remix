@@ -1,0 +1,27 @@
+.blogEntryHeader {
+    display: grid;
+    grid-template-areas: "title" "publish";
+    grid-template-columns: 1fr;
+    grid-gap: 0.5rem;
+
+    a {
+        text-decoration: none;
+    }
+
+    &__title {
+        grid-area: title;
+        display: block;
+        border-bottom: solid 1px var(--base0);
+        font-size: 3.2rem;
+        line-height: 3rem;
+        font-weight: var(--fontWeightThin);
+        padding-bottom: 0.4rem;
+    }
+
+    &__publish {
+        grid-area: publish;
+        display: flex;
+        gap: 1rem;
+        font-size: 0.8rem;
+    }
+}

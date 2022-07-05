@@ -4,9 +4,13 @@ import { cssLinkDescriptor } from "../../../utilities/styling/cssLinkDescriptor"
 import styles from "./BlogEntry.css";
 import { BlogEntryBody, links as blogEntryBodyLinks } from "./BlogEntryBody";
 import { BlogEntryFooter } from "./BlogEntryFooter";
-import { BlogEntryHeader } from "./BlogEntryHeader";
+import { BlogEntryHeader, links as blogEntryHeaderLinks } from "./BlogEntryHeader";
 
-export const link: LinksFunction = () => [cssLinkDescriptor(styles), ...blogEntryBodyLinks()];
+export const link: LinksFunction = () => [
+    cssLinkDescriptor(styles),
+    ...blogEntryBodyLinks(),
+    ...blogEntryHeaderLinks(),
+];
 
 export interface BlogEntryItem {
     title: string;
@@ -19,8 +23,8 @@ export interface BlogEntryItem {
 
 export const BlogEntry: FC<BlogEntryItem> = ({ title, slug, bodyMarkdown, metaTags, publishAt, updatedAt }) => {
     return (
-        <article>
-            <BlogEntryHeader title={title} slug={slug} />
+        <article className={`blogEntry`}>
+            <BlogEntryHeader title={title} slug={slug} publishAt={publishAt} updatedAt={updatedAt} />
             <BlogEntryBody bodyMarkdown={bodyMarkdown} />
             <BlogEntryFooter metaTags={metaTags} />
         </article>

@@ -1,4 +1,9 @@
 .theMenu {
   grid-area: menu;
   display: grid;
+  height: min-content;
+}
+
+.theMenu * {
+  font-weight: var(--fontWeightThin);
 }

@@ -1,0 +1,82 @@
+.blogEntryBody {
+    line-height: 1.5rem;
+    * {
+        margin-bottom: 1rem;
+    }
+
+    p {
+        text-indent: 0.8rem;
+        line-height: 1.5rem;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        border-bottom: solid 1px var(--base0);
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.4rem;
+    }
+
+    ul,
+    ol {
+        li {
+            list-style-position: inside;
+            margin-bottom: 0;
+            li {
+                margin-left: 1rem;
+            }
+        }
+
+        ul,
+        ol {
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+    }
+
+    ul {
+        li {
+            list-style-type: circle;
+        }
+    }
+
+    ol {
+        li {
+            list-style-type: decimal;
+        }
+    }
+
+    pre {
+        margin-left: 1rem;
+        border: solid 1px var(--base0);
+        padding: 1rem;
+        font-family: var(--fontFamilyMonospace);
+    }
+
+    code {
+        font-family: var(--fontFamilyMonospace);
+        border: solid 1px var(--base01);
+        padding: 0 0.2rem;
+    }
+}
+
+@mixin blogEntryBodyHead($level) {
+    .blogEntryBody h#{$level} {
+        $multiply: 7 - $level;
+        font-size: 1rem + (0.035 * $multiply * $multiply);
+        font-weight: var(--fontWeightThin);
+        border-left: solid 0.6rem var(--base0);
+        padding-left: 0.4rem;
+        margin-left: 0rem + (($level - 1) * 0.5);
+    }
+}
+
+@include blogEntryBodyHead(1);
+@include blogEntryBodyHead(2);
+@include blogEntryBodyHead(3);
+@include blogEntryBodyHead(4);
+@include blogEntryBodyHead(5);
+@include blogEntryBodyHead(6);

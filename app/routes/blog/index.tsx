@@ -1,13 +1,15 @@
-import { LoaderFunction } from "@remix-run/node";
+import { LinksFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { FC, Fragment } from "react";
 import { appConfig } from "../../../appConfig";
-import { BlogEntry, BlogEntryItem } from "../../components/blog/blogEntry/BlogEntry";
+import { BlogEntry, BlogEntryItem, link as blogEntryLinks } from "../../components/blog/blogEntry/BlogEntry";
 import { parseIso8601ToJst } from "../../libraries/datetime";
 import { findManyBlogEntryRecentPublished } from "../../services/blog/blogEntry.server";
 import { PrismaPublishedBlogEntry } from "../../services/blog/types/prisma/PrismaPublishedBlogEntry";
 import { DateParsedResponseBody } from "../../types/DateParsedResponseBody";
 import { getLatestBlogEntryBody } from "../../utilities/blog/getLatestBlogEntryBody";
+
+export const links: LinksFunction = () => [...blogEntryLinks()];
 
 export const loader: LoaderFunction = async (): Promise<PrismaPublishedBlogEntry[]> => {
     return await findManyBlogEntryRecentPublished(appConfig.blog.indexEntriesCount);

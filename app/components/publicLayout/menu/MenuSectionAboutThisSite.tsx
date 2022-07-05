@@ -4,8 +4,6 @@ import { DangerouslySetInnerHtmlValue } from "../../../types/DangerouslySetInner
 import { parseMarkdown } from "../../../libraries/markdown/parseMarkdown";
 import { BaseMenuSection } from "./BaseMenuSection";
 
-export { links } from "./BaseMenuSection";
-
 export const MenuSectionAboutThisSite: FC = () => {
     const aboutMessage: DangerouslySetInnerHtmlValue = {
         __html: parseMarkdown(appConfig.menu.about.messageMarkdown),

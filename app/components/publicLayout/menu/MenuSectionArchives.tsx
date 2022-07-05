@@ -1,9 +1,14 @@
+import { LinksFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
 import { FC, Fragment } from "react";
 import { PathUrl } from "../../../constants/paths/PathUrl";
 import { isValidMonth } from "../../../libraries/vallidator/isValidMonth";
 import { isValidYear } from "../../../libraries/vallidator/isValidYear";
+import { cssLinks } from "../../../utilities/styling/cssLinkDescriptor";
 import { BaseMenuSection } from "./BaseMenuSection";
+import styles from "./MenuSectionArchives.css";
+
+export const links: LinksFunction = () => cssLinks(styles);
 
 type Year = `${1 | 2}${number}${number}${number}`;
 type Month = "01" | "02" | "03" | "04" | "05" | "06" | "07" | "08" | "09" | "10" | "11" | "12";
@@ -29,15 +34,21 @@ export const MenuSectionArchives: FC<Props> = ({ yearMonths }) => {
 
     return (
         <BaseMenuSection sectionName={`Archives`}>
-            <nav>
+            <nav className={`menuSectionArchives`}>
                 {Array.from(uniqueYearMonths.keys()).map((year) => (
                     <Fragment key={year}>
-                        <div>
-                            <Link to={PathUrl.blog.archive.byYear(year)}>{year}</Link>
+                        <div className={`menuSectionArchives__legend`}>
+                            <Link className={`menuSectionArchives__item--year`} to={PathUrl.blog.archive.byYear(year)}>
+                                {year}
+                            </Link>
                         </div>
-                        <div>
+                        <div className={`menuSectionArchives__legend`}>
                             {uniqueYearMonths.get(year)!.map((month) => (
-                                <Link key={`${year}-${month}`} to={PathUrl.blog.archive.byYearMonth(year, month)}>
+                                <Link
+                                    className={`menuSectionArchives__item--month`}
+                                    key={`${year}-${month}`}
+                                    to={PathUrl.blog.archive.byYearMonth(year, month)}
+                                >
                                     {`${month}`.padStart(2, "0")}
                                 </Link>
                             ))}

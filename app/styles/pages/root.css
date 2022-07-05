@@ -1,6 +1,10 @@
 body {
-  background-color: var(--colorBackground);
-  color: var(--colorBody);
+  background-color: var(--colorPublicBackground);
+  color: var(--base01);
   font-family: var(--fontFamilyContent);
   font-size: var(--fontSizeBase);
+}
+
+body a {
+  text-decoration: underline;
 }
