@@ -4,9 +4,11 @@
   grid-template-columns: 1fr;
   grid-gap: 0.5rem;
 }
+
 .blogEntryHeader a {
   text-decoration: none;
 }
+
 .blogEntryHeader__title {
   grid-area: title;
   display: block;
@@ -16,6 +18,7 @@
   font-weight: var(--fontWeightThin);
   padding-bottom: 0.4rem;
 }
+
 .blogEntryHeader__publish {
   grid-area: publish;
   display: flex;

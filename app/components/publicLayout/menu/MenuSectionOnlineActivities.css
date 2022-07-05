@@ -2,17 +2,21 @@
 .menuSectionOnlineActivities {
   flex-wrap: wrap;
 }
+
 .menuSectionOnlineActivities dt {
   float: left;
   clear: left;
   margin-right: 0.3rem;
 }
+
 .menuSectionOnlineActivities dt:before {
   content: "◦";
 }
+
 .menuSectionOnlineActivities dt:after {
   content: ":";
 }
+
 .menuSectionOnlineActivities dd {
   float: left;
 }
