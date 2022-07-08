@@ -31,8 +31,8 @@ export const MenuSectionOnlineActivities: FC = () => {
 
     return (
         <BaseMenuSection sectionName={`Online accounts`}>
-            <div dangerouslySetInnerHTML={messageMarkdown} />
-            <dl className={`menuSectionOnlineActivities`}>
+            <div className={`menuSectionOnlineActivities__message`} dangerouslySetInnerHTML={messageMarkdown} />
+            <dl className={`menuSectionOnlineActivities__items`}>
                 {appConfig.menu.onlineActivity.activities.map((activity) => (
                     <MenuSectionOnlineActivityItem key={activity.serviceName} activity={activity} />
                 ))}

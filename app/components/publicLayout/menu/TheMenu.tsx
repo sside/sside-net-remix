@@ -3,14 +3,18 @@ import { FC } from "react";
 import { cssLinkDescriptor } from "../../../utilities/styling/cssLinkDescriptor";
 import { links as baseMenuSectionLinks } from "./BaseMenuSection";
 import { MenuSectionAboutThisSite } from "./MenuSectionAboutThisSite";
-import { MenuSectionArchives, YearMonthFormat, links as menuSectionArchivesLinks } from "./MenuSectionArchives";
+import { links as menuSectionArchivesLinks, MenuSectionArchives, YearMonthFormat } from "./MenuSectionArchives";
 import {
     BlogMetaTagCount,
-    MenuSectionBlogMetaTags,
     links as menuSectionBlogMetaTagsLinks,
+    MenuSectionBlogMetaTags,
 } from "./MenuSectionBlogMetaTags";
 import { links as menuSectionOnlineActivitiesLinks, MenuSectionOnlineActivities } from "./MenuSectionOnlineActivities";
-import { MenuSectionRecentBlogEntries, RecentBlogEntryItem } from "./MenuSectionRecentBlogEntries";
+import {
+    links as menuSectionRecentBlogEntriesLinks,
+    MenuSectionRecentBlogEntries,
+    RecentBlogEntryItem,
+} from "./MenuSectionRecentBlogEntries";
 import styles from "./TheMenu.css";
 
 export const links: LinksFunction = () => [
@@ -19,6 +23,7 @@ export const links: LinksFunction = () => [
     ...menuSectionOnlineActivitiesLinks(),
     ...menuSectionArchivesLinks(),
     ...menuSectionBlogMetaTagsLinks(),
+    ...menuSectionRecentBlogEntriesLinks(),
 ];
 
 interface Props {

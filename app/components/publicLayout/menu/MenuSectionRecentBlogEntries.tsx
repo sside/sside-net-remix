@@ -1,10 +1,15 @@
+import { LinksFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
 import { FC } from "react";
 import { PathUrl } from "../../../constants/paths/PathUrl";
 import { toIso8601Date } from "../../../libraries/datetime";
 import { PrismaPublishedBlogEntry } from "../../../services/blog/types/prisma/PrismaPublishedBlogEntry";
 import { isUpdatedEntry } from "../../../utilities/blog/isUpdatedBlogEntry";
+import { cssLinks } from "../../../utilities/styling/cssLinkDescriptor";
 import { BaseMenuSection } from "./BaseMenuSection";
+import styles from "./MenuSectionRecentBlogEntries.css";
+
+export const links: LinksFunction = () => cssLinks(styles);
 
 export class RecentBlogEntryItem {
     constructor(
@@ -47,9 +52,9 @@ export const MenuSectionRecentBlogEntries: FC<Props> = ({ recentEntries }) => {
 
     return (
         <BaseMenuSection sectionName={`Recent entries`}>
-            <ul>
+            <ul className={`menuSectionRecentBlogEntries`}>
                 {recentEntries.map(({ blogEntryId, title, slug, publishAt, updatedAt }) => (
-                    <li key={blogEntryId}>
+                    <li className={`menuSectionRecentBlogEntries__item`} key={blogEntryId}>
                         <Link to={PathUrl.blog.entryBySlug(slug)}>{createTitle(title, publishAt, updatedAt)}</Link>
                     </li>
                 ))}

@@ -1,20 +1,32 @@
 .menuSectionOnlineActivities {
     flex-wrap: wrap;
 
-    dt {
-        float: left;
-        clear: left;
-        margin-right: 0.3rem;
-
-        &:before {
-            content: "◦";
-        }
-
-        &:after {
-            content: ":";
-        }
+    &__message {
+        margin-bottom: 0.5rem;
     }
-    dd {
-        float: left;
+
+    &__items {
+        @mixin itemMargin() {
+            margin-bottom: 0.2rem;
+        }
+
+        dt {
+            @include itemMargin;
+            float: left;
+            clear: left;
+            margin-right: 0.3rem;
+
+            &:before {
+                content: "◦";
+            }
+
+            &:after {
+                content: ":";
+            }
+        }
+        dd {
+            @include itemMargin;
+            float: left;
+        }
     }
 }
