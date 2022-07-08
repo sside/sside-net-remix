@@ -1,0 +1,12 @@
+.blogPager {
+  display: flex;
+  gap: 1rem;
+}
+
+.blogPager__link--next:after {
+  content: " >>";
+}
+
+.blogPager__link--previous:before {
+  content: "<< ";
+}

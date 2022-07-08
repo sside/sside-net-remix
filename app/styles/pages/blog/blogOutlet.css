@@ -3,12 +3,14 @@ body.app {
   grid-template-areas: "header main" "menu main" "footer main";
   grid-template-columns: 17rem 1fr;
   grid-template-rows: min-content 1fr min-content;
+  min-height: 100vh;
 }
 
 .blog {
   grid-area: main;
   display: grid;
   grid-template-columns: 1fr;
+  grid-template-rows: min-content;
   grid-gap: 3rem;
   background-color: var(--base03);
   color: var(--base0);

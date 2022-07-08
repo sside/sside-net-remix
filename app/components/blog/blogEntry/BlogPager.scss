@@ -1,0 +1,17 @@
+.blogPager {
+    display: flex;
+    gap: 1rem;
+
+    &__link {
+        &--next {
+            &:after {
+                content: " >>";
+            }
+        }
+        &--previous {
+            &:before {
+                content: "<< ";
+            }
+        }
+    }
+}
