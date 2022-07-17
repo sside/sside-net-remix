@@ -41,11 +41,11 @@
   margin-bottom: 0;
 }
 
-.blogEntryBody ul li {
+.blogEntryBody ul > li {
   list-style-type: circle;
 }
 
-.blogEntryBody ol li {
+.blogEntryBody ol > li {
   list-style-type: decimal;
 }
 

@@ -1,4 +1,6 @@
 import { DateTime, DurationLikeObject } from "luxon";
+import { isValidMonth } from "../vallidator/isValidMonth";
+import { isValidYear } from "../vallidator/isValidYear";
 
 const TimeZone = {
     JST: "Asia/Tokyo",
@@ -37,6 +39,23 @@ export const isBetweenDate = (target: Date, a: Date, b: Date): boolean => {
     const [firstMilliSecond, lastMilliSecond] = [a, b].map((date) => date.getTime()).sort((a, b) => a - b);
     const targetMilliSecond = target.getTime();
     return firstMilliSecond <= targetMilliSecond && targetMilliSecond <= lastMilliSecond;
+};
+
+export const createMonthRange = (year: number, month: number): [Date, Date] => {
+    if (!isValidYear(year) || !isValidMonth(month)) {
+        throw new Error(`Not valid year or month. year: ${year}, month: ${month}`);
+    }
+
+    const jst = setJst(DateTime.local(year, month, 15));
+    return [jst.startOf("month").toJSDate(), jst.endOf("month").toJSDate()];
+};
+
+export const createYearRange = (year: number): [Date, Date] => {
+    if (!isValidYear(year)) {
+        throw new Error(`Not valid year. Year:${year}`);
+    }
+    const jst = setJst(DateTime.local(year, 6, 15));
+    return [jst.startOf("year").toJSDate(), jst.endOf("year").toJSDate()];
 };
 
 export const plusDate = (date: Date, duration: DurationLikeObject): Date =>

@@ -3,6 +3,7 @@ import { config } from "dotenv";
 export class EnvironmentVariable {
     [key: string]: string;
     NODE_ENV = "";
+    DATABASE_URL = "";
     ADMINISTRATOR_EMAIL_ADDRESS = "";
     ADMINISTRATOR_PASSWORD = "";
     SESSION_COOKIE_SECRET = "";

@@ -40,20 +40,20 @@ export const blogEntryFormAction: ActionFunction = async ({ request }) => {
     const parsedTags = metaTags.split(",").map((value) => value.trim());
 
     const { Publish, Draft } = BlogPostEditorSubmitType;
-    let redirectId: string;
     switch (submitType) {
         case Publish:
-            redirectId = (await publishBlogEntry(title, slug, body, parsedTags, blogEntryId || undefined, new Date()))
-                .id;
+            await publishBlogEntry(title, slug, body, parsedTags, blogEntryId || undefined, new Date());
             break;
         case Draft:
-            redirectId = (await upsertBlogEntryDraft(title, slug, body, parsedTags, blogEntryId || undefined)).id;
+            await upsertBlogEntryDraft(title, slug, body, parsedTags, blogEntryId || undefined);
             break;
         default:
-            throw new ForbiddenServerError(`Blog post submit type is not valid`);
+            throw new ForbiddenServerError(`Blog post submit type is not valid`, {
+                submitType,
+            });
     }
 
-    return redirect(PathUrl.management.blog.editById(redirectId));
+    return redirect(PathUrl.management.root);
 };
 
 interface Props {

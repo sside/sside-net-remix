@@ -1,5 +1,5 @@
 body {
-  background-color: var(--colorPublicBackground);
+  background-color: var(--base03);
 }
 
 .loginForm {
@@ -15,7 +15,7 @@ body {
   margin: auto;
   height: min-content;
   width: max-content;
-  padding: 3rem 5rem;
+  padding: 4rem 6rem;
   border-radius: 10px;
   text-align: center;
 }

@@ -4,15 +4,30 @@ import { FC, Fragment } from "react";
 import { appConfig } from "../../../appConfig";
 import { BlogEntry, BlogEntryItem, link as blogEntryLinks } from "../../components/blog/blogEntry/BlogEntry";
 import { parseIso8601ToJst } from "../../libraries/datetime";
-import { findManyBlogEntryRecentPublished } from "../../services/blog/blogEntry.server";
+import { createPagingQuery } from "../../libraries/vallidator/validatePagingQuery";
+import {
+    findManyPublishedBlogEntryByPaging,
+    findManyPublishedBlogEntryRecent,
+} from "../../services/blog/findPublishedBlogEntry.server";
 import { PrismaPublishedBlogEntry } from "../../services/blog/types/prisma/PrismaPublishedBlogEntry";
 import { DateParsedResponseBody } from "../../types/DateParsedResponseBody";
 import { getLatestBlogEntryBody } from "../../utilities/blog/getLatestBlogEntryBody";
 
 export const links: LinksFunction = () => [...blogEntryLinks()];
 
-export const loader: LoaderFunction = async (): Promise<PrismaPublishedBlogEntry[]> => {
-    return await findManyBlogEntryRecentPublished(appConfig.blog.indexEntriesCount);
+export const loader: LoaderFunction = async ({ params }): Promise<PrismaPublishedBlogEntry[]> => {
+    const { pointer, order, count } = params;
+    const { pagingItemCount } = appConfig.blog;
+
+    let blogEntries: PrismaPublishedBlogEntry[];
+    if (pointer && order && count) {
+        const { pointer: queryPointerId, order: queryOrder } = createPagingQuery(pointer, order);
+        blogEntries = await findManyPublishedBlogEntryByPaging(queryPointerId, queryOrder, pagingItemCount);
+    } else {
+        blogEntries = await findManyPublishedBlogEntryRecent(pagingItemCount);
+    }
+
+    return blogEntries;
 };
 
 const BlogIndex: FC = () => {

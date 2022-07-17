@@ -1,3 +1,11 @@
+import { QuerySortOrder } from "../../types/QuerySortOrder";
+
+export interface PagingQuery {
+    pointerId: string;
+    order: QuerySortOrder;
+    count: number;
+}
+
 export const PathUrl = {
     blog: {
         root: `/blog/`,
@@ -7,7 +15,12 @@ export const PathUrl = {
             byYearMonth: (year: number, month: number) => `/blog/archive/${year}/${String(month).padStart(2, "0")}/`,
         },
         metaTag: {
-            byMetaTag: (metaTag: string) => `/blog/metaTag/${metaTag}/`,
+            byMetaTag: (metaTag: string) => `/blog/meta_tag/${metaTag}/`,
+            byMetaTagWithPaging: (metaTag: string, paging: PagingQuery) =>
+                `/blog/meta_tag/${metaTag}/?` +
+                Object.entries(paging)
+                    .map(([key, value]) => `${key}=${value}`)
+                    .join("&"),
         },
     },
     management: {

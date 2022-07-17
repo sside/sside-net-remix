@@ -38,13 +38,13 @@
     }
 
     ul {
-        li {
+        > li {
             list-style-type: circle;
         }
     }
 
     ol {
-        li {
+        > li {
             list-style-type: decimal;
         }
     }

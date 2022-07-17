@@ -17,6 +17,7 @@ interface AppConfig {
     };
     blog: {
         indexEntriesCount: number;
+        pagingItemCount: number;
         maxTitleLength: number;
         maxSlugLength: number;
         maxMetaTagLength: number;
@@ -44,7 +45,8 @@ export const appConfig: AppConfig = {
         sessionExpireDay: 365,
     },
     blog: {
-        indexEntriesCount: 5,
+        indexEntriesCount: 2,
+        pagingItemCount: 2,
         maxTitleLength: 512,
         maxSlugLength: 255,
         maxMetaTagLength: 64,

@@ -2,7 +2,7 @@ import { LinksFunction, LoaderFunction } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import { FC, Fragment } from "react";
 import { appConfig } from "../../appConfig";
-import { TheFooter, links as theFooterLinks } from "../components/publicLayout/footer/TheFooter";
+import { links as theFooterLinks, TheFooter } from "../components/publicLayout/footer/TheFooter";
 import { links as theHeaderLink, TheHeader } from "../components/publicLayout/header/TheHeader";
 import { YearMonthFormat } from "../components/publicLayout/menu/MenuSectionArchives";
 import { BlogMetaTagCount } from "../components/publicLayout/menu/MenuSectionBlogMetaTags";
@@ -10,7 +10,10 @@ import { RecentBlogEntryItem } from "../components/publicLayout/menu/MenuSection
 import { links as theMenuLinks, TheMenu } from "../components/publicLayout/menu/TheMenu";
 import { DateFormat, formatDate, parseIso8601ToJst } from "../libraries/datetime";
 import { findAllBlogMetaTagCounts } from "../services/blog-meta-tag/blogMetaTag.server";
-import { findAllBlogEntryOnlyPublishAt, findManyBlogEntryRecentPublished } from "../services/blog/blogEntry.server";
+import {
+    findAllBlogEntryOnlyPublishAt,
+    findManyPublishedBlogEntryRecent,
+} from "../services/blog/findPublishedBlogEntry.server";
 import styles from "../styles/pages/blog/blogOutlet.css";
 import { DateParsedResponseBody } from "../types/DateParsedResponseBody";
 import { convertDateToString } from "../utilities/converter/convertDateToString";
@@ -26,7 +29,7 @@ export const links: LinksFunction = () => [
 export const loader: LoaderFunction = async (): Promise<
     [DateParsedResponseBody<RecentBlogEntryItem>[], string[], BlogMetaTagCount[]]
 > => {
-    const recentEntries = await findManyBlogEntryRecentPublished(appConfig.menu.latestEntries.entriesCount);
+    const recentEntries = await findManyPublishedBlogEntryRecent(appConfig.menu.latestEntries.entriesCount);
     const recentEntriesResponse = recentEntries.map(RecentBlogEntryItem.fromEntity).map(convertDateToString);
 
     const archivesPublishYearMonths = Array.from(

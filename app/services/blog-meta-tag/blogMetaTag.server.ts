@@ -17,7 +17,9 @@ export async function findOneBlogMetaTagById(id: string): Promise<BlogMetaTag> {
     });
 
     if (!blogMetaTag) {
-        throw new NotFoundServerError(`Blog meta tag not found. Id:${id}`);
+        throw new NotFoundServerError(`Blog meta tag not found.`, {
+            id,
+        });
     }
 
     return blogMetaTag;
@@ -35,7 +37,9 @@ export async function findOneBlogMetaTagByName(name: string): Promise<BlogMetaTa
     });
 
     if (!blogMetaTag) {
-        throw new NotFoundServerError(`Blog meta tag not found. Name:${name}`);
+        throw new NotFoundServerError(`Blog meta tag not found.`, {
+            name,
+        });
     }
 
     return blogMetaTag;
@@ -68,7 +72,9 @@ export async function createBlogMetaTag(name: string): Promise<BlogMetaTag> {
         },
     });
     if (exist) {
-        throw new InternalServerError();
+        throw new InternalServerError(`Blog meta tag is already exists.`, {
+            name,
+        });
     }
     return await prisma.blogMetaTag.create({
         data: {
@@ -85,7 +91,9 @@ export async function updateBlogMetaTag(id: string, name: string): Promise<BlogM
 
     const exist = await findOneBlogMetaTagById(id);
     if (!exist) {
-        throw new NotFoundServerError(`Blog meta tag is not exists. Id: ${id}`);
+        throw new NotFoundServerError(`Blog meta tag is not exists`, {
+            id,
+        });
     }
     if (exist.name === name) {
         return exist;
@@ -97,7 +105,9 @@ export async function updateBlogMetaTag(id: string, name: string): Promise<BlogM
         },
     });
     if (duplicated) {
-        throw new ConflictServerError(`Blog meta tag is exists. Name: ${name}`);
+        throw new ConflictServerError(`Blog meta tag is already exists.`, {
+            name,
+        });
     }
 
     return await prisma.blogMetaTag.update({
