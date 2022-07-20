@@ -1,6 +1,6 @@
 import { Response } from "@remix-run/node";
 import { StatusCodes } from "http-status-codes";
-import { Nullable, Primitive } from "../types/utility-type";
+import { Nullable, Primitive } from "../types/utility/utility-type";
 
 interface ErrorContextValues {
     [key: string]: Primitive | Nullable;

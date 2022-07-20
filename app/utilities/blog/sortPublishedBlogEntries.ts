@@ -1,7 +1,7 @@
 import { parseIso8601ToJst } from "../../libraries/datetime";
 import { PrismaPublishedBlogEntry } from "../../services/blog/types/prisma/PrismaPublishedBlogEntry";
-import { DateParsedResponseBody } from "../../types/DateParsedResponseBody";
-import { QuerySortOrder } from "../../types/QuerySortOrder";
+import { DateParsedResponseBody } from "../../types/utility/DateParsedResponseBody";
+import { QuerySortOrder } from "../../types/database/QuerySortOrder";
 
 export const sortPublishedBlogEntries = <
     T extends PrismaPublishedBlogEntry[] | DateParsedResponseBody<PrismaPublishedBlogEntry>[],

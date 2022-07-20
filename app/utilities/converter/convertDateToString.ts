@@ -1,5 +1,5 @@
 import { toIso8601DateTime } from "../../libraries/datetime";
-import { DateParsedResponseBody } from "../../types/DateParsedResponseBody";
+import { DateParsedResponseBody } from "../../types/utility/DateParsedResponseBody";
 
 export const convertDateToString = <T>(target: T): DateParsedResponseBody<T> => {
     const converted: Partial<DateParsedResponseBody<T>> = {};

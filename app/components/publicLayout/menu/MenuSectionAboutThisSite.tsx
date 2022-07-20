@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { appConfig } from "../../../../appConfig";
-import { DangerouslySetInnerHtmlValue } from "../../../types/DangerouslySetInnerHtmlValue";
+import { DangerouslySetInnerHtmlValue } from "../../../types/frontend/react/DangerouslySetInnerHtmlValue";
 import { parseMarkdown } from "../../../libraries/markdown/parseMarkdown";
 import { BaseMenuSection } from "./BaseMenuSection";
 

@@ -1,9 +1,12 @@
 import { BlogEntry, Prisma } from "@prisma/client";
+import { appConfig } from "../../../appConfig";
 import { NotFoundServerError, UnprocessableServerError } from "../../error/ServerError";
 import { prisma } from "../../libraries/database/database";
 import { createMonthRange, createYearRange } from "../../libraries/datetime";
 import { Logger } from "../../libraries/logger/logger";
-import { QuerySortOrder } from "../../types/QuerySortOrder";
+import { isValidMonth } from "../../libraries/vallidator/isValidMonth";
+import { isValidYear } from "../../libraries/vallidator/isValidYear";
+import { QuerySortOrder } from "../../types/database/QuerySortOrder";
 import { NextBlogEntryDirection } from "./constants/NextBlogEntryDirection";
 import { PrismaJoinedBlogEntry } from "./types/prisma/PrismaJoinedBlogEntry";
 import { PrismaPublishedBlogEntry } from "./types/prisma/PrismaPublishedBlogEntry";
@@ -114,7 +117,9 @@ export async function findBothSidePublishedBlogEntry(
 
     return [old, young];
 }
-export async function findManyPublishedBlogEntryRecent(count: number): Promise<PrismaPublishedBlogEntry[]> {
+export async function findManyPublishedBlogEntryRecent(
+    count = appConfig.blog.indexEntriesCount,
+): Promise<PrismaPublishedBlogEntry[]> {
     logger.log(`Find recent published blog entries.`, {
         count,
     });
@@ -134,43 +139,18 @@ export async function findManyPublishedBlogEntryRecent(count: number): Promise<P
 export async function findManyPublishedBlogEntryByPaging(
     pointerId: string,
     order: QuerySortOrder,
-    limit: number,
-    year?: number,
-    month?: number,
+    count = appConfig.blog.pagingItemCount,
 ): Promise<PrismaPublishedBlogEntry[]> {
     logger.log(`Find entries by paging info`, {
         pointerId,
         order,
-        limit,
-        year,
-        month,
+        limit: count,
     });
-
-    if (month && !year) {
-        throw new UnprocessableServerError(`Year is not defined but month is defined.`, {
-            month,
-            year,
-        });
-    }
 
     const { publishAt } = await findOnePublishedBlogEntryById(pointerId);
 
-    const whereQuery = createWhereQueryOnlyPublished();
-    whereQuery.AND = [createWhereQueryPublishAtThreshold(order, publishAt!)];
-
-    if (year) {
-        const [queryStart, queryEnd] = month ? createMonthRange(year, month) : createYearRange(year);
-
-        whereQuery.AND.push({
-            publishAt: {
-                gte: queryStart,
-                lte: queryEnd,
-            },
-        });
-    }
-
     return prisma.blogEntry.findMany({
-        where: whereQuery,
+        where: { ...createWhereQueryOnlyPublished(), ...createWhereQueryPublishAtThreshold(order, publishAt!) },
         include: {
             blogEntryBodyHistories: true,
             blogMetaTags: true,
@@ -178,14 +158,15 @@ export async function findManyPublishedBlogEntryByPaging(
         orderBy: {
             publishAt: order,
         },
-        take: limit,
+        take: count,
     });
 }
+
 export async function findManyPublishedBlogEntryByMetaTagName(
     metaTagName: string,
-    limit: number,
     pointerId?: string,
     order: QuerySortOrder = "desc",
+    limit = appConfig.blog.pagingItemCount,
 ): Promise<PrismaPublishedBlogEntry[]> {
     logger.log(`Find published blog entries by meta tag name`, {
         metaTagName,
@@ -221,8 +202,55 @@ export async function findManyPublishedBlogEntryByMetaTagName(
     });
 }
 
+export async function findManyPublishedBlogEntryByYearMonth(
+    year: number,
+    month?: number,
+    pointerId?: string,
+    order: QuerySortOrder = "desc",
+    count = appConfig.blog.pagingItemCount,
+): Promise<PrismaPublishedBlogEntry[]> {
+    logger.log(`Find many published blog entries by year and optional month.`, {
+        year,
+        month,
+        pointerId,
+        order,
+        count,
+    });
+
+    const where = createWhereQueryOnlyPublished();
+    const dateWhereAnd: Prisma.BlogEntryWhereInput[] = [];
+    const [queryStart, queryEnd] = createYearOrYearMonthRange(year, month);
+    dateWhereAnd.push({
+        publishAt: {
+            gte: queryStart,
+            lte: queryEnd,
+        },
+    });
+
+    if (pointerId && order) {
+        const { publishAt } = await findOnePublishedBlogEntryById(pointerId);
+        dateWhereAnd.push(createWhereQueryPublishAtThreshold(order, publishAt!));
+    }
+
+    return await prisma.blogEntry.findMany({
+        where: {
+            ...where,
+            AND: dateWhereAnd,
+        },
+        orderBy: {
+            publishAt: order,
+        },
+        take: count,
+        include: {
+            blogEntryBodyHistories: true,
+            blogMetaTags: true,
+        },
+    });
+}
+
 export async function findAllBlogEntryOnlyPublishAt(): Promise<Date[]> {
     logger.log(`Find all published blog dates.`);
+
     return (
         await prisma.blogEntry.findMany({
             where: createWhereQueryOnlyPublished(),
@@ -241,6 +269,7 @@ async function findOnePublishedBlogEntryNext(
         pointerId,
         direction,
     });
+
     const { publishAt } = await findOnePublishedBlogEntryById(pointerId);
 
     const order = getOrderByDirection(direction);
@@ -285,6 +314,21 @@ function createWhereQueryPublishAtThreshold(order: QuerySortOrder, publishAt: Da
                       lt: publishAt,
                   },
     };
+}
+
+function createYearOrYearMonthRange(year: number, month?: number): [Date, Date] {
+    if (!isValidYear(year)) {
+        throw new UnprocessableServerError(`Year is not valid value.`, {
+            year,
+        });
+    }
+    if (month && !isValidMonth(month)) {
+        throw new UnprocessableServerError(`Month is not valid value.`, {
+            month,
+        });
+    }
+
+    return month ? createMonthRange(year, month) : createYearRange(year);
 }
 
 function getOrderByDirection(direction: NextBlogEntryDirection): QuerySortOrder {

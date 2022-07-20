@@ -2,65 +2,87 @@ import { LinksFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { FC, Fragment } from "react";
 import { appConfig } from "../../../appConfig";
-import { BlogEntry, BlogEntryItem, link as blogEntryLinks } from "../../components/blog/blogEntry/BlogEntry";
-import { parseIso8601ToJst } from "../../libraries/datetime";
-import { createPagingQuery } from "../../libraries/vallidator/validatePagingQuery";
+import {
+    blogEntryFromPublishedBlogEntryEntity,
+    link as blogEntryLinks,
+} from "../../components/blog/blogEntry/BlogEntry";
+import { BlogPager, BlogPagerItem, links as blogPagerLinks } from "../../components/blog/blogEntry/BlogPager";
+import { PathUrl } from "../../constants/paths/PathUrl";
+import { NotFoundServerError } from "../../error/ServerError";
 import {
     findManyPublishedBlogEntryByPaging,
     findManyPublishedBlogEntryRecent,
 } from "../../services/blog/findPublishedBlogEntry.server";
 import { PrismaPublishedBlogEntry } from "../../services/blog/types/prisma/PrismaPublishedBlogEntry";
-import { DateParsedResponseBody } from "../../types/DateParsedResponseBody";
-import { getLatestBlogEntryBody } from "../../utilities/blog/getLatestBlogEntryBody";
+import { QuerySortOrder } from "../../types/database/QuerySortOrder";
+import { DateParsedResponseBody } from "../../types/utility/DateParsedResponseBody";
+import { extractBlogPagingQuery } from "../../utilities/blog/blogPagingQuery";
+import { sortPublishedBlogEntries } from "../../utilities/blog/sortPublishedBlogEntries";
 
-export const links: LinksFunction = () => [...blogEntryLinks()];
+export const links: LinksFunction = () => [...blogEntryLinks(), ...blogPagerLinks()];
 
-export const loader: LoaderFunction = async ({ params }): Promise<PrismaPublishedBlogEntry[]> => {
-    const { pointer, order, count } = params;
-    const { pagingItemCount } = appConfig.blog;
-
+export const loader: LoaderFunction = async ({
+    request,
+}): Promise<
+    [PrismaPublishedBlogEntry[], PrismaPublishedBlogEntry | undefined, PrismaPublishedBlogEntry | undefined]
+> => {
     let blogEntries: PrismaPublishedBlogEntry[];
-    if (pointer && order && count) {
-        const { pointer: queryPointerId, order: queryOrder } = createPagingQuery(pointer, order);
-        blogEntries = await findManyPublishedBlogEntryByPaging(queryPointerId, queryOrder, pagingItemCount);
+    const pagingQuery = extractBlogPagingQuery(request.url);
+    if (pagingQuery) {
+        const { pointerId, order, count } = pagingQuery;
+        blogEntries = await findManyPublishedBlogEntryByPaging(pointerId, order, count);
     } else {
-        blogEntries = await findManyPublishedBlogEntryRecent(pagingItemCount);
+        blogEntries = await findManyPublishedBlogEntryRecent(appConfig.blog.pagingItemCount);
     }
 
-    return blogEntries;
+    if (!blogEntries.length) {
+        throw new NotFoundServerError(`Blog entries not found.`, {
+            ...pagingQuery,
+        });
+    }
+
+    const { Asc, Desc } = QuerySortOrder;
+    const sortedEntries = sortPublishedBlogEntries(blogEntries, Asc);
+    const older = (await findManyPublishedBlogEntryByPaging(sortedEntries[0].id, Desc, 1))[0];
+    const younger = (await findManyPublishedBlogEntryByPaging(sortedEntries[sortedEntries.length - 1].id, Asc, 1))[0];
+
+    return [blogEntries, older, younger];
 };
 
 const BlogIndex: FC = () => {
-    const fetchedBlogEntries = useLoaderData<DateParsedResponseBody<PrismaPublishedBlogEntry>[]>();
-    const blogEntries: (BlogEntryItem & Pick<PrismaPublishedBlogEntry, "id">)[] = fetchedBlogEntries.map(
-        ({ id, slug, blogEntryBodyHistories, blogMetaTags, publishAt }) => {
-            const { title, body, updatedAt } = getLatestBlogEntryBody(blogEntryBodyHistories);
-            const metaTags: string[] = blogMetaTags.map(({ name }) => name);
-            return {
-                id,
-                title,
-                slug,
-                bodyMarkdown: body,
-                metaTags,
-                publishAt: parseIso8601ToJst(publishAt!),
-                updatedAt: parseIso8601ToJst(updatedAt),
-            };
-        },
-    );
+    const [fetchedBlogEntries, older, younger] =
+        useLoaderData<
+            [
+                DateParsedResponseBody<PrismaPublishedBlogEntry>[],
+                DateParsedResponseBody<PrismaPublishedBlogEntry | undefined>,
+                DateParsedResponseBody<PrismaPublishedBlogEntry | undefined>,
+            ]
+        >();
+
+    const { Asc, Desc } = QuerySortOrder;
+
+    const createPagerItem = (
+        pointerBlogEntry: DateParsedResponseBody<PrismaPublishedBlogEntry> | undefined,
+        order: QuerySortOrder,
+    ): BlogPagerItem | undefined => {
+        if (!pointerBlogEntry) {
+            return undefined;
+        }
+
+        return {
+            url: PathUrl.blog.rootPaging({
+                pointerId: pointerBlogEntry.id,
+                count: appConfig.blog.pagingItemCount,
+                order,
+            }),
+            label: order === Desc ? `Next` : `Previous`,
+        };
+    };
 
     return (
         <Fragment>
-            {blogEntries.map(({ id, title, slug, bodyMarkdown, publishAt, updatedAt, metaTags }) => (
-                <BlogEntry
-                    key={id}
-                    title={title}
-                    slug={slug}
-                    bodyMarkdown={bodyMarkdown}
-                    publishAt={publishAt}
-                    updatedAt={updatedAt}
-                    metaTags={metaTags}
-                />
-            ))}
+            {sortPublishedBlogEntries(fetchedBlogEntries).map((entry) => blogEntryFromPublishedBlogEntryEntity(entry))}
+            <BlogPager previous={createPagerItem(younger, Asc)} next={createPagerItem(older, Desc)} />
         </Fragment>
     );
 };

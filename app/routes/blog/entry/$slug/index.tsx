@@ -14,7 +14,7 @@ import {
 } from "../../../../services/blog/findPublishedBlogEntry.server";
 import { PrismaJoinedBlogEntry } from "../../../../services/blog/types/prisma/PrismaJoinedBlogEntry";
 import { PrismaPublishedBlogEntry } from "../../../../services/blog/types/prisma/PrismaPublishedBlogEntry";
-import { DateParsedResponseBody } from "../../../../types/DateParsedResponseBody";
+import { DateParsedResponseBody } from "../../../../types/utility/DateParsedResponseBody";
 import { getLatestBlogEntryBody } from "../../../../utilities/blog/getLatestBlogEntryBody";
 
 export const links: LinksFunction = () => [...blogEntryLinks(), ...blogPagerLinks()];

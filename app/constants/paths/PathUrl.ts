@@ -1,14 +1,10 @@
-import { QuerySortOrder } from "../../types/QuerySortOrder";
-
-export interface PagingQuery {
-    pointerId: string;
-    order: QuerySortOrder;
-    count: number;
-}
+import { BlogPagingQuery } from "../../types/blog/BlogPagingQuery";
+import { createBlogPagingQuery } from "../../utilities/blog/blogPagingQuery";
 
 export const PathUrl = {
     blog: {
         root: `/blog/`,
+        rootPaging: (paging: BlogPagingQuery) => `/blog/?` + createBlogPagingQuery(paging),
         entryBySlug: (slug: string) => `/blog/entry/${slug}/`,
         archive: {
             byYear: (year: number) => `/blog/archive/${year}/`,
@@ -16,11 +12,8 @@ export const PathUrl = {
         },
         metaTag: {
             byMetaTag: (metaTag: string) => `/blog/meta_tag/${metaTag}/`,
-            byMetaTagWithPaging: (metaTag: string, paging: PagingQuery) =>
-                `/blog/meta_tag/${metaTag}/?` +
-                Object.entries(paging)
-                    .map(([key, value]) => `${key}=${value}`)
-                    .join("&"),
+            byMetaTagWithPaging: (metaTag: string, paging: BlogPagingQuery) =>
+                `/blog/meta_tag/${metaTag}/?` + createBlogPagingQuery(paging),
         },
     },
     management: {

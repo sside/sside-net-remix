@@ -2,7 +2,7 @@ import { LinksFunction } from "@remix-run/node";
 import { FC } from "react";
 import { parseIso8601ToJst } from "../../../libraries/datetime";
 import { PrismaPublishedBlogEntry } from "../../../services/blog/types/prisma/PrismaPublishedBlogEntry";
-import { DateParsedResponseBody } from "../../../types/DateParsedResponseBody";
+import { DateParsedResponseBody } from "../../../types/utility/DateParsedResponseBody";
 import { getLatestBlogEntryBody } from "../../../utilities/blog/getLatestBlogEntryBody";
 import { cssLinkDescriptor } from "../../../utilities/styling/cssLinkDescriptor";
 import styles from "./BlogEntry.css";

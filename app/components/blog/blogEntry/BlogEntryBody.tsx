@@ -1,7 +1,7 @@
 import { LinksFunction } from "@remix-run/node";
 import { FC } from "react";
 import { parseMarkdown } from "../../../libraries/markdown/parseMarkdown";
-import { DangerouslySetInnerHtmlValue } from "../../../types/DangerouslySetInnerHtmlValue";
+import { DangerouslySetInnerHtmlValue } from "../../../types/frontend/react/DangerouslySetInnerHtmlValue";
 import { cssLinks } from "../../../utilities/styling/cssLinkDescriptor";
 import styles from "./BlogEntryBody.css";
 

@@ -15,8 +15,8 @@ import {
     findOnePublishedBlogEntryNextSameMetaTagByAndId,
 } from "../../../../services/blog/findPublishedBlogEntry.server";
 import { PrismaPublishedBlogEntry } from "../../../../services/blog/types/prisma/PrismaPublishedBlogEntry";
-import { DateParsedResponseBody } from "../../../../types/DateParsedResponseBody";
-import { QuerySortOrder } from "../../../../types/QuerySortOrder";
+import { DateParsedResponseBody } from "../../../../types/utility/DateParsedResponseBody";
+import { QuerySortOrder } from "../../../../types/database/QuerySortOrder";
 import { sortPublishedBlogEntries } from "../../../../utilities/blog/sortPublishedBlogEntries";
 
 export const links: LinksFunction = () => blogEntryLinks();
@@ -36,10 +36,11 @@ export const loader: LoaderFunction = async ({
 
     const entries = await findManyPublishedBlogEntryByMetaTagName(
         metaTagName,
-        parseInt(count!) || appConfig.blog.pagingItemCount,
         pointerId || undefined,
         (order as QuerySortOrder) || undefined,
+        parseInt(count!) || appConfig.blog.pagingItemCount,
     );
+
     if (!entries || !entries.length) {
         throw new NotFoundServerError(
             `Blog entries not found by meta tag. Meta tag name: ${metaTagName}, pointerId: ${pointerId}, order: ${order}, count: ${count}`,

@@ -15,7 +15,7 @@ import {
     findManyPublishedBlogEntryRecent,
 } from "../services/blog/findPublishedBlogEntry.server";
 import styles from "../styles/pages/blog/blogOutlet.css";
-import { DateParsedResponseBody } from "../types/DateParsedResponseBody";
+import { DateParsedResponseBody } from "../types/utility/DateParsedResponseBody";
 import { convertDateToString } from "../utilities/converter/convertDateToString";
 import { cssLinkDescriptor } from "../utilities/styling/cssLinkDescriptor";
 

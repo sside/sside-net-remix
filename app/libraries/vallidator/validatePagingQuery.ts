@@ -1,19 +1,21 @@
 import validator from "validator";
-import { UnprocessableServerError } from "../../error/ServerError";
+import { Nullable } from "../../types/utility/utility-type";
 import isUUID = validator.isUUID;
 
-interface PagingQuery {
-    pointer: string;
-    order: "asc" | "desc";
-}
-
-export const validatePagingQuery = (pointer?: string, order?: string): true | string => {
+export const validatePagingQuery = (
+    pointer: string | Nullable,
+    order: string | Nullable,
+    count: string | Nullable,
+): true | string => {
     const errorMessages: string[] = [];
     if (!pointer) {
         errorMessages.push(`pointer is not defined.`);
     }
     if (!order) {
         errorMessages.push(`order is not defined.`);
+    }
+    if (!count) {
+        errorMessages.push(`count is not defied.`);
     }
 
     if (errorMessages.length) {
@@ -26,18 +28,9 @@ export const validatePagingQuery = (pointer?: string, order?: string): true | st
     if (order !== "asc" && order !== "desc") {
         errorMessages.push(`order must be asc or desc.`);
     }
-
-    return errorMessages.length ? errorMessages.join(", ") : true;
-};
-
-export const createPagingQuery = (pointer?: string, order?: string): PagingQuery => {
-    const validateResult = validatePagingQuery(pointer, order);
-    if (typeof validateResult === "string") {
-        throw new UnprocessableServerError(validateResult);
+    if (isNaN(parseInt(count!, 10))) {
+        errorMessages.push(`count must be integer.`);
     }
 
-    return {
-        pointer: pointer!,
-        order: order as "asc" | "desc",
-    };
+    return errorMessages.length ? errorMessages.join(", ") : true;
 };

@@ -1,7 +1,7 @@
 import { LinksFunction } from "@remix-run/node";
 import { FC, Fragment } from "react";
 import { appConfig, OnlineActivity } from "../../../../appConfig";
-import { DangerouslySetInnerHtmlValue } from "../../../types/DangerouslySetInnerHtmlValue";
+import { DangerouslySetInnerHtmlValue } from "../../../types/frontend/react/DangerouslySetInnerHtmlValue";
 import { parseMarkdown } from "../../../libraries/markdown/parseMarkdown";
 import { cssLinks } from "../../../utilities/styling/cssLinkDescriptor";
 import { BaseMenuSection } from "./BaseMenuSection";

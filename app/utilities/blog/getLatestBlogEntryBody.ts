@@ -1,5 +1,5 @@
 import { BlogEntryBodyHistory } from "@prisma/client";
-import { DateParsedResponseBody } from "../../types/DateParsedResponseBody";
+import { DateParsedResponseBody } from "../../types/utility/DateParsedResponseBody";
 
 export const getLatestBlogEntryBody = <T extends BlogEntryBodyHistory | DateParsedResponseBody<BlogEntryBodyHistory>>(
     bodies: T[],
