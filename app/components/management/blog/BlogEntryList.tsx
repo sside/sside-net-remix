@@ -13,6 +13,7 @@ interface Props {
     entries: BlogEntryEditItemClientResponse[];
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const sortByKey = (
     posts: BlogEntryEditItemClientResponse[],
     key: keyof BlogEntryEditItemClientResponse,
