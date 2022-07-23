@@ -8,25 +8,17 @@ import { isValidMonth } from "../../libraries/vallidator/isValidMonth";
 import { isValidYear } from "../../libraries/vallidator/isValidYear";
 import { QuerySortOrder } from "../../types/database/QuerySortOrder";
 import { NextBlogEntryDirection } from "./constants/NextBlogEntryDirection";
-import { PrismaJoinedBlogEntry } from "./types/prisma/PrismaJoinedBlogEntry";
 import { PrismaPublishedBlogEntry } from "./types/prisma/PrismaPublishedBlogEntry";
 
 const logger = new Logger("findPublishedBlogEntry");
 
-export async function findOnePublishedBlogEntryById(id: string): Promise<PrismaJoinedBlogEntry> {
+export async function findOnePublishedBlogEntryById(id: string): Promise<PrismaPublishedBlogEntry> {
     logger.log(`Find a blog entry by id`, {
         id,
     });
 
-    const blogEntry = await prisma.blogEntry.findUnique({
-        where: {
-            id,
-        },
-        include: {
-            blogEntryBodyHistories: true,
-            blogEntryBodyDraft: true,
-            blogMetaTags: true,
-        },
+    const blogEntry = await findUnique({
+        id,
     });
 
     if (!blogEntry || !isPublished(blogEntry)) {
@@ -38,20 +30,13 @@ export async function findOnePublishedBlogEntryById(id: string): Promise<PrismaJ
     return blogEntry;
 }
 
-export async function findOnePublishedBlogEntryBySlug(slug: string): Promise<PrismaJoinedBlogEntry> {
+export async function findOnePublishedBlogEntryBySlug(slug: string): Promise<PrismaPublishedBlogEntry> {
     logger.log(`Find a blog entry by slug`, {
         slug,
     });
 
-    const blogEntry = await prisma.blogEntry.findUnique({
-        where: {
-            slug,
-        },
-        include: {
-            blogEntryBodyHistories: true,
-            blogEntryBodyDraft: true,
-            blogMetaTags: true,
-        },
+    const blogEntry = await findUnique({
+        slug,
     });
 
     if (!blogEntry || !isPublished(blogEntry)) {
@@ -76,7 +61,7 @@ export async function findOnePublishedBlogEntryNextSameMetaTagByAndId(
     const { publishAt: existPublishAt } = await findOnePublishedBlogEntryById(blogEntryId);
 
     const order = getOrderByDirection(direction);
-    const nextBlogEntry = await prisma.blogEntry.findFirst({
+    const nextBlogEntry = await findFirst({
         where: {
             ...createWhereQueryPublishAtThreshold(order, existPublishAt!),
             blogMetaTags: {
@@ -87,10 +72,6 @@ export async function findOnePublishedBlogEntryNextSameMetaTagByAndId(
         },
         orderBy: {
             publishAt: order,
-        },
-        include: {
-            blogEntryBodyHistories: true,
-            blogMetaTags: true,
         },
     });
 
@@ -103,6 +84,7 @@ export async function findOnePublishedBlogEntryNextSameMetaTagByAndId(
 
     return nextBlogEntry;
 }
+
 export async function findBothSidePublishedBlogEntry(
     pointerId: string,
 ): Promise<[PrismaPublishedBlogEntry | null, PrismaPublishedBlogEntry | null]> {
@@ -117,6 +99,7 @@ export async function findBothSidePublishedBlogEntry(
 
     return [old, young];
 }
+
 export async function findManyPublishedBlogEntryRecent(
     count = appConfig.blog.indexEntriesCount,
 ): Promise<PrismaPublishedBlogEntry[]> {
@@ -124,18 +107,15 @@ export async function findManyPublishedBlogEntryRecent(
         count,
     });
 
-    return await prisma.blogEntry.findMany({
+    return await findMany({
         where: createWhereQueryOnlyPublished(),
-        include: {
-            blogEntryBodyHistories: true,
-            blogMetaTags: true,
-        },
         orderBy: {
             publishAt: "desc",
         },
         take: count,
     });
 }
+
 export async function findManyPublishedBlogEntryByPaging(
     pointerId: string,
     order: QuerySortOrder,
@@ -149,12 +129,8 @@ export async function findManyPublishedBlogEntryByPaging(
 
     const { publishAt } = await findOnePublishedBlogEntryById(pointerId);
 
-    return prisma.blogEntry.findMany({
+    return await findMany({
         where: { ...createWhereQueryOnlyPublished(), ...createWhereQueryPublishAtThreshold(order, publishAt!) },
-        include: {
-            blogEntryBodyHistories: true,
-            blogMetaTags: true,
-        },
         orderBy: {
             publishAt: order,
         },
@@ -182,7 +158,7 @@ export async function findManyPublishedBlogEntryByMetaTagName(
         blogEntryWhere.push(createWhereQueryPublishAtThreshold(order, publishAt!));
     }
 
-    return await prisma.blogEntry.findMany({
+    return await findMany({
         where: {
             AND: blogEntryWhere,
             blogMetaTags: {
@@ -190,10 +166,6 @@ export async function findManyPublishedBlogEntryByMetaTagName(
                     name: metaTagName,
                 },
             },
-        },
-        include: {
-            blogEntryBodyHistories: true,
-            blogMetaTags: true,
         },
         orderBy: {
             publishAt: order,
@@ -232,7 +204,7 @@ export async function findManyPublishedBlogEntryByYearMonth(
         dateWhereAnd.push(createWhereQueryPublishAtThreshold(order, publishAt!));
     }
 
-    return await prisma.blogEntry.findMany({
+    return await findMany({
         where: {
             ...where,
             AND: dateWhereAnd,
@@ -241,10 +213,6 @@ export async function findManyPublishedBlogEntryByYearMonth(
             publishAt: order,
         },
         take: count,
-        include: {
-            blogEntryBodyHistories: true,
-            blogMetaTags: true,
-        },
     });
 }
 
@@ -261,6 +229,36 @@ export async function findAllBlogEntryOnlyPublishAt(): Promise<Date[]> {
     ).map(({ publishAt }) => publishAt!);
 }
 
+async function findUnique(where: Prisma.BlogEntryWhereUniqueInput): Promise<PrismaPublishedBlogEntry | null> {
+    return await prisma.blogEntry.findUnique({
+        where,
+        include: {
+            blogEntryBodyHistories: true,
+            blogMetaTags: true,
+        },
+    });
+}
+
+async function findFirst(args?: Prisma.BlogEntryFindFirstArgs): Promise<PrismaPublishedBlogEntry | null> {
+    return await prisma.blogEntry.findFirst({
+        ...args,
+        include: {
+            blogEntryBodyHistories: true,
+            blogMetaTags: true,
+        },
+    });
+}
+
+async function findMany(args?: Prisma.BlogEntryFindManyArgs): Promise<PrismaPublishedBlogEntry[]> {
+    return await prisma.blogEntry.findMany({
+        ...args,
+        include: {
+            blogEntryBodyHistories: true,
+            blogMetaTags: true,
+        },
+    });
+}
+
 async function findOnePublishedBlogEntryNext(
     pointerId: string,
     direction: NextBlogEntryDirection,
@@ -273,13 +271,9 @@ async function findOnePublishedBlogEntryNext(
     const { publishAt } = await findOnePublishedBlogEntryById(pointerId);
 
     const order = getOrderByDirection(direction);
-    const next = await prisma.blogEntry.findFirst({
+    const next = await findFirst({
         where: {
             ...createWhereQueryPublishAtThreshold(order, publishAt!),
-        },
-        include: {
-            blogEntryBodyHistories: true,
-            blogMetaTags: true,
         },
         orderBy: {
             publishAt: order,

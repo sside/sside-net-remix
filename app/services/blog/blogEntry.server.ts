@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { InternalServerError, NotFoundServerError, UnprocessableServerError } from "../../error/ServerError";
 import { prisma } from "../../libraries/database/database";
 import { Logger } from "../../libraries/logger/logger";
@@ -18,15 +19,8 @@ export async function findOneBlogEntryById(id: string): Promise<PrismaJoinedBlog
         throw new InternalServerError(`Blog entry id is not defined.`);
     }
 
-    const blogEntry = await prisma.blogEntry.findUnique({
-        where: {
-            id: id,
-        },
-        include: {
-            blogEntryBodyHistories: true,
-            blogEntryBodyDraft: true,
-            blogMetaTags: true,
-        },
+    const blogEntry = await findUnique({
+        id,
     });
 
     if (!blogEntry) {
@@ -39,12 +33,7 @@ export async function findOneBlogEntryById(id: string): Promise<PrismaJoinedBlog
 export async function findAllBlogEntries(): Promise<PrismaJoinedBlogEntry[]> {
     logger.log(`Find all exist blog entries.`);
 
-    return await prisma.blogEntry.findMany({
-        include: {
-            blogEntryBodyHistories: true,
-            blogMetaTags: true,
-            blogEntryBodyDraft: true,
-        },
+    return await findMany({
         orderBy: {
             updatedAt: "desc",
         },
@@ -59,11 +48,9 @@ export async function publishBlogEntry(
     id?: string,
     publishAt?: Date,
 ): Promise<PrismaJoinedBlogEntry> {
-    if (id) {
-        return publishExistBlogEntry(id, title, slug, body, tags, publishAt);
-    } else {
-        return publishNewBlogEntry(title, slug, body, tags, publishAt);
-    }
+    return await (id
+        ? publishExistBlogEntry(id, title, slug, body, tags, publishAt)
+        : publishNewBlogEntry(title, slug, body, tags, publishAt));
 }
 
 export async function upsertBlogEntryDraft(
@@ -83,6 +70,7 @@ export async function upsertBlogEntryDraft(
     });
 
     validatePublishBlogEntry(title, slug, body, tags);
+
     const blogEntry = await (id
         ? findOneBlogEntryById(id)
         : prisma.blogEntry.create({
@@ -127,6 +115,40 @@ export async function deleteOneBlogEntryById(id: string): Promise<void> {
     await prisma.blogEntry.delete({
         where: {
             id: exist.id,
+        },
+    });
+}
+
+async function findUnique(where: Prisma.BlogEntryWhereUniqueInput): Promise<PrismaJoinedBlogEntry | null> {
+    return await prisma.blogEntry.findUnique({
+        where,
+        include: {
+            blogEntryBodyHistories: true,
+            blogEntryBodyDraft: true,
+            blogMetaTags: true,
+        },
+    });
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+async function findFirst(args?: Prisma.BlogEntryFindFirstArgs): Promise<PrismaJoinedBlogEntry | null> {
+    return await prisma.blogEntry.findFirst({
+        ...args,
+        include: {
+            blogEntryBodyHistories: true,
+            blogMetaTags: true,
+            blogEntryBodyDraft: true,
+        },
+    });
+}
+
+async function findMany(args?: Prisma.BlogEntryFindManyArgs): Promise<PrismaJoinedBlogEntry[]> {
+    return await prisma.blogEntry.findMany({
+        ...args,
+        include: {
+            blogEntryBodyHistories: true,
+            blogMetaTags: true,
+            blogEntryBodyDraft: true,
         },
     });
 }

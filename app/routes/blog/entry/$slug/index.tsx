@@ -12,7 +12,6 @@ import {
     findBothSidePublishedBlogEntry,
     findOnePublishedBlogEntryBySlug,
 } from "../../../../services/blog/findPublishedBlogEntry.server";
-import { PrismaJoinedBlogEntry } from "../../../../services/blog/types/prisma/PrismaJoinedBlogEntry";
 import { PrismaPublishedBlogEntry } from "../../../../services/blog/types/prisma/PrismaPublishedBlogEntry";
 import { DateParsedResponseBody } from "../../../../types/utility/DateParsedResponseBody";
 import { getLatestBlogEntryBody } from "../../../../utilities/blog/getLatestBlogEntryBody";
@@ -21,7 +20,7 @@ export const links: LinksFunction = () => [...blogEntryLinks(), ...blogPagerLink
 
 export const loader: LoaderFunction = async ({
     params,
-}): Promise<[PrismaJoinedBlogEntry, PrismaPublishedBlogEntry | null, PrismaPublishedBlogEntry | null]> => {
+}): Promise<[PrismaPublishedBlogEntry, PrismaPublishedBlogEntry | null, PrismaPublishedBlogEntry | null]> => {
     const { slug } = params;
     if (!slug) {
         throw toErrorResponse(new UnprocessableServerError(`slug is not defined`));
@@ -36,7 +35,7 @@ const BlogSlugRoute: FC = () => {
     const [entry, older, younger] =
         useLoaderData<
             [
-                DateParsedResponseBody<PrismaJoinedBlogEntry>,
+                DateParsedResponseBody<PrismaPublishedBlogEntry>,
                 DateParsedResponseBody<PrismaPublishedBlogEntry> | null,
                 DateParsedResponseBody<PrismaPublishedBlogEntry> | null,
             ]
