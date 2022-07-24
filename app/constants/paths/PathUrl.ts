@@ -4,11 +4,17 @@ import { createBlogPagingQuery } from "../../utilities/blog/blogPagingQuery";
 export const PathUrl = {
     blog: {
         root: `/blog/`,
-        rootPaging: (paging: BlogPagingQuery) => `/blog/?` + createBlogPagingQuery(paging),
-        entryBySlug: (slug: string) => `/blog/entry/${slug}/`,
+        rootPaging: (paging: BlogPagingQuery) => PathUrl.blog.root + "?" + createBlogPagingQuery(paging),
+        entryBySlug: (slug: string) => PathUrl.blog.root + `entry/${slug}/`,
         archive: {
-            byYear: (year: number) => `/blog/archive/${year}/`,
-            byYearMonth: (year: number, month: number) => `/blog/archive/${year}/${String(month).padStart(2, "0")}/`,
+            root: () => PathUrl.blog.root + `archive/`,
+            byYear: (year: number) => PathUrl.blog.archive.root() + `${year}/`,
+            byYearPaging: (year: number, paging: BlogPagingQuery) =>
+                PathUrl.blog.archive.byYear(year) + "?" + createBlogPagingQuery(paging),
+            byYearMonth: (year: number, month: number) =>
+                PathUrl.blog.archive.root() + `${year}/${String(month).padStart(2, "0")}/`,
+            byYearMonthPaging: (year: number, month: number, paging: BlogPagingQuery) =>
+                PathUrl.blog.archive.byYearMonth(year, month) + "?" + createBlogPagingQuery(paging),
         },
         metaTag: {
             byMetaTag: (metaTag: string) => `/blog/meta_tag/${metaTag}/`,
@@ -19,14 +25,17 @@ export const PathUrl = {
     management: {
         root: `/management`,
         blog: {
-            create: `/management/blog/create/`,
-            editById: (id: string) => `/management/blog/${id}/`,
-            deleteById: (id: string) => `/management/blog/${id}/delete/`,
+            root: () => PathUrl.management.root + `blog/`,
+            create: () => PathUrl.management.blog.root() + `create/`,
+            editById: (id: string) => PathUrl.management.blog.root() + `${id}/`,
+            deleteById: (id: string) => PathUrl.management.blog.root() + `${id}/delete/`,
         },
         metaTag: {
-            create: `/management/meta_tag/create/`,
-            updateById: (id: string) => `/management/meta_tag/${id}/update/`,
-            deleteById: (id: string) => `/management/meta_tag/${id}/delete/`,
+            root: () => PathUrl.management + `meta_tag/`,
+            create: () => PathUrl.management.metaTag.root() + `create/`,
+            byId: (id: string) => PathUrl.management.metaTag.root() + `${id}/`,
+            updateById: (id: string) => PathUrl.management.metaTag.byId(id) + `update/`,
+            deleteById: (id: string) => PathUrl.management.metaTag.byId(id) + `delete/`,
         },
     },
 };
