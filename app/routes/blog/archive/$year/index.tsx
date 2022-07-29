@@ -9,7 +9,7 @@ import {
 import { BlogPager, BlogPagerItem, links as blogPagerLinks } from "../../../../components/blog/blogEntry/BlogPager";
 import { PathUrl } from "../../../../constants/paths/PathUrl";
 import { NotFoundServerError, UnprocessableServerError } from "../../../../error/ServerError";
-import { parseIso8601ToJst } from "../../../../libraries/datetime";
+import { getFullDateTime, parseIso8601ToJst } from "../../../../libraries/datetime";
 import { isValidYear } from "../../../../libraries/vallidator/isValidYear";
 import { findManyPublishedBlogEntryByYearMonth } from "../../../../services/blog/findPublishedBlogEntry.server";
 import { PrismaPublishedBlogEntry } from "../../../../services/blog/types/prisma/PrismaPublishedBlogEntry";
@@ -58,7 +58,7 @@ export const loader: LoaderFunction = async ({
     return [entries, youngerEntries[1], olderEntries[1]];
 };
 
-export const Year: FC = () => {
+const Year: FC = () => {
     const [entries, younger, older] =
         useLoaderData<
             [
@@ -81,7 +81,7 @@ export const Year: FC = () => {
         const { id, publishAt } = blogEntry;
 
         return {
-            url: PathUrl.blog.archive.byYearPaging(parseIso8601ToJst(publishAt!).getFullYear(), {
+            url: PathUrl.blog.archive.byYearPaging(getFullDateTime(parseIso8601ToJst(publishAt!)).year, {
                 order,
                 count: appConfig.blog.pagingItemCount,
                 pointerId: id,

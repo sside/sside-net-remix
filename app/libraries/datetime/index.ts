@@ -1,4 +1,4 @@
-import { DateTime, DurationLikeObject } from "luxon";
+import { DateTime, DurationLikeObject, ToObjectOutput } from "luxon";
 import { isValidMonth } from "../vallidator/isValidMonth";
 import { isValidYear } from "../vallidator/isValidYear";
 
@@ -34,6 +34,10 @@ export const toIso8601DateTime = (date: Date): string => parseJstFromDate(date).
 export const toIso8601Date = (date: Date): string => parseJstFromDate(date).toISODate();
 
 export const formatDate = (date: Date, format: Format): string => parseJstFromDate(date).toFormat(format);
+
+export const getFullDateTime = (date: Date): ToObjectOutput => {
+    return parseJstFromDate(date).toObject();
+};
 
 export const isBetweenDate = (target: Date, a: Date, b: Date): boolean => {
     const [firstMilliSecond, lastMilliSecond] = [a, b].map((date) => date.getTime()).sort((a, b) => a - b);
