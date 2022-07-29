@@ -15,7 +15,7 @@ export const sortPublishedBlogEntries = <
         } else if (a instanceof Date && b instanceof Date) {
             return a.getTime() - b.getTime();
         } else {
-            throw new Error(`[sortPublishedBlogEntries]: Data type is not valid.`);
+            throw new Error(`[${sortPublishedBlogEntries.name}]: 入力されたデータの型が合わず、ソートが行えません。`);
         }
     });
 

@@ -6,7 +6,7 @@ export const getLatestBlogEntryBody = <T extends BlogEntryBodyHistory | DatePars
 ): T => {
     const errorMessagePrefix = `[${getLatestBlogEntryBody.name}]: `;
     if (!bodies.length) {
-        throw new Error(errorMessagePrefix + `Blog entry body count is zero.`);
+        throw new Error(errorMessagePrefix + `入力されたBlog entryの数がゼロです。`);
     }
 
     return bodies.sort(({ createdAt: a }, { createdAt: b }) => {
@@ -15,7 +15,7 @@ export const getLatestBlogEntryBody = <T extends BlogEntryBodyHistory | DatePars
         } else if (a instanceof Date && b instanceof Date) {
             return b.getTime() - a.getTime();
         } else {
-            throw new Error(errorMessagePrefix + `Input type is not string or Date.`);
+            throw new Error(errorMessagePrefix + `入力されたBlogEntryBodyの型が不正です、`);
         }
     })[0];
 };

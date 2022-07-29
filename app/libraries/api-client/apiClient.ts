@@ -12,7 +12,9 @@ const apiClient = async <T>(url: string, method: HttpMethodName, body?: object) 
     const { ok, status, json, url: requestUrl, body: responseBody, bodyUsed } = response;
     if (!ok) {
         throw new Error(
-            `[apiClient]: Request error. Status: ${status}, Response: ${responseBody?.toString()}, URL: ${requestUrl}`,
+            `[${
+                apiClient.name
+            }]: APIコール時にエラーが発生しました。Status: ${status}, Response: ${responseBody?.toString()}, URL: ${requestUrl}`,
         );
     }
     console.log({ bodyUsed });

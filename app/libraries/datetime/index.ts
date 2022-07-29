@@ -47,7 +47,7 @@ export const isBetweenDate = (target: Date, a: Date, b: Date): boolean => {
 
 export const createMonthRange = (year: number, month: number): [Date, Date] => {
     if (!isValidYear(year) || !isValidMonth(month)) {
-        throw new Error(`Not valid year or month. year: ${year}, month: ${month}`);
+        throw new Error(`年月の値が正しくありません。year: ${year}, month: ${month}`);
     }
 
     const jst = setJst(DateTime.local(year, month, 15));
@@ -56,7 +56,7 @@ export const createMonthRange = (year: number, month: number): [Date, Date] => {
 
 export const createYearRange = (year: number): [Date, Date] => {
     if (!isValidYear(year)) {
-        throw new Error(`Not valid year. Year:${year}`);
+        throw new Error(`年の値が正しくありません。year:${year}`);
     }
     const jst = setJst(DateTime.local(year, 6, 15));
     return [jst.startOf("year").toJSDate(), jst.endOf("year").toJSDate()];

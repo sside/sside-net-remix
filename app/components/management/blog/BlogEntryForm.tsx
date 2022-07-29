@@ -48,7 +48,7 @@ export const blogEntryFormAction: ActionFunction = async ({ request }) => {
             await upsertBlogEntryDraft(title, slug, body, parsedTags, blogEntryId || undefined);
             break;
         default:
-            throw new ForbiddenServerError(`Blog post submit type is not valid`, {
+            throw new ForbiddenServerError(`Submit typeが不正か未定義です。`, {
                 submitType,
             });
     }

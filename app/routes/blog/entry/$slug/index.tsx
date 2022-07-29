@@ -7,7 +7,7 @@ import {
 } from "../../../../components/blog/blogEntry/BlogEntry";
 import { BlogPager, BlogPagerItem, links as blogPagerLinks } from "../../../../components/blog/blogEntry/BlogPager";
 import { PathUrl } from "../../../../constants/paths/PathUrl";
-import { toErrorResponse, UnprocessableServerError } from "../../../../error/ServerError";
+import { UnprocessableServerError } from "../../../../error/ServerError";
 import {
     findBothSidePublishedBlogEntry,
     findOnePublishedBlogEntryBySlug,
@@ -23,7 +23,9 @@ export const loader: LoaderFunction = async ({
 }): Promise<[PrismaPublishedBlogEntry, PrismaPublishedBlogEntry | null, PrismaPublishedBlogEntry | null]> => {
     const { slug } = params;
     if (!slug) {
-        throw toErrorResponse(new UnprocessableServerError(`slug is not defined`));
+        throw new UnprocessableServerError(`slugが未定義です。`, {
+            slug,
+        });
     }
 
     const entry = await findOnePublishedBlogEntryBySlug(slug);
@@ -36,13 +38,13 @@ const BlogSlugRoute: FC = () => {
         useLoaderData<
             [
                 DateParsedResponseBody<PrismaPublishedBlogEntry>,
-                DateParsedResponseBody<PrismaPublishedBlogEntry> | null,
-                DateParsedResponseBody<PrismaPublishedBlogEntry> | null,
+                DateParsedResponseBody<PrismaPublishedBlogEntry> | undefined,
+                DateParsedResponseBody<PrismaPublishedBlogEntry> | undefined,
             ]
         >();
 
     const createPagerItem = (
-        entry: DateParsedResponseBody<PrismaPublishedBlogEntry> | null | undefined,
+        entry?: DateParsedResponseBody<PrismaPublishedBlogEntry>,
         prefix?: string,
     ): BlogPagerItem | undefined =>
         entry

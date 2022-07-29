@@ -36,7 +36,7 @@ export const loader: LoaderFunction = async ({
     }
 
     if (!blogEntries.length) {
-        throw new NotFoundServerError(`Blog entries not found.`, {
+        throw new NotFoundServerError(`Blog entryが見つかりませんでした。`, {
             ...pagingQuery,
         });
     }

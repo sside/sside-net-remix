@@ -8,15 +8,15 @@ import {
 } from "../../../../components/blog/blogEntry/BlogEntry";
 import { BlogPager, BlogPagerItem } from "../../../../components/blog/blogEntry/BlogPager";
 import { PathUrl } from "../../../../constants/paths/PathUrl";
-import { NotFoundServerError, toErrorResponse } from "../../../../error/ServerError";
+import { NotFoundServerError } from "../../../../error/ServerError";
 import { NextBlogEntryDirection } from "../../../../services/blog/constants/NextBlogEntryDirection";
 import {
     findManyPublishedBlogEntryByMetaTagName,
     findOnePublishedBlogEntryNextSameMetaTagByAndId,
 } from "../../../../services/blog/findPublishedBlogEntry.server";
 import { PrismaPublishedBlogEntry } from "../../../../services/blog/types/prisma/PrismaPublishedBlogEntry";
-import { DateParsedResponseBody } from "../../../../types/utility/DateParsedResponseBody";
 import { QuerySortOrder } from "../../../../types/database/QuerySortOrder";
+import { DateParsedResponseBody } from "../../../../types/utility/DateParsedResponseBody";
 import { sortPublishedBlogEntries } from "../../../../utilities/blog/sortPublishedBlogEntries";
 
 export const links: LinksFunction = () => blogEntryLinks();
@@ -27,7 +27,9 @@ export const loader: LoaderFunction = async ({
 }): Promise<[PrismaPublishedBlogEntry[], PrismaPublishedBlogEntry | null, PrismaPublishedBlogEntry | null]> => {
     const { metaTagName } = params;
     if (!metaTagName) {
-        throw toErrorResponse(new NotFoundServerError(`Blog meta tag id is not defined. Meta tag name:${metaTagName}`));
+        throw new NotFoundServerError(`Blog meta tagのidが未定義です。`, {
+            metaTagName,
+        });
     }
     const queries = new URL(request.url).searchParams;
     const pointerId = queries.get("pointerId");
@@ -42,9 +44,12 @@ export const loader: LoaderFunction = async ({
     );
 
     if (!entries || !entries.length) {
-        throw new NotFoundServerError(
-            `Blog entries not found by meta tag. Meta tag name: ${metaTagName}, pointerId: ${pointerId}, order: ${order}, count: ${count}`,
-        );
+        throw new NotFoundServerError(`Blog entryが見つかりませんでした。`, {
+            metaTagName,
+            pointerId,
+            order,
+            count,
+        });
     }
 
     const sorted = sortPublishedBlogEntries(entries, "asc");

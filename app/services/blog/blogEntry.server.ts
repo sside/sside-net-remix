@@ -16,7 +16,7 @@ export async function findOneBlogEntryById(id: string): Promise<PrismaJoinedBlog
     });
 
     if (!id) {
-        throw new InternalServerError(`Blog entry id is not defined.`);
+        throw new InternalServerError(`Blog entryのidが未定義です。`);
     }
 
     const blogEntry = await findUnique({
@@ -24,7 +24,9 @@ export async function findOneBlogEntryById(id: string): Promise<PrismaJoinedBlog
     });
 
     if (!blogEntry) {
-        throw new NotFoundServerError(`Blog entry was not found. Id: ${id}`);
+        throw new NotFoundServerError(`Blog entryが見つかりませんでした。`, {
+            id,
+        });
     }
 
     return blogEntry;
@@ -160,7 +162,9 @@ function validatePublishBlogEntry(title: string, slug: string, body: string, tag
         validateBlogEntryMetaTags(tags),
     ].filter((value) => typeof value === "string");
     if (errorMessages.length) {
-        throw new UnprocessableServerError(`Validation error. Error messages:${errorMessages.join(", ")}`);
+        throw new UnprocessableServerError(`Blog entryのバリデーションに失敗しました。`, {
+            errorMessages: errorMessages.join(", "),
+        });
     }
 }
 
@@ -225,7 +229,7 @@ async function publishExistBlogEntry(
         },
     });
     if (!existBlogEntry) {
-        throw new NotFoundServerError(`Exist entry was not found.`, {
+        throw new NotFoundServerError(`Blog entryが見つかりませんでした。`, {
             id,
         });
     }

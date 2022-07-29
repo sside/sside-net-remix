@@ -27,7 +27,7 @@ export const loader: LoaderFunction = async ({
     const { year } = params;
 
     if (!year || !isValidYear(parseInt(year, 10))) {
-        throw new UnprocessableServerError(`Year path is not valid.`, {
+        throw new UnprocessableServerError(`パスパラメータ"year"が正しくありません。`, {
             year,
         });
     }
@@ -37,7 +37,7 @@ export const loader: LoaderFunction = async ({
     const entries = await findManyPublishedBlogEntryByYearMonth(parsedYear, undefined, pointerId, order, count);
 
     if (!entries.length) {
-        throw new NotFoundServerError(`By year, blog entries not found.`, {
+        throw new NotFoundServerError(`Blog entryが見つかりませんでした。.`, {
             year,
         });
     }

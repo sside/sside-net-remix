@@ -22,7 +22,7 @@ export async function findOnePublishedBlogEntryById(id: string): Promise<PrismaP
     });
 
     if (!blogEntry || !isPublished(blogEntry)) {
-        throw new NotFoundServerError(`Blog entry was not found.`, {
+        throw new NotFoundServerError(`Blog entryが見つかりませんでした。`, {
             id,
         });
     }
@@ -40,7 +40,7 @@ export async function findOnePublishedBlogEntryBySlug(slug: string): Promise<Pri
     });
 
     if (!blogEntry || !isPublished(blogEntry)) {
-        throw new NotFoundServerError(`Blog entry was not found.`, {
+        throw new NotFoundServerError(`Blog entryが見つかりませんでした。`, {
             slug,
         });
     }
@@ -76,7 +76,7 @@ export async function findOnePublishedBlogEntryNextSameMetaTagByAndId(
     });
 
     if (!nextBlogEntry) {
-        throw new NotFoundServerError(`Next meta tag entry not found.`, {
+        throw new NotFoundServerError(`同じBlog meta tagで次のentryが見つかりませんでした。`, {
             blogEntryId,
             direction,
         });
@@ -281,7 +281,7 @@ async function findOnePublishedBlogEntryNext(
     });
 
     if (!next) {
-        throw new NotFoundServerError(`Next blog entry not found.`, {
+        throw new NotFoundServerError(`次のBlog entryが見つかりませんでした。`, {
             pointerId,
             direction,
         });
@@ -312,12 +312,12 @@ function createWhereQueryPublishAtThreshold(order: QuerySortOrder, publishAt: Da
 
 function createYearOrYearMonthRange(year: number, month?: number): [Date, Date] {
     if (!isValidYear(year)) {
-        throw new UnprocessableServerError(`Year is not valid value.`, {
+        throw new UnprocessableServerError(`年の値が正しくありません。`, {
             year,
         });
     }
     if (month && !isValidMonth(month)) {
-        throw new UnprocessableServerError(`Month is not valid value.`, {
+        throw new UnprocessableServerError(`月の値が正しくありません。`, {
             month,
         });
     }

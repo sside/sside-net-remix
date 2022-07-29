@@ -1,4 +1,5 @@
 import validator from "validator";
+import { QuerySortOrder } from "../../types/database/QuerySortOrder";
 import { Nullable } from "../../types/utility/utility-type";
 import isUUID = validator.isUUID;
 
@@ -9,13 +10,13 @@ export const validatePagingQuery = (
 ): true | string => {
     const errorMessages: string[] = [];
     if (!pointer) {
-        errorMessages.push(`pointer is not defined.`);
+        errorMessages.push(`"pointer"が未定義です。`);
     }
     if (!order) {
-        errorMessages.push(`order is not defined.`);
+        errorMessages.push(`"order"が未定義です。`);
     }
     if (!count) {
-        errorMessages.push(`count is not defied.`);
+        errorMessages.push(`"count"が未定義です。`);
     }
 
     if (errorMessages.length) {
@@ -23,13 +24,18 @@ export const validatePagingQuery = (
     }
 
     if (!isUUID(pointer!, 4)) {
-        errorMessages.push(`pointer is not valid UUIDv4.`);
+        errorMessages.push(`"pointer"がUUIDv4フォーマットではありません。`);
     }
-    if (order !== "asc" && order !== "desc") {
-        errorMessages.push(`order must be asc or desc.`);
+    const orderValues = Object.values(QuerySortOrder);
+    if (!orderValues.includes(order as QuerySortOrder)) {
+        errorMessages.push(
+            `"order"が${Object.values(QuerySortOrder)
+                .map((value) => `"${value}"`)
+                .join(", ")}のいずれでもありません。`,
+        );
     }
     if (isNaN(parseInt(count!, 10))) {
-        errorMessages.push(`count must be integer.`);
+        errorMessages.push(`"count"が整数ではありません。`);
     }
 
     return errorMessages.length ? errorMessages.join(", ") : true;

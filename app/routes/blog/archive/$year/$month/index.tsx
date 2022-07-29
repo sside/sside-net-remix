@@ -29,7 +29,7 @@ export const loader: LoaderFunction = async ({
 > => {
     const { year, month } = params;
     if (!year || !month) {
-        throw new UnprocessableServerError(`year or month path parameter is not defined.`, {
+        throw new UnprocessableServerError(`パスパラメータ"year", "month"のいずれかが正しくないか未定義です。`, {
             year,
             month,
         });
@@ -38,7 +38,7 @@ export const loader: LoaderFunction = async ({
     const [parsedYear, parsedMonth] = [year, month].map((value) => parseInt(value, 10));
 
     if (!(isValidYear(parsedYear) && isValidMonth(parsedMonth))) {
-        throw new BadRequestServerError(`year or month path parameter is not valid.`, {
+        throw new BadRequestServerError(`パスパラメータ"year", "month"の値が正しくありません。`, {
             parsedYear,
             parsedMonth,
         });
@@ -49,7 +49,7 @@ export const loader: LoaderFunction = async ({
 
     const entries = await findManyPublishedBlogEntryByYearMonth(parsedYear, parsedMonth, pointerId, order, count);
     if (!entries.length) {
-        throw new NotFoundServerError(`Blog entries not found.`, {
+        throw new NotFoundServerError(`Blog entryが見つかりませんでした。`, {
             year,
             month,
             pointerId,

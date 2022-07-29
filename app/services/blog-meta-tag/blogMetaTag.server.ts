@@ -17,7 +17,7 @@ export async function findOneBlogMetaTagById(id: string): Promise<BlogMetaTag> {
     });
 
     if (!blogMetaTag) {
-        throw new NotFoundServerError(`Blog meta tag not found.`, {
+        throw new NotFoundServerError(`Blog meta tagが見つかりませんでした。`, {
             id,
         });
     }
@@ -37,7 +37,7 @@ export async function findOneBlogMetaTagByName(name: string): Promise<BlogMetaTa
     });
 
     if (!blogMetaTag) {
-        throw new NotFoundServerError(`Blog meta tag not found.`, {
+        throw new NotFoundServerError(`Blog metaが見つかりませんでした。.`, {
             name,
         });
     }
@@ -72,7 +72,7 @@ export async function createBlogMetaTag(name: string): Promise<BlogMetaTag> {
         },
     });
     if (exist) {
-        throw new InternalServerError(`Blog meta tag is already exists.`, {
+        throw new InternalServerError(`Blog meta tagは既に作成済みです。`, {
             name,
         });
     }
@@ -91,7 +91,7 @@ export async function updateBlogMetaTag(id: string, name: string): Promise<BlogM
 
     const exist = await findOneBlogMetaTagById(id);
     if (!exist) {
-        throw new NotFoundServerError(`Blog meta tag is not exists`, {
+        throw new NotFoundServerError(`Blog meta tagが見つかりませんでした。`, {
             id,
         });
     }
@@ -105,7 +105,7 @@ export async function updateBlogMetaTag(id: string, name: string): Promise<BlogM
         },
     });
     if (duplicated) {
-        throw new ConflictServerError(`Blog meta tag is already exists.`, {
+        throw new ConflictServerError(`Blog meta tagは既に作成済みです。`, {
             name,
         });
     }
