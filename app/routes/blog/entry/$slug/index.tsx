@@ -46,13 +46,17 @@ const BlogSlugRoute: FC = () => {
     const createPagerItem = (
         entry?: DateParsedResponseBody<PrismaPublishedBlogEntry>,
         prefix?: string,
-    ): BlogPagerItem | undefined =>
-        entry
-            ? {
-                  label: (prefix || "") + getLatestBlogEntryBody(entry.blogEntryBodyHistories).title,
-                  url: PathUrl.blog.entryBySlug(entry.slug),
-              }
-            : undefined;
+    ): BlogPagerItem | undefined => {
+        if (!entry) {
+            return undefined;
+        }
+
+        const { blogEntryBodyHistories, slug } = entry;
+        return {
+            label: (prefix || "") + getLatestBlogEntryBody(blogEntryBodyHistories).title,
+            url: PathUrl.blog.entryBySlug(slug),
+        };
+    };
 
     const nextItem = createPagerItem(older, "next: ");
     const previousItem = createPagerItem(younger, "previous: ");
