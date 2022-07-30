@@ -27,7 +27,7 @@ export const links: LinksFunction = () => [
     ...createMetaTagButtonLinks(),
 ];
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async () => {
     const entries = await findAllBlogEntries();
     const metaTags = await findAllBlogMetaTags();
     return json([
@@ -44,7 +44,7 @@ const Admin: FC = () => {
             <h1 className={`management__header`}>management menu</h1>
             <section className={`management__section`}>
                 <h2 className={`management__section--header`}>blog posts</h2>
-                <LinkButton to={PathUrl.management.blog.create}>CREATE ENTRY</LinkButton>
+                <LinkButton to={PathUrl.management.blog.create()}>CREATE ENTRY</LinkButton>
                 <BlogEntryList entries={entries} />
             </section>
             <section className={`management__section`}>

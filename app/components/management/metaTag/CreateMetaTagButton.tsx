@@ -23,7 +23,7 @@ export const CreateMetaTagButton: FC = () => {
         }
 
         try {
-            await putClient(PathUrl.management.metaTag.create, new CreateNewMetaTagRequest(tagName));
+            await putClient(PathUrl.management.metaTag.create(), new CreateNewMetaTagRequest(tagName));
         } catch (e) {
             console.log(e);
             alert(`Meta tag creation failed`);
