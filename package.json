@@ -6,10 +6,12 @@
     "sideEffects": false,
     "scripts": {
         "build": "remix build",
-        "start": "remix-serve build",
+        "start": "run-s prisma:migrate start:server",
+        "start:server": "remix-serve build",
         "dev": "cross-env PORT=33000 run-s dev:prisma:migrate dev:remix",
         "dev:remix": "cross-env PORT=33000 concurrently \"remix dev\" \"sass --watch --no-source-map app/:app\"",
-        "dev:prisma:migrate": "prisma migrate dev",
+        "prisma:dev": "prisma migrate dev",
+        "prisma:migrate": "prisma migrate deploy",
         "lint": "eslint app",
         "prepare": "husky install",
         "typecheck": "tsc -b"

@@ -1,4 +1,5 @@
 .idea
+.docker
 app/**/*.css.map
 
 node_modules
