@@ -12,18 +12,18 @@ export class Logger {
     }
 
     log(message: string, logObject?: LogObject): void {
-        this.pino.info(message, logObject);
+        this.pino.info(logObject, message);
     }
 
     debug(message: string, logObject?: LogObject): void {
-        this.pino.debug(message, logObject);
+        this.pino.debug(logObject, message);
     }
 
     warn(message: string, logObject?: LogObject): void {
-        this.pino.warn(message, logObject);
+        this.pino.warn(logObject, message);
     }
 
     error(message: string, logObject?: LogObject): void {
-        this.pino.error(message, logObject);
+        this.pino.error(logObject, message);
     }
 }
