@@ -65,47 +65,90 @@
 .blogEntryBody h1 {
   font-size: 2.26rem;
   font-weight: var(--fontWeightThin);
-  border-left: solid 0.6rem var(--base0);
+  border-left: solid 0.3rem var(--base0);
   padding-left: 0.4rem;
-  margin-left: 0;
+  margin-left: 0rem;
+  line-height: 2.2rem;
 }
 
+@media screen and (max-width: 600px) {
+  .blogEntryBody h1 {
+    font-weight: var(--fontWeightMobileThin);
+    font-size: 1.9rem;
+  }
+}
 .blogEntryBody h2 {
   font-size: 1.875rem;
   font-weight: var(--fontWeightThin);
-  border-left: solid 0.6rem var(--base0);
+  border-left: solid 0.3rem var(--base0);
   padding-left: 0.4rem;
   margin-left: 0.5rem;
+  line-height: 2rem;
 }
 
+@media screen and (max-width: 600px) {
+  .blogEntryBody h2 {
+    font-weight: var(--fontWeightMobileThin);
+    font-size: 1.625rem;
+  }
+}
 .blogEntryBody h3 {
   font-size: 1.56rem;
   font-weight: var(--fontWeightThin);
-  border-left: solid 0.6rem var(--base0);
+  border-left: solid 0.3rem var(--base0);
   padding-left: 0.4rem;
   margin-left: 1rem;
+  line-height: 1.8rem;
 }
 
+@media screen and (max-width: 600px) {
+  .blogEntryBody h3 {
+    font-weight: var(--fontWeightMobileThin);
+    font-size: 1.4rem;
+  }
+}
 .blogEntryBody h4 {
   font-size: 1.315rem;
   font-weight: var(--fontWeightThin);
-  border-left: solid 0.6rem var(--base0);
+  border-left: solid 0.3rem var(--base0);
   padding-left: 0.4rem;
   margin-left: 1.5rem;
+  line-height: 1.6rem;
 }
 
+@media screen and (max-width: 600px) {
+  .blogEntryBody h4 {
+    font-weight: var(--fontWeightMobileThin);
+    font-size: 1.225rem;
+  }
+}
 .blogEntryBody h5 {
   font-size: 1.14rem;
   font-weight: var(--fontWeightThin);
-  border-left: solid 0.6rem var(--base0);
+  border-left: solid 0.3rem var(--base0);
   padding-left: 0.4rem;
   margin-left: 2rem;
+  line-height: 1.4rem;
 }
 
+@media screen and (max-width: 600px) {
+  .blogEntryBody h5 {
+    font-weight: var(--fontWeightMobileThin);
+    font-size: 1.1rem;
+  }
+}
 .blogEntryBody h6 {
   font-size: 1.035rem;
   font-weight: var(--fontWeightThin);
-  border-left: solid 0.6rem var(--base0);
+  border-left: solid 0.3rem var(--base0);
   padding-left: 0.4rem;
   margin-left: 2.5rem;
+  line-height: 1.2rem;
+}
+
+@media screen and (max-width: 600px) {
+  .blogEntryBody h6 {
+    font-weight: var(--fontWeightMobileThin);
+    font-size: 1.025rem;
+  }
 }

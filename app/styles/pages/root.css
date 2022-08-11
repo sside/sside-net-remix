@@ -3,6 +3,7 @@ body {
   color: var(--base01);
   font-family: var(--fontFamilyContent);
   font-size: var(--fontSizeBase);
+  overflow-wrap: anywhere;
 }
 
 body a {

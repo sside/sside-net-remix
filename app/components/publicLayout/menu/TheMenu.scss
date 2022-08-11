@@ -1,9 +1,16 @@
+@import "../../../styles/mixins/media-query";
+
 .theMenu {
     grid-area: menu;
     display: grid;
     height: min-content;
+    grid-gap: 0.7rem;
 
     * {
         font-weight: var(--fontWeightThin);
+
+        @include mobile {
+            font-weight: var(--fontWeightMobileThin);
+        }
     }
 }

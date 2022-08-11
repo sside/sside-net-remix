@@ -1,11 +1,22 @@
+@import "../../../styles/mixins/media-query";
+
 .theHeader {
     grid-area: header;
     padding: 3rem 0 2rem 1rem;
+
+    @include mobile {
+        padding: 1rem;
+    }
 
     &__title {
         text-decoration: none;
         color: var(--base03);
         font-size: var(--fontSizeLarge);
         font-weight: var(--fontWeightThin);
+
+        @include mobile {
+            text-align: center;
+            font-size: var(--fontSizeExtraLarge);
+        }
     }
 }

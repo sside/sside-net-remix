@@ -6,6 +6,7 @@
 
     /*font size*/
     --fontSizeBase: 16px;
+    --fontSizeMobileBase: 14px;
     --fontSizeExtraLarge: 2rem;
     --fontSizeLarge: 1.5rem;
     --fontSizeSmall: 0.8rem;
@@ -16,4 +17,5 @@
     --fontWeightNormal: 400;
     --fontWeightBold: 700;
     --fontWeightThin: 100;
+    --fontWeightMobileThin: 200;
 }

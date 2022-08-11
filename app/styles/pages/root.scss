@@ -4,6 +4,8 @@ body {
     font-family: var(--fontFamilyContent);
     font-size: var(--fontSizeBase);
 
+    overflow-wrap: anywhere;
+
     a {
         text-decoration: underline;
     }

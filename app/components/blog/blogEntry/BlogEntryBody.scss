@@ -1,5 +1,8 @@
+@import "../../../styles/mixins/media-query";
+
 .blogEntryBody {
     line-height: 1.5rem;
+
     * {
         margin-bottom: 1rem;
     }
@@ -68,15 +71,17 @@
         $multiply: 7 - $level;
         font-size: 1rem + (0.035 * $multiply * $multiply);
         font-weight: var(--fontWeightThin);
-        border-left: solid 0.6rem var(--base0);
+        border-left: solid 0.3rem var(--base0);
         padding-left: 0.4rem;
         margin-left: 0rem + (($level - 1) * 0.5);
+        line-height: 1rem + (0.2 * $multiply);
+        @include mobile {
+            font-weight: var(--fontWeightMobileThin);
+            font-size: 1rem + (0.025 * $multiply * $multiply);
+        }
     }
 }
 
-@include blogEntryBodyHead(1);
-@include blogEntryBodyHead(2);
-@include blogEntryBodyHead(3);
-@include blogEntryBodyHead(4);
-@include blogEntryBodyHead(5);
-@include blogEntryBodyHead(6);
+@for $i from 1 through 6 {
+    @include blogEntryBodyHead($i);
+}

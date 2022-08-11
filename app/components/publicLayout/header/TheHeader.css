@@ -3,9 +3,21 @@
   padding: 3rem 0 2rem 1rem;
 }
 
+@media screen and (max-width: 600px) {
+  .theHeader {
+    padding: 1rem;
+  }
+}
 .theHeader__title {
   text-decoration: none;
   color: var(--base03);
   font-size: var(--fontSizeLarge);
   font-weight: var(--fontWeightThin);
+}
+
+@media screen and (max-width: 600px) {
+  .theHeader__title {
+    text-align: center;
+    font-size: var(--fontSizeExtraLarge);
+  }
 }

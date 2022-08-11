@@ -1,3 +1,5 @@
+@import "../../mixins/media-query";
+
 body.app {
     display: grid;
     grid-template-areas:
@@ -5,8 +7,19 @@ body.app {
         "menu main"
         "footer main";
     grid-template-columns: 17rem 1fr;
-    grid-template-rows: min-content 1fr min-content;
+    grid-template-rows: min-content 1fr;
     min-height: 100vh;
+    width: 100vw;
+
+    @include mobile {
+        grid-template-areas:
+            "header"
+            "main"
+            "menu"
+            "footer";
+        grid-template-columns: 1fr;
+        width: 100vw;
+    }
 }
 
 .blog {
@@ -18,4 +31,8 @@ body.app {
     background-color: var(--base03);
     color: var(--base0);
     padding: 2rem 3rem;
+
+    @include mobile {
+        padding: 1rem;
+    }
 }
