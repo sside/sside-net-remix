@@ -11,6 +11,7 @@ interface AppConfig {
     global: {
         siteName: string;
         ownerName: string;
+        siteRoot: string;
     };
     auth: {
         sessionExpireDay: number;
@@ -21,6 +22,9 @@ interface AppConfig {
         maxTitleLength: number;
         maxSlugLength: number;
         maxMetaTagLength: number;
+        feed: {
+            recentEntriesCount: number;
+        };
     };
     menu: {
         about: {
@@ -40,6 +44,7 @@ export const appConfig: AppConfig = {
     global: {
         siteName: "sside.net",
         ownerName: "sside",
+        siteRoot: "https://sside.net/",
     },
     auth: {
         sessionExpireDay: 365,
@@ -50,6 +55,9 @@ export const appConfig: AppConfig = {
         maxTitleLength: 512,
         maxSlugLength: 255,
         maxMetaTagLength: 64,
+        feed: {
+            recentEntriesCount: 20,
+        },
     },
     menu: {
         about: {
@@ -70,7 +78,7 @@ export const appConfig: AppConfig = {
                 },
                 {
                     serviceName: `Xbox`,
-                    accountName: `sside net`,
+                    accountName: `ssidenet`,
                     serviceUrl: new URL(`https://live.xbox.com/ja-JP/Profile?Gamertag=sside%20net/`),
                 },
                 { serviceName: `Nintendo`, accountName: `sside [Switch friend code: SW-7280-6189-9608]` },

@@ -1,5 +1,7 @@
+import { appConfig } from "../../../appConfig";
 import { BlogPagingQuery } from "../../types/blog/BlogPagingQuery";
 import { createBlogPagingQuery } from "../../utilities/blog/blogPagingQuery";
+import { removeTrailingSlash } from "../../utilities/url/removeTrailingSlash";
 
 export const PathUrl = {
     blog: {
@@ -21,9 +23,13 @@ export const PathUrl = {
             byMetaTagWithPaging: (metaTag: string, paging: BlogPagingQuery) =>
                 `/blog/meta_tag/${metaTag}/?` + createBlogPagingQuery(paging),
         },
+        feed: {
+            root: () => removeTrailingSlash(appConfig.global.siteRoot) + PathUrl.blog.root + `feed/`,
+            atom: () => PathUrl.blog.feed.root() + `atom/`,
+        },
     },
     management: {
-        root: `/management`,
+        root: `/management/`,
         blog: {
             root: () => PathUrl.management.root + `blog/`,
             create: () => PathUrl.management.blog.root() + `create/`,

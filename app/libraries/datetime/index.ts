@@ -17,6 +17,7 @@ export const DateTimeFormat = {
 export type DateTimeFormat = typeof DateTimeFormat[keyof typeof DateTimeFormat];
 
 export const DateFormat = {
+    Year: "yyyy",
     YearMonth: "yyyy-LL",
 } as const;
 export type DateFormat = typeof DateFormat[keyof typeof DateFormat];
