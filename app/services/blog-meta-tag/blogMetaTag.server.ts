@@ -6,7 +6,7 @@ import { Logger } from "../../libraries/logger/logger";
 const logger = new Logger(`blogMetaTag`);
 
 export async function findOneBlogMetaTagById(id: string): Promise<BlogMetaTag> {
-    logger.log(`Find one meta tag.`, {
+    logger.log(`Idでblog meta tagを1つ探します。`, {
         id,
     });
 
@@ -26,7 +26,7 @@ export async function findOneBlogMetaTagById(id: string): Promise<BlogMetaTag> {
 }
 
 export async function findOneBlogMetaTagByName(name: string): Promise<BlogMetaTag> {
-    logger.log(`Find one meta tag. (find by tag name)`, {
+    logger.log(`Meta tag nameでblog meta tagを1つ探します`, {
         name,
     });
 
@@ -46,13 +46,13 @@ export async function findOneBlogMetaTagByName(name: string): Promise<BlogMetaTa
 }
 
 export async function findAllBlogMetaTags() {
-    logger.log(`Find all meta tags.`);
+    logger.log(`全てのblog meta tagを取得します。`);
 
     return await prisma.blogMetaTag.findMany();
 }
 
 export async function findAllBlogMetaTagCounts() {
-    logger.log(`Find all blog meta tag counts.`);
+    logger.log(`全てのblog meta tagに紐づけられたエントリー数を取得します。`);
 
     return await prisma.blogMetaTag.findMany({
         include: {
@@ -62,7 +62,7 @@ export async function findAllBlogMetaTagCounts() {
 }
 
 export async function createBlogMetaTag(name: string): Promise<BlogMetaTag> {
-    logger.log(`Create new meta tag`, {
+    logger.log(`新しいblog meta tagを作成します。`, {
         name,
     });
 
@@ -84,7 +84,7 @@ export async function createBlogMetaTag(name: string): Promise<BlogMetaTag> {
 }
 
 export async function updateBlogMetaTag(id: string, name: string): Promise<BlogMetaTag> {
-    logger.log(`Update exist meta tag.`, {
+    logger.log(`既存のblog meta tagの名前を変更します。`, {
         id,
         name,
     });
@@ -121,7 +121,7 @@ export async function updateBlogMetaTag(id: string, name: string): Promise<BlogM
 }
 
 export async function upsertBlogMetaTags(metaTags: string[]): Promise<BlogMetaTag[]> {
-    logger.log(`Upsert meta tags.`, {
+    logger.log(`複数のBlog meta tagをUPSERTします。`, {
         metaTags,
     });
 
@@ -143,7 +143,7 @@ export async function upsertBlogMetaTags(metaTags: string[]): Promise<BlogMetaTa
 }
 
 export async function deleteOneBlogMetaTag(id: string): Promise<void> {
-    logger.log(`Delete exist meta tag.`, {
+    logger.log(`Blog meta tagを削除します。`, {
         id,
     });
 

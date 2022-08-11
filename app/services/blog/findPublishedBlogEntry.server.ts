@@ -13,7 +13,7 @@ import { PrismaPublishedBlogEntry } from "./types/prisma/PrismaPublishedBlogEntr
 const logger = new Logger("findPublishedBlogEntry");
 
 export async function findOnePublishedBlogEntryById(id: string): Promise<PrismaPublishedBlogEntry> {
-    logger.log(`Find a blog entry by id`, {
+    logger.log(`公開済みBlog entryをidで検索します。`, {
         id,
     });
 
@@ -31,7 +31,7 @@ export async function findOnePublishedBlogEntryById(id: string): Promise<PrismaP
 }
 
 export async function findOnePublishedBlogEntryBySlug(slug: string): Promise<PrismaPublishedBlogEntry> {
-    logger.log(`Find a blog entry by slug`, {
+    logger.log(`公開済みBlog entryをslugで検索します。`, {
         slug,
     });
 
@@ -53,7 +53,7 @@ export async function findOnePublishedBlogEntryNextSameMetaTagByAndId(
     blogEntryId: string,
     direction: NextBlogEntryDirection,
 ): Promise<PrismaPublishedBlogEntry> {
-    logger.log(`Find both side of specified blog entry has same meta tag.`, {
+    logger.log(`同じmeta tagで公開日の隣接する公開済みBlog entryを検索します。`, {
         metaTagName,
         blogEntryId,
         direction,
@@ -88,6 +88,7 @@ export async function findOnePublishedBlogEntryNextSameMetaTagByAndId(
 export async function findBothSidePublishedBlogEntry(
     pointerId: string,
 ): Promise<[PrismaPublishedBlogEntry | null, PrismaPublishedBlogEntry | null]> {
+    logger.log(`前後の公開日を持つ公開済みBlog entryを検索します。`);
     const { Old, Young } = NextBlogEntryDirection;
 
     const [old, young] = (
@@ -103,7 +104,7 @@ export async function findBothSidePublishedBlogEntry(
 export async function findManyPublishedBlogEntryRecent(
     count = appConfig.blog.indexEntriesCount,
 ): Promise<PrismaPublishedBlogEntry[]> {
-    logger.log(`Find recent published blog entries.`, {
+    logger.log(`直近で公開された公開済みBlog entryを検索します。`, {
         count,
     });
 
@@ -121,7 +122,7 @@ export async function findManyPublishedBlogEntryByPaging(
     order: QuerySortOrder,
     count = appConfig.blog.pagingItemCount,
 ): Promise<PrismaPublishedBlogEntry[]> {
-    logger.log(`Find entries by paging info`, {
+    logger.log(`ページングした公開済みBlog entryを検索します。`, {
         pointerId,
         order,
         limit: count,
@@ -144,7 +145,7 @@ export async function findManyPublishedBlogEntryByMetaTagName(
     order: QuerySortOrder = "desc",
     limit = appConfig.blog.pagingItemCount,
 ): Promise<PrismaPublishedBlogEntry[]> {
-    logger.log(`Find published blog entries by meta tag name`, {
+    logger.log(`Meta tagの名称で公開済みBlog entryを検索します。`, {
         metaTagName,
         limit,
         pointerId,
@@ -181,7 +182,7 @@ export async function findManyPublishedBlogEntryByYearMonth(
     order: QuerySortOrder = "desc",
     count = appConfig.blog.pagingItemCount,
 ): Promise<PrismaPublishedBlogEntry[]> {
-    logger.log(`Find many published blog entries by year and optional month.`, {
+    logger.log(`年度、または年月で公開済みBlog entryを検索します。`, {
         year,
         month,
         pointerId,
@@ -217,7 +218,7 @@ export async function findManyPublishedBlogEntryByYearMonth(
 }
 
 export async function findAllBlogEntryOnlyPublishAt(): Promise<Date[]> {
-    logger.log(`Find all published blog dates.`);
+    logger.log(`全ての公開済みBlog entryを取得します。`);
 
     return (
         await prisma.blogEntry.findMany({
@@ -263,7 +264,7 @@ async function findOnePublishedBlogEntryNext(
     pointerId: string,
     direction: NextBlogEntryDirection,
 ): Promise<PrismaPublishedBlogEntry> {
-    logger.log(`Find published blog entry after pointer`, {
+    logger.log(`公開日が隣接した公開済みBlog entryを検索します。`, {
         pointerId,
         direction,
     });

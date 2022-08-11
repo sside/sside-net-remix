@@ -11,7 +11,7 @@ import { PrismaJoinedBlogEntry } from "./types/prisma/PrismaJoinedBlogEntry";
 const logger = new Logger("blogEntry");
 
 export async function findOneBlogEntryById(id: string): Promise<PrismaJoinedBlogEntry> {
-    logger.log(`Find a blog entry`, {
+    logger.log(`IdでBlog entryを検索します。`, {
         id,
     });
 
@@ -33,7 +33,7 @@ export async function findOneBlogEntryById(id: string): Promise<PrismaJoinedBlog
 }
 
 export async function findAllBlogEntries(): Promise<PrismaJoinedBlogEntry[]> {
-    logger.log(`Find all exist blog entries.`);
+    logger.log(`全てのBlog entryを返します。`);
 
     return await findMany({
         orderBy: {
@@ -62,7 +62,7 @@ export async function upsertBlogEntryDraft(
     tags: string[],
     id?: string,
 ): Promise<PrismaJoinedBlogEntry> {
-    logger.log(`Create or update draft blog entry.`, {
+    logger.log(`Blog entryの下書きをUPSERTします。`, {
         id,
         title,
         slug,
@@ -107,7 +107,7 @@ export async function upsertBlogEntryDraft(
 }
 
 export async function deleteOneBlogEntryById(id: string): Promise<void> {
-    logger.log(`Delete blog entry.`, {
+    logger.log(`Blog entryを削除します。`, {
         id,
     });
 
@@ -175,7 +175,7 @@ async function publishNewBlogEntry(
     tags: string[],
     publishAt?: Date,
 ): Promise<PrismaJoinedBlogEntry> {
-    logger.log(`Publish new blog entry.`, {
+    logger.log(`Blog entryを新規作成、公開します。`, {
         title,
         slug,
         body,
@@ -210,7 +210,7 @@ async function publishExistBlogEntry(
     tags: string[],
     publishAt?: Date,
 ): Promise<PrismaJoinedBlogEntry> {
-    logger.log(`Publish exist blog entry.`, {
+    logger.log(`既存のBlog entryを公開します。`, {
         id,
         title,
         slug,
