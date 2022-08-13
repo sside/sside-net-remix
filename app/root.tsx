@@ -1,6 +1,8 @@
 import type { ErrorBoundaryComponent, LinksFunction, MetaFunction } from "@remix-run/node";
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
 import destyle from "destyle.css";
+import { ContentType } from "./constants/content-type/ContentType";
+import { PathUrl } from "./constants/paths/PathUrl";
 import { RootErrorBoundary, links as rootErrorBoundaryLinks } from "./RootErrorBoundary";
 import color from "./styles/variables/_color.css";
 import font from "./styles/variables/_font.css";
@@ -19,6 +21,7 @@ export const ErrorBoundary: ErrorBoundaryComponent = RootErrorBoundary;
 export const links: LinksFunction = () => [
     ...cssLinks(destyle, color, font, layout, styles),
     ...rootErrorBoundaryLinks(),
+    { rel: "alternate", type: ContentType.Atom["Content-Type"], href: PathUrl.blog.feed.atom(), title: "Atom" },
 ];
 
 export default function App() {
