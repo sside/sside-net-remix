@@ -1,15 +1,60 @@
 version: "3.9"
 
 services:
+  app:
+    image: sside-net:latest
+    restart: always
+    depends_on:
+      - database
+      - https-portal
+    ports:
+      - "51423:51423"
+    environment:
+      - PORT=51423
+      - DATABASE_URL
+      - ADMINISTRATOR_EMAIL_ADDRESS
+      - ADMINISTRATOR_PASSWORD
+      - SESSION_COOKIE_SECRET
+    env_file:
+      - .env
+    deploy:
+      resources:
+        limits:
+          memory: 512m
   database:
     image: postgres:14
     restart: always
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: password
-      PGPASSWORD: password
-      POSTGRES_DB: sside-net
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - PGPASSWORD
+      - POSTGRES_DB
     ports:
       - "5432:5432"
     volumes:
       - ./.docker/postgresql:/var/lib/postgresql
+    env_file:
+      - .env
+    deploy:
+      resources:
+        limits:
+          memory: 384m
+  https-portal:
+    image: steveltn/https-portal:1
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - DOMAINS=sside.net -> http://app:51423
+      - STAGE
+      - CLIENT_MAX_BODY_SIZE=50M
+      - HSTS_MAX_AGE=30
+    volumes:
+      - ./.docker/https-portal:/var/lib/https-portal
+    deploy:
+      resources:
+        limits:
+          memory: 128m
