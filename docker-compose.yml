@@ -37,7 +37,7 @@ services:
       retries: 120
       timeout: 10s
     volumes:
-      - ./.docker/postgresql:/var/lib/postgresql
+      - postgresql:/var/lib/postgresql
     env_file:
       - .env
     deploy:
@@ -60,7 +60,7 @@ services:
       - CLIENT_MAX_BODY_SIZE=50M
       - HSTS_MAX_AGE=30
     volumes:
-      - ./.docker/https-portal:/var/lib/https-portal
+      - https-portal:/var/lib/https-portal
     deploy:
       resources:
         limits:
