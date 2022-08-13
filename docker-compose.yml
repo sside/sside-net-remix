@@ -16,7 +16,7 @@ services:
       - ADMINISTRATOR_PASSWORD
       - SESSION_COOKIE_SECRET
     env_file:
-      - .env
+      - .env.docker
     deploy:
       resources:
         limits:
@@ -39,7 +39,7 @@ services:
     volumes:
       - postgresql:/var/lib/postgresql/data
     env_file:
-      - .env
+      - .env.docker
     deploy:
       resources:
         limits:
@@ -50,7 +50,7 @@ services:
     depends_on:
       - app
     env_file:
-      - .env
+      - .env.docker
     ports:
       - "80:80"
       - "443:443"
