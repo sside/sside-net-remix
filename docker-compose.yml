@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   app:
-    image: sside-net:latest
+    image: ssidenet/sside-net:latest
     restart: always
     depends_on:
       - database
