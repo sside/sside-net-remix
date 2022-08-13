@@ -55,7 +55,7 @@ services:
       - "80:80"
       - "443:443"
     environment:
-      - DOMAINS=sside.net\ ->\ http://app:51423
+      - DOMAINS=sside.net -> http://app:51423
       - STAGE
       - CLIENT_MAX_BODY_SIZE=50M
       - HSTS_MAX_AGE=30
@@ -65,3 +65,6 @@ services:
       resources:
         limits:
           memory: 128m
+volumes:
+  postgresql:
+  https-portal:
