@@ -1,4 +1,4 @@
-import { LinksFunction, LoaderFunction } from "@remix-run/node";
+import { LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData, useParams } from "@remix-run/react";
 import { FC, Fragment } from "react";
 import { appConfig } from "../../../../../appConfig";
@@ -17,6 +17,7 @@ import {
 import { PrismaPublishedBlogEntry } from "../../../../services/blog/types/prisma/PrismaPublishedBlogEntry";
 import { QuerySortOrder } from "../../../../types/database/QuerySortOrder";
 import { DateParsedResponseBody } from "../../../../types/utility/DateParsedResponseBody";
+import { createPageTitle } from "../../../../utilities/blog/createPageTitle";
 import { sortPublishedBlogEntries } from "../../../../utilities/blog/sortPublishedBlogEntries";
 
 export const links: LinksFunction = () => blogEntryLinks();
@@ -62,6 +63,13 @@ export const loader: LoaderFunction = async ({
     ).map((result) => (result.status === "fulfilled" ? result.value : null));
 
     return [entries, old, young];
+};
+
+export const meta: MetaFunction = ({ params }) => {
+    const { metaTagName } = params;
+    return {
+        title: createPageTitle(`Blog meta tag: ${metaTagName}`),
+    };
 };
 
 export const MetaTagId: FC = () => {

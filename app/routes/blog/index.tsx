@@ -1,4 +1,4 @@
-import { LinksFunction, LoaderFunction } from "@remix-run/node";
+import { LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { FC, Fragment } from "react";
 import { appConfig } from "../../../appConfig";
@@ -47,6 +47,12 @@ export const loader: LoaderFunction = async ({
     const younger = (await findManyPublishedBlogEntryByPaging(sortedEntries[sortedEntries.length - 1].id, Asc, 1))[0];
 
     return [blogEntries, older, younger];
+};
+
+export const meta: MetaFunction = () => {
+    return {
+        title: appConfig.global.siteName,
+    };
 };
 
 const BlogIndex: FC = () => {

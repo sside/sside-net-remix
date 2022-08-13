@@ -1,4 +1,4 @@
-import { LinksFunction, LoaderFunction } from "@remix-run/node";
+import { LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { FC, Fragment } from "react";
 import {
@@ -14,6 +14,7 @@ import {
 } from "../../../../services/blog/findPublishedBlogEntry.server";
 import { PrismaPublishedBlogEntry } from "../../../../services/blog/types/prisma/PrismaPublishedBlogEntry";
 import { DateParsedResponseBody } from "../../../../types/utility/DateParsedResponseBody";
+import { createPageTitle } from "../../../../utilities/blog/createPageTitle";
 import { getLatestBlogEntryBody } from "../../../../utilities/blog/getLatestBlogEntryBody";
 
 export const links: LinksFunction = () => [...blogEntryLinks(), ...blogPagerLinks()];
@@ -31,6 +32,13 @@ export const loader: LoaderFunction = async ({
     const entry = await findOnePublishedBlogEntryBySlug(slug);
     const [older, younger] = await findBothSidePublishedBlogEntry(entry.id);
     return [entry, older, younger];
+};
+
+export const meta: MetaFunction = ({ data }) => {
+    const [entry] = data as [DateParsedResponseBody<PrismaPublishedBlogEntry>];
+    return {
+        title: createPageTitle(getLatestBlogEntryBody(entry.blogEntryBodyHistories).title),
+    };
 };
 
 const BlogSlugRoute: FC = () => {
