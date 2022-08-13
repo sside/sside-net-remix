@@ -6,7 +6,6 @@ services:
     restart: always
     depends_on:
       - database
-      - https-portal
     ports:
       - "51423:51423"
     environment:
@@ -42,6 +41,8 @@ services:
   https-portal:
     image: steveltn/https-portal:1
     restart: always
+    depends_on:
+      - app
     env_file:
       - .env
     ports:
