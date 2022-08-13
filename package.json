@@ -17,7 +17,7 @@
         "docker:deploy": "run-s docker:build docker:push",
         "docker:build": "docker image build --tag ssidenet/sside-net:latest --file ./docker/app/Dockerfile .",
         "docker:push": "docker push ssidenet/sside-net:latest",
-        "docker:app": "cross-env DATABASE_URL=postgresql://root:password@app:5432/sside-net docker compose up app",
+        "docker:app": "cross-env DATABASE_URL=postgresql://root:password@database:5432/sside-net docker compose up app",
         "lint": "eslint app",
         "prepare": "husky install",
         "typecheck": "tsc -b"
