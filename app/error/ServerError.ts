@@ -8,18 +8,17 @@ interface ErrorContextValues {
 
 export class ServerError extends Error {
     constructor(public readonly code: StatusCodes, message?: string, values?: ErrorContextValues) {
-        const valueMessages: string[] = [];
+        let errorMessage = message || "";
+
         if (values) {
+            const valueMessages: string[] = [];
             for (const [key, value] of Object.entries(values)) {
                 valueMessages.push(`${key}: ${value}`);
             }
-        }
-        let errorMessage = message || "";
-        if (valueMessages.length) {
             errorMessage += " " + valueMessages.join(", ");
         }
 
-        super(`${code}: ` + errorMessage);
+        super(errorMessage);
     }
 }
 

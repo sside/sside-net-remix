@@ -8,7 +8,12 @@ import {
 } from "../../../../../components/blog/blogEntry/BlogEntry";
 import { BlogPager, BlogPagerItem, links as blogPagerLinks } from "../../../../../components/blog/blogEntry/BlogPager";
 import { PathUrl } from "../../../../../constants/paths/PathUrl";
-import { BadRequestServerError, NotFoundServerError, UnprocessableServerError } from "../../../../../error/ServerError";
+import {
+    BadRequestServerError,
+    NotFoundServerError,
+    toErrorResponse,
+    UnprocessableServerError,
+} from "../../../../../error/ServerError";
 import { getFullDateTime, parseIso8601ToJst } from "../../../../../libraries/datetime";
 import { isValidMonth } from "../../../../../libraries/vallidator/isValidMonth";
 import { isValidYear } from "../../../../../libraries/vallidator/isValidYear";
@@ -30,19 +35,23 @@ export const loader: LoaderFunction = async ({
 > => {
     const { year, month } = params;
     if (!year || !month) {
-        throw new UnprocessableServerError(`パスパラメータ"year", "month"のいずれかが正しくないか未定義です。`, {
-            year,
-            month,
-        });
+        throw toErrorResponse(
+            new UnprocessableServerError(`パスパラメータ"year", "month"のいずれかが正しくないか未定義です。`, {
+                year,
+                month,
+            }),
+        );
     }
 
     const [parsedYear, parsedMonth] = [year, month].map((value) => parseInt(value, 10));
 
     if (!(isValidYear(parsedYear) && isValidMonth(parsedMonth))) {
-        throw new BadRequestServerError(`パスパラメータ"year", "month"の値が正しくありません。`, {
-            parsedYear,
-            parsedMonth,
-        });
+        throw toErrorResponse(
+            new BadRequestServerError(`パスパラメータ"year", "month"の値が正しくありません。`, {
+                parsedYear,
+                parsedMonth,
+            }),
+        );
     }
 
     const pagingQuery = extractBlogPagingQuery(request.url);
@@ -50,13 +59,15 @@ export const loader: LoaderFunction = async ({
 
     const entries = await findManyPublishedBlogEntryByYearMonth(parsedYear, parsedMonth, pointerId, order, count);
     if (!entries.length) {
-        throw new NotFoundServerError(`Blog entryが見つかりませんでした。`, {
-            year,
-            month,
-            pointerId,
-            count,
-            order,
-        });
+        throw toErrorResponse(
+            new NotFoundServerError(`Blog entryが見つかりませんでした。`, {
+                year,
+                month,
+                pointerId,
+                count,
+                order,
+            }),
+        );
     }
 
     const { Asc, Desc } = QuerySortOrder;

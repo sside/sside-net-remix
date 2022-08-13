@@ -8,7 +8,7 @@ import {
 } from "../../../../components/blog/blogEntry/BlogEntry";
 import { BlogPager, BlogPagerItem } from "../../../../components/blog/blogEntry/BlogPager";
 import { PathUrl } from "../../../../constants/paths/PathUrl";
-import { NotFoundServerError } from "../../../../error/ServerError";
+import { NotFoundServerError, toErrorResponse } from "../../../../error/ServerError";
 import { NextBlogEntryDirection } from "../../../../services/blog/constants/NextBlogEntryDirection";
 import {
     findManyPublishedBlogEntryByMetaTagName,
@@ -28,9 +28,11 @@ export const loader: LoaderFunction = async ({
 }): Promise<[PrismaPublishedBlogEntry[], PrismaPublishedBlogEntry | null, PrismaPublishedBlogEntry | null]> => {
     const { metaTagName } = params;
     if (!metaTagName) {
-        throw new NotFoundServerError(`Blog meta tagのidが未定義です。`, {
-            metaTagName,
-        });
+        throw toErrorResponse(
+            new NotFoundServerError(`Blog meta tagのidが未定義です。`, {
+                metaTagName,
+            }),
+        );
     }
     const queries = new URL(request.url).searchParams;
     const pointerId = queries.get("pointerId");
@@ -45,12 +47,14 @@ export const loader: LoaderFunction = async ({
     );
 
     if (!entries || !entries.length) {
-        throw new NotFoundServerError(`Blog entryが見つかりませんでした。`, {
-            metaTagName,
-            pointerId,
-            order,
-            count,
-        });
+        throw toErrorResponse(
+            new NotFoundServerError(`Blog entryが見つかりませんでした。`, {
+                metaTagName,
+                pointerId,
+                order,
+                count,
+            }),
+        );
     }
 
     const sorted = sortPublishedBlogEntries(entries, "asc");

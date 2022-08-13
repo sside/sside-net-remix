@@ -8,7 +8,7 @@ import {
 } from "../../../../components/blog/blogEntry/BlogEntry";
 import { BlogPager, BlogPagerItem, links as blogPagerLinks } from "../../../../components/blog/blogEntry/BlogPager";
 import { PathUrl } from "../../../../constants/paths/PathUrl";
-import { NotFoundServerError, UnprocessableServerError } from "../../../../error/ServerError";
+import { NotFoundServerError, toErrorResponse, UnprocessableServerError } from "../../../../error/ServerError";
 import { getFullDateTime, parseIso8601ToJst } from "../../../../libraries/datetime";
 import { isValidYear } from "../../../../libraries/vallidator/isValidYear";
 import { findManyPublishedBlogEntryByYearMonth } from "../../../../services/blog/findPublishedBlogEntry.server";
@@ -28,9 +28,11 @@ export const loader: LoaderFunction = async ({
     const { year } = params;
 
     if (!year || !isValidYear(parseInt(year, 10))) {
-        throw new UnprocessableServerError(`パスパラメータ"year"が正しくありません。`, {
-            year,
-        });
+        throw toErrorResponse(
+            new UnprocessableServerError(`パスパラメータ"year"が正しくありません。`, {
+                year,
+            }),
+        );
     }
 
     const parsedYear = parseInt(year);
@@ -38,9 +40,11 @@ export const loader: LoaderFunction = async ({
     const entries = await findManyPublishedBlogEntryByYearMonth(parsedYear, undefined, pointerId, order, count);
 
     if (!entries.length) {
-        throw new NotFoundServerError(`Blog entryが見つかりませんでした。.`, {
-            year,
-        });
+        throw toErrorResponse(
+            new NotFoundServerError(`Blog entryが見つかりませんでした。.`, {
+                year,
+            }),
+        );
     }
 
     const { Asc, Desc } = QuerySortOrder;

@@ -8,7 +8,7 @@ import {
 } from "../../components/blog/blogEntry/BlogEntry";
 import { BlogPager, BlogPagerItem, links as blogPagerLinks } from "../../components/blog/blogEntry/BlogPager";
 import { PathUrl } from "../../constants/paths/PathUrl";
-import { NotFoundServerError } from "../../error/ServerError";
+import { NotFoundServerError, toErrorResponse } from "../../error/ServerError";
 import {
     findManyPublishedBlogEntryByPaging,
     findManyPublishedBlogEntryRecent,
@@ -36,9 +36,11 @@ export const loader: LoaderFunction = async ({
     }
 
     if (!blogEntries.length) {
-        throw new NotFoundServerError(`Blog entryが見つかりませんでした。`, {
-            ...pagingQuery,
-        });
+        throw toErrorResponse(
+            new NotFoundServerError(`Blog entryが見つかりませんでした。`, {
+                ...pagingQuery,
+            }),
+        );
     }
 
     const { Asc, Desc } = QuerySortOrder;

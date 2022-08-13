@@ -1,6 +1,6 @@
 import { BlogEntry, Prisma } from "@prisma/client";
 import { appConfig } from "../../../appConfig";
-import { NotFoundServerError, UnprocessableServerError } from "../../error/ServerError";
+import { NotFoundServerError, toErrorResponse, UnprocessableServerError } from "../../error/ServerError";
 import { prisma } from "../../libraries/database/database";
 import { createMonthRange, createYearRange } from "../../libraries/datetime";
 import { Logger } from "../../libraries/logger/logger";
@@ -22,9 +22,11 @@ export async function findOnePublishedBlogEntryById(id: string): Promise<PrismaP
     });
 
     if (!blogEntry || !isPublished(blogEntry)) {
-        throw new NotFoundServerError(`Blog entryが見つかりませんでした。`, {
-            id,
-        });
+        throw toErrorResponse(
+            new NotFoundServerError(`Blog entryが見つかりませんでした。`, {
+                id,
+            }),
+        );
     }
 
     return blogEntry;
@@ -40,9 +42,11 @@ export async function findOnePublishedBlogEntryBySlug(slug: string): Promise<Pri
     });
 
     if (!blogEntry || !isPublished(blogEntry)) {
-        throw new NotFoundServerError(`Blog entryが見つかりませんでした。`, {
-            slug,
-        });
+        throw toErrorResponse(
+            new NotFoundServerError(`Blog entryが見つかりませんでした。`, {
+                slug,
+            }),
+        );
     }
 
     return blogEntry;
@@ -76,10 +80,12 @@ export async function findOnePublishedBlogEntryNextSameMetaTagByAndId(
     });
 
     if (!nextBlogEntry) {
-        throw new NotFoundServerError(`同じBlog meta tagで次のentryが見つかりませんでした。`, {
-            blogEntryId,
-            direction,
-        });
+        throw toErrorResponse(
+            new NotFoundServerError(`同じBlog meta tagで次のentryが見つかりませんでした。`, {
+                blogEntryId,
+                direction,
+            }),
+        );
     }
 
     return nextBlogEntry;
@@ -282,10 +288,12 @@ async function findOnePublishedBlogEntryNext(
     });
 
     if (!next) {
-        throw new NotFoundServerError(`次のBlog entryが見つかりませんでした。`, {
-            pointerId,
-            direction,
-        });
+        throw toErrorResponse(
+            new NotFoundServerError(`次のBlog entryが見つかりませんでした。`, {
+                pointerId,
+                direction,
+            }),
+        );
     }
     return next;
 }

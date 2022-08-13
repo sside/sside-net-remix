@@ -1,5 +1,10 @@
 import { BlogMetaTag } from "@prisma/client";
-import { ConflictServerError, InternalServerError, NotFoundServerError } from "../../error/ServerError";
+import {
+    ConflictServerError,
+    InternalServerError,
+    NotFoundServerError,
+    toErrorResponse,
+} from "../../error/ServerError";
 import { prisma } from "../../libraries/database/database";
 import { Logger } from "../../libraries/logger/logger";
 
@@ -17,9 +22,11 @@ export async function findOneBlogMetaTagById(id: string): Promise<BlogMetaTag> {
     });
 
     if (!blogMetaTag) {
-        throw new NotFoundServerError(`Blog meta tagが見つかりませんでした。`, {
-            id,
-        });
+        throw toErrorResponse(
+            new NotFoundServerError(`Blog meta tagが見つかりませんでした。`, {
+                id,
+            }),
+        );
     }
 
     return blogMetaTag;
@@ -37,9 +44,11 @@ export async function findOneBlogMetaTagByName(name: string): Promise<BlogMetaTa
     });
 
     if (!blogMetaTag) {
-        throw new NotFoundServerError(`Blog metaが見つかりませんでした。.`, {
-            name,
-        });
+        throw toErrorResponse(
+            new NotFoundServerError(`Blog metaが見つかりませんでした。.`, {
+                name,
+            }),
+        );
     }
 
     return blogMetaTag;
@@ -91,9 +100,11 @@ export async function updateBlogMetaTag(id: string, name: string): Promise<BlogM
 
     const exist = await findOneBlogMetaTagById(id);
     if (!exist) {
-        throw new NotFoundServerError(`Blog meta tagが見つかりませんでした。`, {
-            id,
-        });
+        throw toErrorResponse(
+            new NotFoundServerError(`Blog meta tagが見つかりませんでした。`, {
+                id,
+            }),
+        );
     }
     if (exist.name === name) {
         return exist;

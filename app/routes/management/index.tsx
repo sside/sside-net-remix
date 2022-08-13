@@ -1,4 +1,4 @@
-import { json, LinksFunction, LoaderFunction } from "@remix-run/node";
+import { LinksFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { FC } from "react";
 import { LinkButton, links as linkButtonLinks } from "../../components/global/button/LinkButton";
@@ -30,10 +30,10 @@ export const links: LinksFunction = () => [
 export const loader: LoaderFunction = async () => {
     const entries = await findAllBlogEntries();
     const metaTags = await findAllBlogMetaTags();
-    return json([
+    return [
         entries.map(BlogEntryEditItemClientResponse.fromEntity),
         metaTags.map(BlogMetaTagClientResponse.fromEntity),
-    ]);
+    ];
 };
 
 const Admin: FC = () => {

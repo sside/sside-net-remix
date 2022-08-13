@@ -7,7 +7,7 @@ import {
 } from "../../../../components/blog/blogEntry/BlogEntry";
 import { BlogPager, BlogPagerItem, links as blogPagerLinks } from "../../../../components/blog/blogEntry/BlogPager";
 import { PathUrl } from "../../../../constants/paths/PathUrl";
-import { UnprocessableServerError } from "../../../../error/ServerError";
+import { toErrorResponse, UnprocessableServerError } from "../../../../error/ServerError";
 import {
     findBothSidePublishedBlogEntry,
     findOnePublishedBlogEntryBySlug,
@@ -24,9 +24,11 @@ export const loader: LoaderFunction = async ({
 }): Promise<[PrismaPublishedBlogEntry, PrismaPublishedBlogEntry | null, PrismaPublishedBlogEntry | null]> => {
     const { slug } = params;
     if (!slug) {
-        throw new UnprocessableServerError(`slugが未定義です。`, {
-            slug,
-        });
+        throw toErrorResponse(
+            new UnprocessableServerError(`slugが未定義です。`, {
+                slug,
+            }),
+        );
     }
 
     const entry = await findOnePublishedBlogEntryBySlug(slug);
@@ -35,6 +37,11 @@ export const loader: LoaderFunction = async ({
 };
 
 export const meta: MetaFunction = ({ data }) => {
+    if (!data) {
+        return {
+            title: createPageTitle(`Blog entry not found.`),
+        };
+    }
     const [entry] = data as [DateParsedResponseBody<PrismaPublishedBlogEntry>];
     return {
         title: createPageTitle(getLatestBlogEntryBody(entry.blogEntryBodyHistories).title),

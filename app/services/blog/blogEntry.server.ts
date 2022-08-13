@@ -1,5 +1,10 @@
 import { Prisma } from "@prisma/client";
-import { InternalServerError, NotFoundServerError, UnprocessableServerError } from "../../error/ServerError";
+import {
+    InternalServerError,
+    NotFoundServerError,
+    toErrorResponse,
+    UnprocessableServerError,
+} from "../../error/ServerError";
 import { prisma } from "../../libraries/database/database";
 import { Logger } from "../../libraries/logger/logger";
 import { validateBlogEntryMetaTags } from "../../libraries/vallidator/validateBlogEntryMetaTag";
@@ -24,9 +29,11 @@ export async function findOneBlogEntryById(id: string): Promise<PrismaJoinedBlog
     });
 
     if (!blogEntry) {
-        throw new NotFoundServerError(`Blog entryが見つかりませんでした。`, {
-            id,
-        });
+        throw toErrorResponse(
+            new NotFoundServerError(`Blog entryが見つかりませんでした。`, {
+                id,
+            }),
+        );
     }
 
     return blogEntry;
@@ -229,9 +236,11 @@ async function publishExistBlogEntry(
         },
     });
     if (!existBlogEntry) {
-        throw new NotFoundServerError(`Blog entryが見つかりませんでした。`, {
-            id,
-        });
+        throw toErrorResponse(
+            new NotFoundServerError(`Blog entryが見つかりませんでした。`, {
+                id,
+            }),
+        );
     }
 
     if (existBlogEntry.blogEntryBodyDraft) {
