@@ -15,8 +15,6 @@ services:
       - ADMINISTRATOR_EMAIL_ADDRESS
       - ADMINISTRATOR_PASSWORD
       - SESSION_COOKIE_SECRET
-    env_file:
-      - .env.docker
     deploy:
       resources:
         limits:
@@ -38,8 +36,6 @@ services:
       timeout: 10s
     volumes:
       - postgresql:/var/lib/postgresql/data
-    env_file:
-      - .env.docker
     deploy:
       resources:
         limits:
@@ -49,8 +45,6 @@ services:
     restart: always
     depends_on:
       - app
-    env_file:
-      - .env.docker
     ports:
       - "80:80"
       - "443:443"
