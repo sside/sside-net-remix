@@ -37,7 +37,7 @@ services:
       retries: 120
       timeout: 10s
     volumes:
-      - postgresql:/var/lib/postgresql
+      - postgresql:/var/lib/postgresql/data
     env_file:
       - .env
     deploy:
