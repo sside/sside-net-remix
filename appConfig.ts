@@ -19,6 +19,9 @@ interface AppConfig {
     analytics: {
         googleTagId: string;
     };
+    sentry: {
+        dsn: string;
+    };
     blog: {
         indexEntriesCount: number;
         pagingItemCount: number;
@@ -98,5 +101,8 @@ export const appConfig: AppConfig = {
         latestEntries: {
             entriesCount: 6,
         },
+    },
+    sentry: {
+        dsn: "https://1b59d601df2a4f0e90fac511487069cf@o1359620.ingest.sentry.io/6647362",
     },
 };

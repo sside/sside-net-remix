@@ -1,6 +1,7 @@
 import type { ErrorBoundaryComponent, LinksFunction, MetaFunction } from "@remix-run/node";
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useCatch } from "@remix-run/react";
 import { CatchBoundaryComponent } from "@remix-run/react/dist/routeModules";
+import { withSentry } from "@sentry/remix";
 import destyle from "destyle.css";
 import { appConfig } from "../appConfig";
 import { ErrorPage, links as errorPageLinks } from "./components/error/ErrorPage";
@@ -36,7 +37,7 @@ export const links: LinksFunction = () => [
     { rel: "icon", type: ContentType.Image.Png["Content-Type"], href: PathUrl.asset.favicon() },
 ];
 
-export default function App() {
+function App() {
     return (
         <html lang="ja">
             <head>
@@ -53,3 +54,5 @@ export default function App() {
         </html>
     );
 }
+
+export default withSentry(App);
