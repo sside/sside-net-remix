@@ -11,7 +11,7 @@ import { links as theMenuLinks, TheMenu } from "../components/publicLayout/menu/
 import { DateFormat, formatDate, parseIso8601ToJst } from "../libraries/datetime";
 import { findAllBlogMetaTagCounts } from "../services/blog-meta-tag/blogMetaTag.server";
 import {
-    findAllBlogEntryOnlyPublishAt,
+    findAllPublishedBlogEntryOnlyPublishAt,
     findManyPublishedBlogEntryRecent,
 } from "../services/blog/findPublishedBlogEntry.server";
 import styles from "../styles/pages/blog/blogOutlet.css";
@@ -34,7 +34,9 @@ export const loader: LoaderFunction = async (): Promise<
 
     const archivesPublishYearMonths = Array.from(
         new Set(
-            (await findAllBlogEntryOnlyPublishAt()).map((publishAt) => formatDate(publishAt, DateFormat.YearMonth)),
+            (await findAllPublishedBlogEntryOnlyPublishAt()).map((publishAt) =>
+                formatDate(publishAt, DateFormat.YearMonth),
+            ),
         ),
     );
 

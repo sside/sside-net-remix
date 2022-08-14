@@ -223,8 +223,28 @@ export async function findManyPublishedBlogEntryByYearMonth(
     });
 }
 
-export async function findAllBlogEntryOnlyPublishAt(): Promise<Date[]> {
-    logger.log(`全ての公開済みBlog entryを取得します。`);
+export async function findAllPublishedBlogEntrySitemapData() {
+    logger.log(`サイトマップ作成用に全ての公開済みBlog entryの情報を取得します。`);
+
+    return await prisma.blogEntry.findMany({
+        where: createWhereQueryOnlyPublished(),
+        select: {
+            slug: true,
+            blogEntryBodyHistories: {
+                orderBy: {
+                    updatedAt: "desc",
+                },
+                take: 1,
+                select: {
+                    updatedAt: true,
+                },
+            },
+        },
+    });
+}
+
+export async function findAllPublishedBlogEntryOnlyPublishAt(): Promise<Date[]> {
+    logger.log(`全ての公開済みBlog entryの公開日を取得します。`);
 
     return (
         await prisma.blogEntry.findMany({

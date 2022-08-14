@@ -43,6 +43,7 @@
         "remix-auth": "^3.2.2",
         "remix-auth-form": "^1.1.2",
         "safe-marked": "^11.0.0",
+        "sitemap": "^7.1.1",
         "validator": "^13.7.0"
     },
     "devDependencies": {
