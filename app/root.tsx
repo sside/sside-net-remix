@@ -2,7 +2,9 @@ import type { ErrorBoundaryComponent, LinksFunction, MetaFunction } from "@remix
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useCatch } from "@remix-run/react";
 import { CatchBoundaryComponent } from "@remix-run/react/dist/routeModules";
 import destyle from "destyle.css";
+import { appConfig } from "../appConfig";
 import { ErrorPage, links as errorPageLinks } from "./components/error/ErrorPage";
+import { GoogleAnalytics } from "./components/google-analytics/GoogleAnalytics";
 import { ContentType } from "./constants/content-type/ContentType";
 import { PathUrl } from "./constants/paths/PathUrl";
 import color from "./styles/variables/_color.css";
@@ -38,6 +40,7 @@ export default function App() {
     return (
         <html lang="ja">
             <head>
+                <GoogleAnalytics googleTagId={appConfig.analytics.googleTagId} />
                 <Meta />
                 <Links />
             </head>

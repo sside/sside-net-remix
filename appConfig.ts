@@ -16,6 +16,9 @@ interface AppConfig {
     auth: {
         sessionExpireDay: number;
     };
+    analytics: {
+        googleTagId: string;
+    };
     blog: {
         indexEntriesCount: number;
         pagingItemCount: number;
@@ -48,6 +51,9 @@ export const appConfig: AppConfig = {
     },
     auth: {
         sessionExpireDay: 365,
+    },
+    analytics: {
+        googleTagId: "G-MW2KXZTQLB",
     },
     blog: {
         indexEntriesCount: 2,
