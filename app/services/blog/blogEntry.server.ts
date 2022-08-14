@@ -55,11 +55,10 @@ export async function publishBlogEntry(
     body: string,
     tags: string[],
     id?: string,
-    publishAt?: Date,
 ): Promise<PrismaJoinedBlogEntry> {
     return await (id
-        ? publishExistBlogEntry(id, title, slug, body, tags, publishAt)
-        : publishNewBlogEntry(title, slug, body, tags, publishAt));
+        ? publishExistBlogEntry(id, title, slug, body, tags)
+        : publishNewBlogEntry(title, slug, body, tags));
 }
 
 export async function upsertBlogEntryDraft(
@@ -180,21 +179,19 @@ async function publishNewBlogEntry(
     slug: string,
     body: string,
     tags: string[],
-    publishAt?: Date,
 ): Promise<PrismaJoinedBlogEntry> {
     logger.log(`Blog entryを新規作成、公開します。`, {
         title,
         slug,
         body,
         tags,
-        publishAt,
     });
 
     validatePublishBlogEntry(title, slug, body, tags);
     const created = await prisma.blogEntry.create({
         data: {
             slug,
-            publishAt: publishAt || new Date(),
+            publishAt: new Date(),
             blogEntryBodyHistories: {
                 create: {
                     title,
@@ -256,7 +253,7 @@ async function publishExistBlogEntry(
             id,
         },
         data: {
-            publishAt: publishAt || existBlogEntry.publishAt || new Date(),
+            publishAt: existBlogEntry.publishAt || new Date(),
             blogEntryBodyHistories: {
                 create: {
                     body,

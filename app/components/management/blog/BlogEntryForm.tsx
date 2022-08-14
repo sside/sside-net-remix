@@ -42,7 +42,7 @@ export const blogEntryFormAction: ActionFunction = async ({ request }) => {
     const { Publish, Draft } = BlogPostEditorSubmitType;
     switch (submitType) {
         case Publish:
-            await publishBlogEntry(title, slug, body, parsedTags, blogEntryId || undefined, new Date());
+            await publishBlogEntry(title, slug, body, parsedTags, blogEntryId || undefined);
             break;
         case Draft:
             await upsertBlogEntryDraft(title, slug, body, parsedTags, blogEntryId || undefined);
