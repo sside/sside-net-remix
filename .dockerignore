@@ -3,3 +3,5 @@ build
 .docker
 .cache
 .env
+.git
+.husky
