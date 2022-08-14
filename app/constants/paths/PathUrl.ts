@@ -44,4 +44,9 @@ export const PathUrl = {
             deleteById: (id: string) => PathUrl.management.metaTag.byId(id) + `delete/`,
         },
     },
+    asset: {
+        root: `/assets/`,
+        favicon: () => PathUrl.asset.root + `favicon/favicon.png`,
+        gitHubIcon: () => PathUrl.asset.root + `github/github_icon.png`,
+    },
 };

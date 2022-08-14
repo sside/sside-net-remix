@@ -22,7 +22,7 @@ body.app {
   grid-gap: 3rem;
   background-color: var(--base03);
   color: var(--base0);
-  padding: 2rem 3rem;
+  padding: 2rem 3rem 1rem 3rem;
 }
 
 @media screen and (max-width: 600px) {

@@ -1,3 +1,22 @@
 .theFooter {
   grid-area: footer;
+  display: grid;
+  grid-template-areas: "author" "icons";
+  padding-bottom: 1rem;
+  padding-left: 0.5rem;
+  grid-gap: 0.5rem;
+}
+
+.theFooter__author {
+  grid-area: author;
+}
+
+.theFooter__icons {
+  grid-area: icons;
+  display: flex;
+}
+
+.theFooter__icons img {
+  aspect-ratio: auto;
+  height: 1.5rem;
 }

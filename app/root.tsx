@@ -31,6 +31,7 @@ export const links: LinksFunction = () => [
     ...cssLinks(destyle, color, font, layout, styles),
     ...errorPageLinks(),
     { rel: "alternate", type: ContentType.Atom["Content-Type"], href: PathUrl.blog.feed.atom(), title: "Atom" },
+    { rel: "icon", type: ContentType.Image.Png["Content-Type"], href: PathUrl.asset.favicon() },
 ];
 
 export default function App() {
