@@ -12,8 +12,8 @@ export const validateBlogEntryMetaTag: ValueValidator = (metaTag) => {
         return `Meta tag length exceeded maximum. Length: ${metaTagLength}, Max:${maxMetaTagLength}`;
     }
 
-    if (!/^[a-zA-Z0-9-_]+$/.test(metaTag)) {
-        return `Meta tag must be ^[a-zA-Z0-9-_]+$ format.`;
+    if (/[:/#?&@%+~]/.test(metaTag)) {
+        return `Meta tag must be all url valid characters.`;
     }
 
     return true;
