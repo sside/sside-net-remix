@@ -1,0 +1,14 @@
+.blogMetaTagTagify {
+    --tags-border-color: var(--colorBody);
+    --tags-hover-border-color: var(--colorBody);
+    --tags-focus-border-color: var(--colorBody);
+
+    --tag-text-color: var(--base2);
+    --tag-text-color--edit: var(--base2);
+
+    --tag-bg: var(--blue);
+    --tag-hover: var(--blue);
+
+    --tag-invalid-bg: var(--base03);
+    --tag-remove-bg: var(--base03);
+}

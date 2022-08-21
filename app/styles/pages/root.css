@@ -5,7 +5,6 @@ body {
   font-size: var(--fontSizeBase);
   overflow-wrap: anywhere;
 }
-
 body a {
   text-decoration: underline;
 }

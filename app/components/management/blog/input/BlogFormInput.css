@@ -1,0 +1,5 @@
+.blogFormInput {
+  border: solid 1px var(--colorBody);
+  padding: 0.2rem;
+  border-radius: 5px;
+}

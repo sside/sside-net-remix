@@ -1,12 +1,13 @@
-import { ActionFunction, json, LinksFunction, LoaderFunction } from "@remix-run/node";
+import { ActionFunction, LinksFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { FC, Fragment } from "react";
 import {
     BlogEntryForm,
     blogEntryFormAction,
     links as blogEntryFormLinks,
-} from "../../../../components/management/blog/BlogEntryForm";
+} from "../../../../components/management/blog/input/BlogEntryForm";
 import { NotFoundServerError, toErrorResponse } from "../../../../error/ServerError";
+import { findAllBlogMetaTags } from "../../../../services/blog-meta-tag/blogMetaTag.server";
 import { findOneBlogEntryById } from "../../../../services/blog/blogEntry.server";
 import { BlogEntryEditItemClientResponse } from "../../../../services/blog/types/BlogEntryEditItemClientResponse";
 
@@ -19,11 +20,15 @@ export const loader: LoaderFunction = async ({ params }) => {
     if (!blogEntryId) {
         return toErrorResponse(new NotFoundServerError());
     }
-    return json(BlogEntryEditItemClientResponse.fromEntity(await findOneBlogEntryById(blogEntryId)));
+    return [
+        BlogEntryEditItemClientResponse.fromEntity(await findOneBlogEntryById(blogEntryId)),
+        (await findAllBlogMetaTags()).map(({ name }) => name),
+    ];
 };
 
 const BlogEntryId: FC = () => {
-    const { id, title, slug, body, metaTags } = useLoaderData<BlogEntryEditItemClientResponse>();
+    const [entry, existMetaTags] = useLoaderData<[BlogEntryEditItemClientResponse, string[]]>();
+    const { id, title, slug, body, metaTags } = entry;
 
     return (
         <Fragment>
@@ -34,6 +39,7 @@ const BlogEntryId: FC = () => {
                 slug={slug}
                 body={body}
                 metaTags={metaTags.map(({ name }) => name)}
+                allExistMetaTags={existMetaTags}
             />
         </Fragment>
     );

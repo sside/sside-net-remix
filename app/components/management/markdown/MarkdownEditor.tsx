@@ -1,24 +1,24 @@
 import { LinksFunction } from "@remix-run/node";
 import easyMdeStyles from "easymde/dist/easymde.min.css";
 import { FC, useEffect } from "react";
-import { isClientSide } from "../../utilities/isClientSide";
-import { cssLinks } from "../../utilities/styling/cssLinkDescriptor";
+import { isClientSide } from "../../../utilities/isClientSide";
+import { cssLinks } from "../../../utilities/styling/cssLinkDescriptor";
 import markdownEditorStyle from "./MarkdownEditor.css";
 
 export const links: LinksFunction = () => cssLinks(easyMdeStyles, markdownEditorStyle);
 
 interface Props {
     defaultValue: string;
-    id: string;
+    idMustBeUniqueInPage: string;
     name: string;
 }
 
-export const MarkdownEditor: FC<Props> = ({ defaultValue, id, name }) => {
+export const MarkdownEditor: FC<Props> = ({ defaultValue, idMustBeUniqueInPage, name }) => {
     useEffect(() => {
         if (isClientSide() && !document.querySelector(".EasyMDEContainer")) {
             const EasyMDE = require("easymde");
             const easyMde = new EasyMDE({
-                element: document.getElementById(id),
+                element: document.getElementById(idMustBeUniqueInPage),
                 status: false,
                 lineNumbers: true,
                 theme: `markdownEditor`,
@@ -46,5 +46,5 @@ export const MarkdownEditor: FC<Props> = ({ defaultValue, id, name }) => {
         }
     });
 
-    return <textarea id={id} name={name} defaultValue={defaultValue} />;
+    return <textarea id={idMustBeUniqueInPage} name={name} defaultValue={defaultValue} />;
 };

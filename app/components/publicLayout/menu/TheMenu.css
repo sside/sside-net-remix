@@ -4,11 +4,9 @@
   height: min-content;
   grid-gap: 0.7rem;
 }
-
 .theMenu * {
   font-weight: var(--fontWeightThin);
 }
-
 @media screen and (max-width: 600px) {
   .theMenu * {
     font-weight: var(--fontWeightMobileThin);

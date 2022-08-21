@@ -2,26 +2,21 @@
 .menuSectionOnlineActivities {
   flex-wrap: wrap;
 }
-
 .menuSectionOnlineActivities__message {
   margin-bottom: 0.5rem;
 }
-
 .menuSectionOnlineActivities__items dt {
   margin-bottom: 0.2rem;
   float: left;
   clear: left;
   margin-right: 0.3rem;
 }
-
 .menuSectionOnlineActivities__items dt:before {
   content: "◦";
 }
-
 .menuSectionOnlineActivities__items dt:after {
   content: ":";
 }
-
 .menuSectionOnlineActivities__items dd {
   margin-bottom: 0.2rem;
   float: left;

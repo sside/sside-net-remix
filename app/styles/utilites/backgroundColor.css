@@ -1,35 +1,27 @@
 .background--yellow {
   background-color: var(--yellow);
 }
-
 .background--orange {
   background-color: var(--orange);
 }
-
 .background--red {
   background-color: var(--red);
 }
-
 .background--magenta {
   background-color: var(--magenta);
 }
-
 .background--violet {
   background-color: var(--violet);
 }
-
 .background--blue {
   background-color: var(--blue);
 }
-
 .background--cyan {
   background-color: var(--cyan);
 }
-
 .background--green {
   background-color: var(--green);
 }
-
 .background--gray {
   background-color: var(--base01);
 }

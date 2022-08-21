@@ -4,7 +4,6 @@
   gap: 0.3rem;
   text-decoration: none;
 }
-
 .menuSectionBlogMetaTags__link {
   width: fit-content;
   font-size: 0.8rem;
@@ -14,11 +13,9 @@
   border-radius: 5px;
   line-height: 1.4rem;
 }
-
 .menuSectionBlogMetaTags__link:hover {
   background-color: var(--base3);
 }
-
 .menuSectionBlogMetaTags__linkCount {
   display: inline-block;
   margin-left: 0.2rem;

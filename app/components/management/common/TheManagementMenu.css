@@ -5,13 +5,11 @@
   align-items: baseline;
   font-weight: var(--fontWeightThin);
 }
-
 .theManagementMenu__title {
   display: block;
   padding-right: 2rem;
   font-size: var(--fontSizeExtraLarge);
 }
-
 .theManagementMenu__item:hover {
   text-decoration: underline;
 }

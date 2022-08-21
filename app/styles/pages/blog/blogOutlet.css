@@ -6,7 +6,6 @@ body.app {
   min-height: 100vh;
   width: 100%;
 }
-
 @media screen and (max-width: 600px) {
   body.app {
     grid-template-areas: "header" "main" "menu" "footer";
@@ -14,6 +13,7 @@ body.app {
     width: 100vw;
   }
 }
+
 .blog {
   grid-area: main;
   display: grid;
@@ -24,7 +24,6 @@ body.app {
   color: var(--base0);
   padding: 2rem 3rem 1rem 3rem;
 }
-
 @media screen and (max-width: 600px) {
   .blog {
     padding: 1rem;

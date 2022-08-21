@@ -3,17 +3,14 @@
   display: grid;
   grid-template-columns: 1fr;
 }
-
 .rootErrorBoundary__header {
   font-size: var(--fontSizeExtraLarge);
   font-weight: var(--fontWeightThin);
 }
-
 .rootErrorBoundary__message {
   font-size: var(--fontSizeLarge);
   font-weight: var(--fontWeightThin);
 }
-
 .rootErrorBoundary__stackTrace {
   border: 1px solid var(--colorBody);
   border-radius: 5px;

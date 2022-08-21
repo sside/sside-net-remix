@@ -5,18 +5,15 @@
   width: fit-content;
   max-width: 100%;
 }
-
 .management__header {
   font-size: var(--fontSizeExtraLarge);
   font-weight: var(--fontWeightThin);
 }
-
 .management__section {
   display: grid;
   grid-template-rows: 1fr;
   grid-gap: 1rem;
 }
-
 .management__section--header {
   font-size: var(--fontSizeLarge);
   font-weight: var(--fontWeightThin);

@@ -1,13 +1,11 @@
 .baseMenuSection {
   width: 100%;
 }
-
 .baseMenuSection__header {
   font-size: var(--fontSizeLarge);
   border-bottom: 1px solid var(--base03);
   padding: 0 0.4rem;
 }
-
 .baseMenuSection__body {
   padding: 0.6rem;
 }

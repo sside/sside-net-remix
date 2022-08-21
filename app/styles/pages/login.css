@@ -19,19 +19,16 @@ body {
   border-radius: 10px;
   text-align: center;
 }
-
 .loginForm__title {
   grid-area: title;
   font-size: 2rem;
   font-weight: 900;
 }
-
 .loginForm__form {
   display: grid;
   grid-gap: 0.5rem;
   grid-area: form;
 }
-
 .loginForm__form--input {
   width: 100%;
   border: solid 1px var(--colorBody);
@@ -39,11 +36,9 @@ body {
   padding: 0.2rem 0.5rem;
   text-align: left;
 }
-
 .loginForm__form--label {
   font-weight: 900;
 }
-
 .loginForm__form--submit {
   margin-top: 0.5rem;
   padding: 0.8rem;
