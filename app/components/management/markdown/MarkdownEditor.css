@@ -14,41 +14,52 @@
   background-color: var(--base03);
   color: var(--colorBody);
 }
+
 .cm-s-markdownEditor .cm-tag {
   color: var(--colorBody);
 }
+
 .cm-s-markdownEditor .cm-attribute {
   color: var(--colorBody);
 }
+
 .cm-s-markdownEditor .cm-string {
   color: var(--colorBody);
 }
+
 .cm-s-markdownEditor .cm-header-1 {
   font-size: 200%;
   line-height: 200%;
 }
+
 .cm-s-markdownEditor .cm-header-2 {
   font-size: 160%;
   line-height: 160%;
 }
+
 .cm-s-markdownEditor .cm-header-3 {
   font-size: 125%;
   line-height: 125%;
 }
+
 .cm-s-markdownEditor .cm-header-4 {
   font-size: 110%;
   line-height: 110%;
 }
+
 .cm-s-markdownEditor .cm-comment {
   background: rgba(0, 0, 0, 0.05);
   border-radius: 2px;
 }
+
 .cm-s-markdownEditor .cm-link {
   color: var(--colorBody);
 }
+
 .cm-s-markdownEditor .cm-url {
   color: var(--colorBody);
 }
+
 .cm-s-markdownEditor .cm-quote {
   color: var(--colorBody);
   font-style: italic;
