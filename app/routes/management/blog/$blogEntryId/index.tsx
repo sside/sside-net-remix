@@ -9,7 +9,7 @@ import {
 import { NotFoundServerError, toErrorResponse } from "../../../../error/ServerError";
 import { findAllBlogMetaTags } from "../../../../services/blog-meta-tag/blogMetaTag.server";
 import { findOneBlogEntryById } from "../../../../services/blog/blogEntry.server";
-import { BlogEntryEditItemClientResponse } from "../../../../services/blog/types/BlogEntryEditItemClientResponse";
+import { BlogEntryEditItemClientResponse } from "../../../../types/response/BlogEntryEditItemClientResponse";
 
 export const links: LinksFunction = () => [...blogEntryFormLinks()];
 

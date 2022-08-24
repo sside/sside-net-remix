@@ -15,7 +15,7 @@ import { PathUrl } from "../../constants/paths/PathUrl";
 import { findAllBlogMetaTags } from "../../services/blog-meta-tag/blogMetaTag.server";
 import { BlogMetaTagClientResponse } from "../../services/blog-meta-tag/types/BlogMetaTagClientResponse";
 import { findAllBlogEntries } from "../../services/blog/blogEntry.server";
-import { BlogEntryEditItemClientResponse } from "../../services/blog/types/BlogEntryEditItemClientResponse";
+import { BlogEntryEditItemClientResponse } from "../../types/response/BlogEntryEditItemClientResponse";
 import styles from "../../styles/pages/management/management.css";
 import { cssLinkDescriptor } from "../../utilities/styling/cssLinkDescriptor";
 

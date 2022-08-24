@@ -3,7 +3,7 @@ import { Link } from "@remix-run/react";
 import { FC } from "react";
 import { PathUrl } from "../../../constants/paths/PathUrl";
 import { DateTimeFormat, formatDate } from "../../../libraries/datetime";
-import { BlogEntryEditItemClientResponse } from "../../../services/blog/types/BlogEntryEditItemClientResponse";
+import { BlogEntryEditItemClientResponse } from "../../../types/response/BlogEntryEditItemClientResponse";
 import { cssLinks } from "../../../utilities/styling/cssLinkDescriptor";
 import styles from "./BlogEntryList.css";
 

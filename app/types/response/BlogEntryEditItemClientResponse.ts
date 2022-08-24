@@ -1,6 +1,6 @@
-import { toIso8601DateTime } from "../../../libraries/datetime";
-import { getLatestBlogEntryBody } from "../../../utilities/blog/getLatestBlogEntryBody";
-import { PrismaJoinedBlogEntry } from "./prisma/PrismaJoinedBlogEntry";
+import { toIso8601DateTime } from "../../libraries/datetime";
+import { getLatestBlogEntryBody } from "../../utilities/blog/getLatestBlogEntryBody";
+import { PrismaJoinedBlogEntry } from "../../services/blog/types/prisma/PrismaJoinedBlogEntry";
 
 export class BlogEntryEditItemClientResponse {
     constructor(
