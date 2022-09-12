@@ -64,6 +64,15 @@ export async function findAllBlogMetaTagCounts() {
     logger.log(`全てのblog meta tagに紐づけられたエントリー数を取得します。`);
 
     return await prisma.blogMetaTag.findMany({
+        where: {
+            blogEntries: {
+                some: {
+                    publishAt: {
+                        not: null,
+                    },
+                },
+            },
+        },
         include: {
             _count: true,
         },
